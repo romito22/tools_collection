@@ -96,6 +96,28 @@
       text-transform: uppercase;
     }
 
+    .field {
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .hint {
+      min-height: 18px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .hint.valid {
+      color: #b8d9ef;
+    }
+
+    .hint.warn {
+      color: var(--pass);
+    }
+
     input {
       width: 100%;
       min-height: 58px;
@@ -306,14 +328,16 @@
 
       <section class="card" aria-label="Measurement inputs">
         <div class="inputs">
-          <label>
-            Measure A
+          <div class="field">
+            <label for="measureA">Measure A</label>
             <input id="measureA" autocomplete="off" spellcheck="false" placeholder="3'-4 1/2&quot;">
-          </label>
-          <label>
-            Measure B
+            <div class="hint" id="hintA">Example: 3'-4 1/2"</div>
+          </div>
+          <div class="field">
+            <label for="measureB">Measure B</label>
             <input id="measureB" autocomplete="off" spellcheck="false" placeholder="40 9/16&quot;">
-          </label>
+            <div class="hint" id="hintB">Example: 40 9/16"</div>
+          </div>
         </div>
 
         <div class="controls">
@@ -395,6 +419,8 @@
     const diffFraction = document.querySelector("#diffFraction");
     const distanceText = document.querySelector("#distanceText");
     const correctionText = document.querySelector("#correctionText");
+    const hintA = document.querySelector("#hintA");
+    const hintB = document.querySelector("#hintB");
 
     let latestResultText = "";
 
@@ -440,6 +466,19 @@
       return total;
     }
 
+    function expandCompactInches(text) {
+      // Let field-style entries like 2'-434 mean 2'-4 3/4".
+      return text.replace(/(^|\s|-)(\d{3})(?=\s*(?:in|")?\s*$)/, (match, prefix, digits) => {
+        const whole = digits[0];
+        const numerator = digits[1];
+        const denominator = digits[2];
+        if (!["2", "4", "8"].includes(denominator) || Number(numerator) >= Number(denominator)) {
+          return match;
+        }
+        return `${prefix}${whole} ${numerator}/${denominator}`;
+      });
+    }
+
     function parseMeasurement(input) {
       // Normalize common construction wording before splitting feet, inches, and metric values.
       let text = input
@@ -472,6 +511,7 @@
         text = `${text.slice(0, feetMatch.index)} ${text.slice(feetMatch.index + feetMatch[0].length)}`;
       }
 
+      text = expandCompactInches(text);
       text = text.replace(/\b(?:in|ft)\b/g, " ").replace(/["']/g, " ");
       const inches = parseInchesPart(text);
 
@@ -505,6 +545,14 @@
         : `${numerator}/${reducedDenominator}"`;
     }
 
+    function formatMeasurement(value) {
+      if (!Number.isFinite(value)) return "--";
+      const feet = Math.floor(value / 12);
+      const inches = value - feet * 12;
+      const inchesText = formatFraction(inches);
+      return feet > 0 ? `${feet}'-${inchesText}` : inchesText;
+    }
+
     function setState(kind, title, detail) {
       resultBadge.className = `badge ${kind}`;
       resultTitle.textContent = title;
@@ -526,6 +574,20 @@
       diffFraction.textContent = "--";
       distanceText.textContent = "--";
       correctionText.textContent = "--";
+      hintA.className = "hint";
+      hintB.className = "hint";
+      hintA.textContent = measureA.value.trim() ? "Invalid measurement" : "Example: 3'-4 1/2\"";
+      hintB.textContent = measureB.value.trim() ? "Invalid measurement" : "Example: 40 9/16\"";
+
+      if (parsedA.ok) {
+        hintA.className = "hint valid";
+        hintA.textContent = `Looks like: ${formatMeasurement(parsedA.inches)} (${formatDecimal(parsedA.inches)})`;
+      }
+
+      if (parsedB.ok) {
+        hintB.className = "hint valid";
+        hintB.textContent = `Looks like: ${formatMeasurement(parsedB.inches)} (${formatDecimal(parsedB.inches)})`;
+      }
 
       if (!measureA.value.trim() && !measureB.value.trim()) {
         setState("idle", "Ready", "Enter two measurements");
