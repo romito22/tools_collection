@@ -352,6 +352,14 @@
             <span>Fraction</span>
             <output id="diffFraction">--</output>
           </div>
+          <div class="value-row">
+            <span>Distance</span>
+            <output id="distanceText">--</output>
+          </div>
+          <div class="value-row">
+            <span>Correction</span>
+            <output id="correctionText">--</output>
+          </div>
         </div>
       </section>
 
@@ -385,6 +393,8 @@
     const valueB = document.querySelector("#valueB");
     const diffDecimal = document.querySelector("#diffDecimal");
     const diffFraction = document.querySelector("#diffFraction");
+    const distanceText = document.querySelector("#distanceText");
+    const correctionText = document.querySelector("#correctionText");
 
     let latestResultText = "";
 
@@ -514,6 +524,8 @@
       valueB.textContent = parsedB.ok ? formatDecimal(parsedB.inches) : "--";
       diffDecimal.textContent = "--";
       diffFraction.textContent = "--";
+      distanceText.textContent = "--";
+      correctionText.textContent = "--";
 
       if (!measureA.value.trim() && !measureB.value.trim()) {
         setState("idle", "Ready", "Enter two measurements");
@@ -532,6 +544,7 @@
 
       const diff = Math.abs(parsedA.inches - parsedB.inches);
       const fraction = formatFraction(diff);
+      const signedDiff = parsedB.inches - parsedA.inches;
 
       diffDecimal.textContent = formatDecimal(diff);
       diffFraction.textContent = fraction;
@@ -539,16 +552,30 @@
       let statusText = "";
       if (diff === 0) {
         setState("exact", "EXACT MATCH", "Difference is 0");
+        distanceText.textContent = "A and B match exactly";
+        correctionText.textContent = "No correction needed";
         statusText = "EXACT MATCH";
       } else if (diff <= parsedTolerance.inches + Number.EPSILON) {
         setState("pass", "PASS", `Within tolerance of ${formatFraction(parsedTolerance.inches)}`);
+        distanceText.textContent = signedDiff > 0
+          ? `B is larger by ${fraction}`
+          : `A is larger by ${fraction}`;
+        correctionText.textContent = signedDiff > 0
+          ? `Subtract ${fraction} from B, or add it to A`
+          : `Subtract ${fraction} from A, or add it to B`;
         statusText = `PASS within ${formatFraction(parsedTolerance.inches)}`;
       } else {
         setState("fail", "FAIL", `Too far beyond ${formatFraction(parsedTolerance.inches)}`);
+        distanceText.textContent = signedDiff > 0
+          ? `B is larger by ${fraction}`
+          : `A is larger by ${fraction}`;
+        correctionText.textContent = signedDiff > 0
+          ? `Subtract ${fraction} from B, or add it to A`
+          : `Subtract ${fraction} from A, or add it to B`;
         statusText = `FAIL beyond ${formatFraction(parsedTolerance.inches)}`;
       }
 
-      latestResultText = `A = ${formatDecimal(parsedA.inches)}, B = ${formatDecimal(parsedB.inches)}, Difference = ${fraction}, ${statusText}`;
+      latestResultText = `A = ${formatDecimal(parsedA.inches)}, B = ${formatDecimal(parsedB.inches)}, Difference = ${fraction}, ${distanceText.textContent}, ${correctionText.textContent}, ${statusText}`;
     }
 
     [measureA, measureB, tolerance].forEach((input) => {
