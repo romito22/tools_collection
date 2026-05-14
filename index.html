@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tools_collection | Measurement Compare</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101418;
+      --panel: #171d23;
+      --panel-soft: #202832;
+      --text: #eef4f8;
+      --muted: #9aa8b4;
+      --line: #31404d;
+      --input: #0c1116;
+      --focus: #6cc6ff;
+      --exact: #1db86f;
+      --exact-bg: rgba(29, 184, 111, 0.16);
+      --pass: #f5a524;
+      --pass-bg: rgba(245, 165, 36, 0.16);
+      --fail: #ef5350;
+      --fail-bg: rgba(239, 83, 80, 0.16);
+      --idle: #7b8791;
+      --idle-bg: rgba(123, 135, 145, 0.14);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(108, 198, 255, 0.12), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      width: min(920px, 100%);
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .app {
+      display: grid;
+      gap: 14px;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 4px 2px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 4vw, 2rem);
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: color-mix(in srgb, var(--panel) 94%, white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+    }
+
+    .inputs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      min-height: 58px;
+      padding: 12px 13px;
+      color: var(--text);
+      background: var(--input);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font: 700 1.18rem/1.2 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      outline: none;
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    input::placeholder {
+      color: #64727f;
+      opacity: 1;
+    }
+
+    input:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(108, 198, 255, 0.16);
+      background: #0a1016;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(140px, 1fr) auto auto auto;
+      gap: 10px;
+      align-items: end;
+      padding: 0 14px 14px;
+    }
+
+    .controls input {
+      min-height: 44px;
+      font-size: 1rem;
+    }
+
+    button {
+      min-height: 44px;
+      padding: 0 14px;
+      color: var(--text);
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    button:hover {
+      background: #27323d;
+      border-color: #526678;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .result-card {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .badge {
+      display: grid;
+      place-items: center;
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid currentColor;
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .badge strong {
+      display: block;
+      font-size: clamp(1.4rem, 5vw, 2.35rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .badge span {
+      display: block;
+      margin-top: 8px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .badge.idle {
+      color: var(--idle);
+      background: var(--idle-bg);
+    }
+
+    .badge.exact {
+      color: var(--exact);
+      background: var(--exact-bg);
+    }
+
+    .badge.pass {
+      color: var(--pass);
+      background: var(--pass-bg);
+    }
+
+    .badge.fail {
+      color: var(--fail);
+      background: var(--fail-bg);
+    }
+
+    .values {
+      display: grid;
+      gap: 8px;
+      align-content: center;
+    }
+
+    .value-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(154, 168, 180, 0.18);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .value-row:last-child {
+      border-bottom: 0;
+    }
+
+    .value-row output {
+      color: var(--text);
+      font: 800 1rem/1.2 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .examples {
+      padding: 14px;
+    }
+
+    .examples h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 9px;
+      color: #d7e2ea;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font: 700 0.86rem/1 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    }
+
+    .toast {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: right;
+    }
+
+    @media (max-width: 680px) {
+      main {
+        padding: 10px;
+      }
+
+      header,
+      .inputs,
+      .controls,
+      .result-card {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        display: grid;
+      }
+
+      .controls {
+        align-items: stretch;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .toast {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="app" aria-label="Measurement comparison tool">
+      <header>
+        <div>
+          <h1>tools_collection</h1>
+          <p class="subtitle">Compare construction measurements across feet, inches, fractions, mm, and cm.</p>
+        </div>
+        <div class="toast" id="toast" aria-live="polite"></div>
+      </header>
+
+      <section class="card" aria-label="Measurement inputs">
+        <div class="inputs">
+          <label>
+            Measure A
+            <input id="measureA" autocomplete="off" spellcheck="false" placeholder="3'-4 1/2&quot;">
+          </label>
+          <label>
+            Measure B
+            <input id="measureB" autocomplete="off" spellcheck="false" placeholder="40 9/16&quot;">
+          </label>
+        </div>
+
+        <div class="controls">
+          <label>
+            Tolerance
+            <input id="tolerance" autocomplete="off" spellcheck="false" value="1/16&quot;">
+          </label>
+          <button id="swapBtn" type="button">Swap</button>
+          <button id="clearBtn" type="button">Clear</button>
+          <button id="copyBtn" type="button">Copy Result</button>
+        </div>
+      </section>
+
+      <section class="card result-card" aria-label="Comparison result">
+        <div class="badge idle" id="resultBadge">
+          <div>
+            <strong id="resultTitle">Ready</strong>
+            <span id="resultDetail">Enter two measurements</span>
+          </div>
+        </div>
+
+        <div class="values">
+          <div class="value-row">
+            <span>Measure A</span>
+            <output id="valueA">--</output>
+          </div>
+          <div class="value-row">
+            <span>Measure B</span>
+            <output id="valueB">--</output>
+          </div>
+          <div class="value-row">
+            <span>Difference</span>
+            <output id="diffDecimal">--</output>
+          </div>
+          <div class="value-row">
+            <span>Fraction</span>
+            <output id="diffFraction">--</output>
+          </div>
+        </div>
+      </section>
+
+      <section class="card examples" aria-label="Valid input examples">
+        <h2>Examples</h2>
+        <div class="chips">
+          <span class="chip">3'-4 1/2"</span>
+          <span class="chip">3 ft 4 1/2 in</span>
+          <span class="chip">40-1/2"</span>
+          <span class="chip">40 8/16</span>
+          <span class="chip">1/16"</span>
+          <span class="chip">1028.7 mm</span>
+          <span class="chip">102.87 cm</span>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const measureA = document.querySelector("#measureA");
+    const measureB = document.querySelector("#measureB");
+    const tolerance = document.querySelector("#tolerance");
+    const swapBtn = document.querySelector("#swapBtn");
+    const clearBtn = document.querySelector("#clearBtn");
+    const copyBtn = document.querySelector("#copyBtn");
+    const toast = document.querySelector("#toast");
+    const resultBadge = document.querySelector("#resultBadge");
+    const resultTitle = document.querySelector("#resultTitle");
+    const resultDetail = document.querySelector("#resultDetail");
+    const valueA = document.querySelector("#valueA");
+    const valueB = document.querySelector("#valueB");
+    const diffDecimal = document.querySelector("#diffDecimal");
+    const diffFraction = document.querySelector("#diffFraction");
+
+    let latestResultText = "";
+
+    function gcd(a, b) {
+      while (b) {
+        const next = a % b;
+        a = b;
+        b = next;
+      }
+      return a || 1;
+    }
+
+    function parseNumberToken(token) {
+      if (!token) return NaN;
+      const normalized = token.trim();
+
+      if (/^\d+\/\d+$/.test(normalized)) {
+        const [top, bottom] = normalized.split("/").map(Number);
+        return bottom === 0 ? NaN : top / bottom;
+      }
+
+      return Number(normalized);
+    }
+
+    function parseInchesPart(text) {
+      // Mixed numbers and hyphenated fractions are reduced to simple addable tokens.
+      const tokens = text
+        .replace(/-/g, " ")
+        .replace(/[^\d./\s]/g, " ")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+      if (!tokens.length) return 0;
+
+      let total = 0;
+      for (const token of tokens) {
+        const value = parseNumberToken(token);
+        if (!Number.isFinite(value)) return NaN;
+        total += value;
+      }
+
+      return total;
+    }
+
+    function parseMeasurement(input) {
+      // Normalize common construction wording before splitting feet, inches, and metric values.
+      let text = input
+        .trim()
+        .toLowerCase()
+        .replace(/[\u201c\u201d]/g, '"')
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/\bfeet\b/g, "ft")
+        .replace(/\bfoot\b/g, "ft")
+        .replace(/\binches\b/g, "in")
+        .replace(/\binch\b/g, "in");
+
+      if (!text) return { ok: false, error: "empty" };
+      if (/[^\d\s.'"/a-z-]/.test(text)) return { ok: false, error: "invalid characters" };
+
+      const metric = text.match(/^(\d+(?:\.\d+)?)\s*(mm|millimeter|millimeters|cm|centimeter|centimeters)$/);
+      if (metric) {
+        const value = Number(metric[1]);
+        const unit = metric[2];
+        return {
+          ok: true,
+          inches: unit.startsWith("mm") || unit.startsWith("millimeter") ? value / 25.4 : value / 2.54
+        };
+      }
+
+      const feetMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:'|ft\b)/);
+      let feet = 0;
+      if (feetMatch) {
+        feet = Number(feetMatch[1]);
+        text = `${text.slice(0, feetMatch.index)} ${text.slice(feetMatch.index + feetMatch[0].length)}`;
+      }
+
+      text = text.replace(/\b(?:in|ft)\b/g, " ").replace(/["']/g, " ");
+      const inches = parseInchesPart(text);
+
+      if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
+        return { ok: false, error: "invalid measurement" };
+      }
+
+      return { ok: true, inches: feet * 12 + inches };
+    }
+
+    function formatDecimal(value) {
+      if (!Number.isFinite(value)) return "--";
+      return `${Number(value.toFixed(4)).toFixed(value % 1 === 0 ? 3 : 4)}"`;
+    }
+
+    function formatFraction(value, denominator = 16) {
+      // Display differences the way they are usually checked in the field.
+      if (!Number.isFinite(value)) return "--";
+      const rounded = Math.round(value * denominator) / denominator;
+      const whole = Math.floor(rounded);
+      let numerator = Math.round((rounded - whole) * denominator);
+
+      if (numerator === 0) return `${whole}"`;
+      if (numerator === denominator) return `${whole + 1}"`;
+
+      const divisor = gcd(numerator, denominator);
+      numerator /= divisor;
+      const reducedDenominator = denominator / divisor;
+      return whole > 0
+        ? `${whole} ${numerator}/${reducedDenominator}"`
+        : `${numerator}/${reducedDenominator}"`;
+    }
+
+    function setState(kind, title, detail) {
+      resultBadge.className = `badge ${kind}`;
+      resultTitle.textContent = title;
+      resultDetail.textContent = detail;
+    }
+
+    function compare() {
+      // Recompute on every keystroke so the tool works like a compact side panel.
+      toast.textContent = "";
+      latestResultText = "";
+
+      const parsedA = parseMeasurement(measureA.value);
+      const parsedB = parseMeasurement(measureB.value);
+      const parsedTolerance = parseMeasurement(tolerance.value);
+
+      valueA.textContent = parsedA.ok ? formatDecimal(parsedA.inches) : "--";
+      valueB.textContent = parsedB.ok ? formatDecimal(parsedB.inches) : "--";
+      diffDecimal.textContent = "--";
+      diffFraction.textContent = "--";
+
+      if (!measureA.value.trim() && !measureB.value.trim()) {
+        setState("idle", "Ready", "Enter two measurements");
+        return;
+      }
+
+      if (!parsedA.ok || !parsedB.ok) {
+        setState("idle", "Invalid measurement", "Check Measure A or Measure B");
+        return;
+      }
+
+      if (!parsedTolerance.ok || parsedTolerance.inches < 0) {
+        setState("idle", "Invalid tolerance", "Use a value like 1/16\"");
+        return;
+      }
+
+      const diff = Math.abs(parsedA.inches - parsedB.inches);
+      const fraction = formatFraction(diff);
+
+      diffDecimal.textContent = formatDecimal(diff);
+      diffFraction.textContent = fraction;
+
+      let statusText = "";
+      if (diff === 0) {
+        setState("exact", "EXACT MATCH", "Difference is 0");
+        statusText = "EXACT MATCH";
+      } else if (diff <= parsedTolerance.inches + Number.EPSILON) {
+        setState("pass", "PASS", `Within tolerance of ${formatFraction(parsedTolerance.inches)}`);
+        statusText = `PASS within ${formatFraction(parsedTolerance.inches)}`;
+      } else {
+        setState("fail", "FAIL", `Too far beyond ${formatFraction(parsedTolerance.inches)}`);
+        statusText = `FAIL beyond ${formatFraction(parsedTolerance.inches)}`;
+      }
+
+      latestResultText = `A = ${formatDecimal(parsedA.inches)}, B = ${formatDecimal(parsedB.inches)}, Difference = ${fraction}, ${statusText}`;
+    }
+
+    [measureA, measureB, tolerance].forEach((input) => {
+      input.addEventListener("input", compare);
+    });
+
+    swapBtn.addEventListener("click", () => {
+      const currentA = measureA.value;
+      measureA.value = measureB.value;
+      measureB.value = currentA;
+      compare();
+      measureA.focus();
+    });
+
+    clearBtn.addEventListener("click", () => {
+      measureA.value = "";
+      measureB.value = "";
+      tolerance.value = '1/16"';
+      compare();
+      measureA.focus();
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      if (!latestResultText) {
+        toast.textContent = "Nothing valid to copy yet.";
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(latestResultText);
+        toast.textContent = "Result copied.";
+      } catch {
+        toast.textContent = "Copy failed. Select the result manually.";
+      }
+    });
+
+    compare();
+  </script>
+</body>
+</html>
