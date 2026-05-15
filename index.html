@@ -79,29 +79,32 @@
         <section class="card review-deck">
           <div class="section-head">
             <div><h2>Brace Length Practice</h2><p>Each card focuses on Lbh. Yellow means the brace length looks right. Red means it has an error.</p></div>
-            <div class="actions"><button id="reviewSampleBtn" type="button">Sample</button><button id="reviewPrevBtn" type="button">Prev</button><button id="reviewNextBtn" type="button">Next</button><button id="exportReviewBtn" type="button">Export Marked Excel</button></div>
+            <div class="actions"><button id="reviewSampleBtn" type="button">Sample</button><button id="whiteWashBtn" type="button">White Wash</button><button id="exportReviewBtn" type="button">Export Marked Excel</button></div>
           </div>
-          <div class="review-layout">
-            <article id="reviewCard" class="review-card idle">
+          <div class="review-controls">
+            <label>Excel File<input id="reviewExcelInput" type="file" accept=".xlsx,.xls,.csv"></label>
+            <div class="stats">
+              <div><span>Brace Cards</span><b id="reviewTotal">0</b></div>
+              <div><span>Reviewed</span><b id="reviewDone">0</b></div>
+              <div><span>Good</span><b id="reviewGood">0</b></div>
+              <div><span>Bad</span><b id="reviewBad">0</b></div>
+            </div>
+          </div>
+          <article id="reviewCard" class="review-card idle">
+            <div>
               <p class="note">Upload an Excel file to create review cards.</p>
-            </article>
-            <aside class="review-side">
-              <label>Excel File<input id="reviewExcelInput" type="file" accept=".xlsx,.xls,.csv"></label>
-              <div class="stats">
-                <div><span>Rows</span><b id="reviewTotal">0</b></div>
-                <div><span>Reviewed</span><b id="reviewDone">0</b></div>
-                <div><span>Good</span><b id="reviewGood">0</b></div>
-                <div><span>Bad</span><b id="reviewBad">0</b></div>
-              </div>
-              <label>Review Note<textarea id="reviewNote" rows="4" placeholder="Example: Hwp does not match drawing"></textarea></label>
-              <div class="review-actions">
-                <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
-                <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
-                <button id="clearMarkBtn" type="button">Clear Mark</button>
-              </div>
-              <p id="reviewStatus" class="note">Waiting for Excel data.</p>
-            </aside>
+            </div>
+          </article>
+          <div class="review-decision">
+            <label>Review Note<textarea id="reviewNote" rows="3" placeholder="Example: Lbh shown wrong on drawing"></textarea></label>
+            <div class="review-actions">
+              <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
+              <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
+              <button id="clearMarkBtn" type="button">Clear Mark</button>
+            </div>
           </div>
+          <div id="braceBoard" class="brace-board"></div>
+          <p id="reviewStatus" class="note">Waiting for Excel data.</p>
         </section>
       </section>
     </main>
