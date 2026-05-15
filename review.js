@@ -21,6 +21,7 @@ const reviewEls = {
   clear: freshControl("#clearMarkBtn"),
   export: freshControl("#exportReviewBtn"),
   whiteWash: freshControl("#whiteWashBtn"),
+  list: document.querySelector("#braceList"),
   board: document.querySelector("#braceBoard")
 };
 
@@ -29,8 +30,10 @@ let reviewState = {
   rows: [],
   headerIndex: -1,
   headers: [],
+  groups: [],
   data: [],
   current: 0,
+  currentCell: 0,
   marks: new Map()
 };
 
@@ -60,6 +63,7 @@ function findReviewHeader(rows) {
 function loadReviewRows(rows, fileName = "review.xlsx") {
   const headerIndex = findReviewHeader(rows);
   const headers = headerIndex >= 0 ? rows[headerIndex].map((cell, index) => String(cell || `Column ${index + 1}`)) : [];
+  const groups = buildReviewGroups(headers);
   const raw = headerIndex >= 0
     ? rows.slice(headerIndex + 1).map((row, offset) => ({ row, rowIndex: headerIndex + 1 + offset })).filter((item) => item.row.some((cell) => String(cell ?? "").trim()))
     : [];
@@ -80,15 +84,38 @@ function loadReviewRows(rows, fileName = "review.xlsx") {
       data.push({ ...item, braceNo, qty, lbh: lbhNumber, cardKey: `${item.rowIndex}:${braceNo}` });
     }
   });
-  reviewState = { fileName, rows, headerIndex, headers, data, current: 0, marks: new Map() };
+  reviewState = { fileName, rows, headerIndex, headers, groups, data, current: 0, currentCell: 0, marks: new Map() };
   reviewEls.note.value = "";
   renderReview();
 }
 
-function reviewColumns() {
-  return reviewState.headers
-    .map((header, index) => ({ header: String(header || "").trim(), index, k: key(header) }))
-    .filter((item) => item.header && item.header !== "#");
+function buildReviewGroups(headers) {
+  const ignored = new Set(["", "#"]);
+  const groups = [];
+  headers.forEach((header, index) => {
+    const name = String(header || "").trim();
+    if (!name || ignored.has(name)) return;
+    const span = [index];
+    for (let next = index + 1; next < headers.length && !String(headers[next] || "").trim(); next += 1) {
+      span.push(next);
+    }
+    groups.push({ name, index, span, k: key(name) });
+  });
+  return groups.filter((group) => !["qty"].includes(group.k));
+}
+
+function groupValue(item, group) {
+  return group.span
+    .map((index) => item.row[index])
+    .filter((value) => String(value ?? "").trim() !== "")
+    .join(" ");
+}
+
+function reviewCells(item) {
+  if (!item) return [];
+  return reviewState.groups
+    .map((group) => ({ ...group, value: groupValue(item, group), cellKey: `${item.cardKey}:${group.index}` }))
+    .filter((cell) => String(cell.value ?? "").trim() !== "");
 }
 
 function findIndex(headers, names) {
@@ -133,39 +160,38 @@ function renderReview() {
     reviewEls.card.className = "review-card idle";
     reviewEls.card.innerHTML = `<p class="note">Upload an Excel file above to create review cards.</p>`;
     reviewEls.status.textContent = "Waiting for Excel data.";
+    renderBraceList();
     renderBoard();
     return;
   }
 
-  const mark = reviewState.marks.get(item.cardKey);
+  const cells = reviewCells(item);
+  if (reviewState.currentCell >= cells.length) reviewState.currentCell = 0;
+  const cell = cells[reviewState.currentCell];
+  const mark = cell ? reviewState.marks.get(cell.cellKey) : null;
   reviewEls.note.value = mark?.note || "";
   reviewEls.card.className = `review-card ${mark?.status || ""}`.trim();
   const statusText = mark?.status === "good" ? "Looks Good" : mark?.status === "bad" ? "Has Error" : "Unmarked";
-  const focus = `
+  const focus = cell ? `
     <div class="review-field focus">
-      <span>Expected Lbh</span>
-      <b>${safeText(formatLbh(item.lbh))}</b>
+      <span>Selected Value</span>
+      <b>${safeText(cell.value)}</b>
     </div>
     <div class="review-field focus">
-      <span>Brace</span>
-      <b>${item.braceNo} / ${item.qty}</b>
+      <span>Field</span>
+      <b>${safeText(cell.name)}</b>
     </div>
-  `;
-  const fields = reviewColumns().filter(({ index }) => String(item.row[index] ?? "").trim() !== "").map(({ header, index }) => `
-    <div class="review-field">
-      <span>${safeText(header)}</span>
-      <b>${safeText(item.row[index] ?? "")}</b>
-    </div>
-  `).join("");
+  ` : `<p class="note">No reviewable values found for this brace.</p>`;
 
   reviewEls.card.innerHTML = `
     <div class="review-title">
       <strong>${safeText(cardLabel(item))}</strong>
       <span class="review-pill ${mark?.status || ""}">${statusText}</span>
     </div>
-    <div class="review-fields">${focus}${fields}</div>
+    <div class="review-fields">${focus}</div>
   `;
-  reviewEls.status.textContent = `Selected ${reviewState.current + 1} of ${reviewState.data.length}. Choose a tile below or mark this brace.`;
+  reviewEls.status.textContent = `Brace ${reviewState.current + 1} of ${reviewState.data.length}. Select a value tile, then mark that specific value.`;
+  renderBraceList();
   renderBoard();
 }
 
@@ -174,28 +200,66 @@ function shortValue(item, names) {
   return value ?? "";
 }
 
-function renderBoard() {
-  if (!reviewEls.board) return;
+function braceStatus(item) {
+  const cells = reviewCells(item);
+  const marks = cells.map((cell) => reviewState.marks.get(cell.cellKey)).filter(Boolean);
+  if (marks.some((mark) => mark.status === "bad")) return "bad";
+  if (cells.length && marks.length === cells.length && marks.every((mark) => mark.status === "good")) return "good";
+  if (marks.length) return "partial";
+  return "";
+}
+
+function renderBraceList() {
+  if (!reviewEls.list) return;
   if (!reviewState.data.length) {
-    reviewEls.board.innerHTML = `<p class="note">No brace cards loaded.</p>`;
+    reviewEls.list.innerHTML = `<p class="note">No braces loaded.</p>`;
     return;
   }
-  reviewEls.board.innerHTML = reviewState.data.map((item, index) => {
-    const mark = reviewState.marks.get(item.cardKey);
-    const classes = ["brace-tile", mark?.status || "", index === reviewState.current ? "selected" : ""].filter(Boolean).join(" ");
-    const status = mark?.status === "good" ? "GOOD" : mark?.status === "bad" ? "ERROR" : "OPEN";
+  reviewEls.list.innerHTML = reviewState.data.map((item, index) => {
+    const status = braceStatus(item);
+    const classes = ["brace-list-item", status, index === reviewState.current ? "selected" : ""].filter(Boolean).join(" ");
     return `
       <button class="${classes}" type="button" data-index="${index}">
-        <strong>${safeText(shortValue(item, ["mark"]) || `Row ${item.rowIndex + 1}`)} / Brace ${item.braceNo}</strong>
-        <b>${safeText(formatLbh(item.lbh))}</b>
-        <span>${safeText(shortValue(item, ["cb id"]))} | ${safeText(shortValue(item, ["grids"]))} | ${status}</span>
+        <strong>${safeText(shortValue(item, ["mark"]) || `Row ${item.rowIndex + 1}`)}</strong>
+        <span>Brace ${item.braceNo}/${item.qty}</span>
+        <small>${safeText(shortValue(item, ["cb id"]))} ${safeText(shortValue(item, ["grids"]))}</small>
       </button>
     `;
   }).join("");
-  reviewEls.board.querySelectorAll(".brace-tile").forEach((tile) => {
+  reviewEls.list.querySelectorAll(".brace-list-item").forEach((tile) => {
     tile.addEventListener("click", () => {
       saveNote();
       reviewState.current = Number(tile.dataset.index);
+      reviewState.currentCell = 0;
+      renderReview();
+    });
+  });
+}
+
+function renderBoard() {
+  if (!reviewEls.board) return;
+  const item = currentItem();
+  const cells = reviewCells(item);
+  if (!cells.length) {
+    reviewEls.board.innerHTML = `<p class="note">No reviewable values loaded for this brace.</p>`;
+    return;
+  }
+  reviewEls.board.innerHTML = cells.map((cell, index) => {
+    const mark = reviewState.marks.get(cell.cellKey);
+    const classes = ["value-tile", mark?.status || "", index === reviewState.currentCell ? "selected" : ""].filter(Boolean).join(" ");
+    const status = mark?.status === "good" ? "GOOD" : mark?.status === "bad" ? "ERROR" : "OPEN";
+    return `
+      <button class="${classes}" type="button" data-index="${index}">
+        <span>${safeText(cell.name)}</span>
+        <b>${safeText(cell.value)}</b>
+        <small>${status}</small>
+      </button>
+    `;
+  }).join("");
+  reviewEls.board.querySelectorAll(".value-tile").forEach((tile) => {
+    tile.addEventListener("click", () => {
+      saveNote();
+      reviewState.currentCell = Number(tile.dataset.index);
       renderReview();
     });
   });
@@ -221,46 +285,59 @@ function gcd(a, b) {
 function saveNote() {
   const item = currentItem();
   if (!item) return;
-  const mark = reviewState.marks.get(item.cardKey);
+  const cell = reviewCells(item)[reviewState.currentCell];
+  if (!cell) return;
+  const mark = reviewState.marks.get(cell.cellKey);
   if (mark) mark.note = reviewEls.note.value.trim();
-}
-
-function moveCard(delta) {
-  saveNote();
-  if (!reviewState.data.length) return;
-  reviewState.current = Math.max(0, Math.min(reviewState.data.length - 1, reviewState.current + delta));
-  renderReview();
 }
 
 function markCard(status) {
   const item = currentItem();
   if (!item) return;
-  reviewState.marks.set(item.cardKey, { status, note: reviewEls.note.value.trim(), rowIndex: item.rowIndex, braceNo: item.braceNo });
-  if (reviewState.current < reviewState.data.length - 1) reviewState.current += 1;
+  const cells = reviewCells(item);
+  const cell = cells[reviewState.currentCell];
+  if (!cell) return;
+  reviewState.marks.set(cell.cellKey, {
+    status,
+    note: reviewEls.note.value.trim(),
+    rowIndex: item.rowIndex,
+    braceNo: item.braceNo,
+    columnIndex: cell.index,
+    field: cell.name,
+    value: cell.value
+  });
+  if (reviewState.currentCell < cells.length - 1) reviewState.currentCell += 1;
+  else if (reviewState.current < reviewState.data.length - 1) {
+    reviewState.current += 1;
+    reviewState.currentCell = 0;
+  }
   renderReview();
 }
 
 function clearCard() {
   const item = currentItem();
   if (!item) return;
-  reviewState.marks.delete(item.cardKey);
+  const cell = reviewCells(item)[reviewState.currentCell];
+  if (!cell) return;
+  reviewState.marks.delete(cell.cellKey);
   reviewEls.note.value = "";
   renderReview();
 }
 
 function rowReviewSummary(rowIndex) {
   const rowCards = reviewState.data.filter((item) => item.rowIndex === rowIndex);
-  const marks = rowCards.map((item) => reviewState.marks.get(item.cardKey)).filter(Boolean);
+  const marks = rowCards.flatMap((item) => reviewCells(item).map((cell) => reviewState.marks.get(cell.cellKey)).filter(Boolean));
   const bad = marks.filter((mark) => mark.status === "bad");
   const good = marks.filter((mark) => mark.status === "good");
   if (bad.length) {
     return {
       status: "ERROR",
       color: "#ff4d4d",
-      notes: bad.map((mark) => `Brace ${mark.braceNo}: ${mark.note || "Lbh error"}`).join("; ")
+      notes: bad.map((mark) => `Brace ${mark.braceNo} ${mark.field}: ${mark.note || "error"}`).join("; ")
     };
   }
-  if (rowCards.length && good.length === rowCards.length) {
+  const rowCellCount = rowCards.reduce((sum, item) => sum + reviewCells(item).length, 0);
+  if (rowCellCount && good.length === rowCellCount) {
     return {
       status: "GOOD",
       color: "#fff200",
@@ -311,8 +388,10 @@ function whiteWash() {
     rows: [],
     headerIndex: -1,
     headers: [],
+    groups: [],
     data: [],
     current: 0,
+    currentCell: 0,
     marks: new Map()
   };
   if (reviewEls.file) reviewEls.file.value = "";
