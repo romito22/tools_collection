@@ -60,8 +60,8 @@ th{color:var(--muted);background:var(--soft);font-size:.72rem;text-transform:upp
 .checkpoint.low{border-left-color:var(--green)}
 .checkpoint-top{display:flex;justify-content:space-between;gap:8px;color:var(--text);font-size:.86rem;font-weight:850}
 .checkpoint-note{color:var(--muted);font-size:.78rem;line-height:1.25}
-.review-layout{display:grid;grid-template-columns:minmax(360px,1fr) minmax(280px,360px);gap:12px}
-.review-card{min-height:430px;display:grid;align-content:start;gap:12px;padding:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--soft) 88%,transparent),var(--panel));border:1px solid var(--line);border-radius:var(--r)}
+.review-controls{display:grid;grid-template-columns:minmax(260px,420px) minmax(360px,1fr);gap:12px;align-items:end}
+.review-card{min-height:190px;display:grid;align-content:start;gap:12px;padding:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--soft) 88%,transparent),var(--panel));border:1px solid var(--line);border-radius:var(--r)}
 .review-card.good{border-color:var(--amber);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--amber) 70%,transparent)}
 .review-card.bad{border-color:var(--red);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--red) 70%,transparent)}
 .review-title{display:flex;justify-content:space-between;gap:12px;align-items:start}
@@ -75,10 +75,19 @@ th{color:var(--muted);background:var(--soft);font-size:.72rem;text-transform:upp
 .review-field.focus b{font-size:1.25rem;color:var(--text)}
 .review-field span{display:block;color:var(--muted);font-size:.68rem;font-weight:900;text-transform:uppercase}
 .review-field b{display:block;margin-top:4px;font:900 .95rem/1.2 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;overflow-wrap:anywhere}
-.review-side{display:grid;gap:10px;align-content:start}
+.review-decision{display:grid;grid-template-columns:minmax(260px,1fr) minmax(300px,420px);gap:12px;align-items:end}
 .review-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .review-actions button:last-child{grid-column:1/-1}
 .mark-good{color:#111;background:var(--amber);border-color:var(--amber)}
 .mark-bad{background:var(--red);border-color:var(--red)}
-@media(max-width:1180px){.app-shell{grid-template-columns:1fr}.side-nav{position:static;height:auto;grid-template-columns:1fr auto auto;grid-template-rows:auto;align-items:center}.side-nav nav{display:flex}.workspace,.assistant-grid,.review-layout{grid-template-columns:1fr}.diagram,svg,.checkpoints{max-height:none}}
-@media(max-width:680px){main{padding:10px}.side-nav{display:grid;grid-template-columns:1fr;gap:10px}.side-nav nav,.topbar,.section-head{display:grid}.compact .actions,.stats,.review-actions{grid-template-columns:1fr}.review-actions button:last-child{grid-column:auto}}
+.brace-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.brace-tile{display:grid;gap:7px;min-height:132px;padding:10px;text-align:left;background:var(--soft);border:1px solid var(--line);border-radius:var(--r)}
+.brace-tile:hover{border-color:var(--focus)}
+.brace-tile.selected{border-color:var(--focus);box-shadow:0 0 0 2px color-mix(in srgb,var(--focus) 35%,transparent)}
+.brace-tile.good{background:color-mix(in srgb,var(--amber) 20%,var(--soft));border-color:var(--amber);color:var(--text)}
+.brace-tile.bad{background:color-mix(in srgb,var(--red) 20%,var(--soft));border-color:var(--red)}
+.brace-tile strong{font-size:.92rem;line-height:1.15}
+.brace-tile span{color:var(--muted);font:800 .72rem/1.2 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+.brace-tile b{font:950 1.15rem/1.1 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+@media(max-width:1180px){.app-shell{grid-template-columns:1fr}.side-nav{position:static;height:auto;grid-template-columns:1fr auto auto;grid-template-rows:auto;align-items:center}.side-nav nav{display:flex}.workspace,.assistant-grid,.review-controls,.review-decision{grid-template-columns:1fr}.diagram,svg,.checkpoints{max-height:none}}
+@media(max-width:680px){main{padding:10px}.side-nav{display:grid;grid-template-columns:1fr;gap:10px}.side-nav nav,.topbar,.section-head{display:grid}.compact .actions,.stats,.review-actions{grid-template-columns:1fr}.review-actions button:last-child{grid-column:auto}.brace-board{grid-template-columns:1fr}}
