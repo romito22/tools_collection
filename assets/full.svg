@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="768" fill="#05090d"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="58" y="58" width="908" height="650" stroke="#d7e7ff" stroke-width="2"/>
+    <text x="512" y="118" text-anchor="middle" fill="#7fb4ff" stroke="#7fb4ff" stroke-width="1" font-family="Arial, sans-serif" font-size="54">BOLTED GUSSET OVERALL LAYOUT</text>
+    <line x1="114" y1="548" x2="460" y2="188" stroke="#f7d849" stroke-width="3" stroke-dasharray="8 6"/>
+    <rect x="132" y="164" width="312" height="46" stroke="#ff5252" stroke-width="3"/>
+    <rect x="132" y="524" width="312" height="46" stroke="#ff5252" stroke-width="3"/>
+    <rect x="98" y="144" width="33" height="444" stroke="#ff5252" stroke-width="3"/>
+    <rect x="444" y="144" width="33" height="444" stroke="#ff5252" stroke-width="3"/>
+    <path d="M132 524 L182 524 L182 503 L155 477 L132 477 Z" stroke="#ff5252" stroke-width="3"/>
+    <path d="M444 211 L394 211 L394 230 L420 256 L444 256 Z" stroke="#ff5252" stroke-width="3"/>
+    <path d="M169 466 L382 244 L407 268 L193 489 Z" stroke="#ff9d28" stroke-width="4"/>
+    <circle cx="527" cy="217" r="13" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="527" cy="274" r="13" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="250" cy="468" r="13" stroke="#ffffff" stroke-width="3"/>
+    <text x="527" y="224" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18">B</text>
+    <text x="527" y="281" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18">C</text>
+    <text x="250" y="475" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18">A</text>
+    <line x1="115" y1="622" x2="460" y2="622" stroke="#ffffff" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <line x1="549" y1="188" x2="549" y2="546" stroke="#ffffff" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <line x1="375" y1="105" x2="455" y2="183" stroke="#ffffff" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="262" y="596" width="88" height="38" fill="#05090d" stroke="#ffffff" stroke-width="2"/>
+    <text x="306" y="623" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="28">Wwp</text>
+    <rect x="522" y="348" width="38" height="72" fill="#05090d" stroke="#ffffff" stroke-width="2"/>
+    <text x="547" y="385" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="24" transform="rotate(-90 547 385)">Hwp</text>
+    <text x="150" y="96" fill="#ffffff" font-family="Arial, sans-serif" font-size="26">Lwp-h AT UPPER END OF BRACE</text>
+    <text x="585" y="112" fill="#ffffff" font-family="Arial, sans-serif" font-size="24">OVERALL PROCEDURE</text>
+    <text x="606" y="198" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">A  LAYOUT BOTTOM BRACE CONNECTION</text>
+    <text x="606" y="255" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">B  ESTABLISH UPPER-MOST BOLT-HOLE</text>
+    <text x="606" y="342" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">C  LAYOUT UPPER BOLT-HOLE PATTERN</text>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#ffffff"/>
+    </marker>
+  </defs>
+</svg>
