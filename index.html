@@ -7,82 +7,109 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main>
-    <header class="topbar">
+  <div class="app-shell">
+    <aside class="side-nav">
       <div>
         <h1>tools_collection</h1>
-        <p>Compact field helpers for measurement checks and Excel-driven drawing review focus.</p>
+        <p>Engineering helper tools for quick review work.</p>
       </div>
+      <nav>
+        <button class="nav-btn active" type="button" data-target="toolsView">Tools</button>
+        <button class="nav-btn" type="button" data-target="reviewView">Review Deck</button>
+      </nav>
       <button id="themeBtn" type="button">Theme</button>
-    </header>
+    </aside>
 
-    <section class="workspace">
-      <aside class="card compact">
-        <h2>Measure Compare</h2>
-        <label>Measure A<input id="measureA" placeholder="3'-4 1/2&quot;"><span id="hintA" class="hint">Example: 3'-4 1/2"</span></label>
-        <label>Measure B<input id="measureB" placeholder="40 9/16&quot;"><span id="hintB" class="hint">Example: 40 9/16"</span></label>
-        <label>Tolerance<input id="tolerance" value="1/16&quot;"></label>
-        <div class="actions"><button id="swapBtn">Swap</button><button id="clearBtn">Clear</button><button id="copyBtn">Copy</button></div>
-        <div id="resultBadge" class="badge idle"><strong id="resultTitle">Ready</strong><span id="resultDetail">Enter measurements</span></div>
-        <div class="rows">
-          <p><span>A</span><output id="valueA">--</output></p>
-          <p><span>B</span><output id="valueB">--</output></p>
-          <p><span>Difference</span><output id="diffDecimal">--</output></p>
-          <p><span>Fraction</span><output id="diffFraction">--</output></p>
-          <p><span>Distance</span><output id="distanceText">--</output></p>
-          <p><span>Correction</span><output id="correctionText">--</output></p>
-        </div>
-        <p id="toast" class="note"></p>
-      </aside>
-
-      <section class="card assistant">
-        <div class="section-head">
-          <div><h2>Excel Drawing Assistant</h2><p>Use Excel as the source of truth. No OCR, no PDF reading, no Bluebeam integration.</p></div>
-          <div class="actions"><button id="loadSampleBtn">Sample</button><button id="exportPngBtn">Export PNG</button></div>
-        </div>
-        <div class="assistant-grid">
-          <div class="panel">
-            <label>Excel File<input id="excelInput" type="file" accept=".xlsx,.xls,.csv"></label>
-            <label>Excel Row / Mark<select id="rowSelect"></select></label>
-            <p id="excelStatus" class="note">Upload a parameter table or load the sample.</p>
-            <div class="stats"><div><span>Sheet</span><b id="sheetName">--</b></div><div><span>Parameters</span><b id="paramCount">0</b></div><div><span>Detail</span><b id="detailType">Steel connection</b></div><div><span>Flags</span><b id="flagCount">0</b></div></div>
-            <div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Value</th><th>Priority</th></tr></thead><tbody id="parameterRows"><tr><td colspan="3">No data yet.</td></tr></tbody></table></div>
+    <main>
+      <section id="toolsView" class="view active">
+        <header class="topbar">
+          <div>
+            <h2>Measurement + Drawing Helpers</h2>
+            <p>Compare measurements and preview Excel-driven drawing review cues.</p>
           </div>
-          <div class="panel"><h3>Expected Detail SVG</h3><div class="diagram"><svg id="detailSvg" viewBox="0 0 760 470"></svg></div></div>
-          <div class="panel"><h3>Review Checkpoints</h3><div id="checkpointList" class="checkpoints"></div></div>
-        </div>
+        </header>
+
+        <section class="workspace">
+          <aside class="card compact">
+            <h2>Measure Compare</h2>
+            <label>Measure A<input id="measureA" placeholder="3'-4 1/2&quot;"><span id="hintA" class="hint">Example: 3'-4 1/2"</span></label>
+            <label>Measure B<input id="measureB" placeholder="40 9/16&quot;"><span id="hintB" class="hint">Example: 40 9/16"</span></label>
+            <label>Tolerance<input id="tolerance" value="1/16&quot;"></label>
+            <div class="actions"><button id="swapBtn">Swap</button><button id="clearBtn">Clear</button><button id="copyBtn">Copy</button></div>
+            <div id="resultBadge" class="badge idle"><strong id="resultTitle">Ready</strong><span id="resultDetail">Enter measurements</span></div>
+            <div class="rows">
+              <p><span>A</span><output id="valueA">--</output></p>
+              <p><span>B</span><output id="valueB">--</output></p>
+              <p><span>Difference</span><output id="diffDecimal">--</output></p>
+              <p><span>Fraction</span><output id="diffFraction">--</output></p>
+              <p><span>Distance</span><output id="distanceText">--</output></p>
+              <p><span>Correction</span><output id="correctionText">--</output></p>
+            </div>
+            <p id="toast" class="note"></p>
+          </aside>
+
+          <section class="card assistant">
+            <div class="section-head">
+              <div><h2>Excel Drawing Assistant</h2><p>Use Excel as the source of truth. No OCR, no PDF reading, no Bluebeam integration.</p></div>
+              <div class="actions"><button id="loadSampleBtn">Sample</button><button id="exportPngBtn">Export PNG</button></div>
+            </div>
+            <div class="assistant-grid">
+              <div class="panel">
+                <label>Excel File<input id="excelInput" type="file" accept=".xlsx,.xls,.csv"></label>
+                <label>Excel Row / Mark<select id="rowSelect"></select></label>
+                <p id="excelStatus" class="note">Upload a parameter table or load the sample.</p>
+                <div class="stats"><div><span>Sheet</span><b id="sheetName">--</b></div><div><span>Parameters</span><b id="paramCount">0</b></div><div><span>Detail</span><b id="detailType">Steel connection</b></div><div><span>Flags</span><b id="flagCount">0</b></div></div>
+                <div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Value</th><th>Priority</th></tr></thead><tbody id="parameterRows"><tr><td colspan="3">No data yet.</td></tr></tbody></table></div>
+              </div>
+              <div class="panel"><h3>Expected Detail SVG</h3><div class="diagram"><svg id="detailSvg" viewBox="0 0 760 470"></svg></div></div>
+              <div class="panel"><h3>Review Checkpoints</h3><div id="checkpointList" class="checkpoints"></div></div>
+            </div>
+          </section>
+        </section>
       </section>
-    </section>
 
-    <section class="card review-deck">
-      <div class="section-head">
-        <div><h2>Excel Review Deck</h2><p>Swipe-style row review. Mark rows yellow when they look right, red when something is wrong.</p></div>
-        <div class="actions"><button id="reviewPrevBtn" type="button">Prev</button><button id="reviewNextBtn" type="button">Next</button><button id="exportReviewBtn" type="button">Export Marked Excel</button></div>
-      </div>
-      <div class="review-layout">
-        <article id="reviewCard" class="review-card idle">
-          <p class="note">Upload an Excel file above to create review cards.</p>
-        </article>
-        <aside class="review-side">
-          <div class="stats">
-            <div><span>Rows</span><b id="reviewTotal">0</b></div>
-            <div><span>Reviewed</span><b id="reviewDone">0</b></div>
-            <div><span>Good</span><b id="reviewGood">0</b></div>
-            <div><span>Bad</span><b id="reviewBad">0</b></div>
+      <section id="reviewView" class="view">
+        <header class="topbar">
+          <div>
+            <h2>Excel Review Deck</h2>
+            <p>Upload an Excel file, review one row at a time, then export a marked copy.</p>
           </div>
-          <label>Review Note<textarea id="reviewNote" rows="4" placeholder="Example: Hwp does not match drawing"></textarea></label>
-          <div class="review-actions">
-            <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
-            <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
-            <button id="clearMarkBtn" type="button">Clear Mark</button>
+        </header>
+
+        <section class="card review-deck">
+          <div class="section-head">
+            <div><h2>Swipe-Style Row Review</h2><p>Yellow means it looks right. Red means it has an error.</p></div>
+            <div class="actions"><button id="reviewSampleBtn" type="button">Sample</button><button id="reviewPrevBtn" type="button">Prev</button><button id="reviewNextBtn" type="button">Next</button><button id="exportReviewBtn" type="button">Export Marked Excel</button></div>
           </div>
-          <p id="reviewStatus" class="note">Waiting for Excel data.</p>
-        </aside>
-      </div>
-    </section>
-  </main>
+          <div class="review-layout">
+            <article id="reviewCard" class="review-card idle">
+              <p class="note">Upload an Excel file to create review cards.</p>
+            </article>
+            <aside class="review-side">
+              <label>Excel File<input id="reviewExcelInput" type="file" accept=".xlsx,.xls,.csv"></label>
+              <div class="stats">
+                <div><span>Rows</span><b id="reviewTotal">0</b></div>
+                <div><span>Reviewed</span><b id="reviewDone">0</b></div>
+                <div><span>Good</span><b id="reviewGood">0</b></div>
+                <div><span>Bad</span><b id="reviewBad">0</b></div>
+              </div>
+              <label>Review Note<textarea id="reviewNote" rows="4" placeholder="Example: Hwp does not match drawing"></textarea></label>
+              <div class="review-actions">
+                <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
+                <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
+                <button id="clearMarkBtn" type="button">Clear Mark</button>
+              </div>
+              <p id="reviewStatus" class="note">Waiting for Excel data.</p>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
   <script src="review.js"></script>
+  <script src="nav.js"></script>
 </body>
 </html>
