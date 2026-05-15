@@ -1,19 +1,27 @@
+function freshControl(selector) {
+  const node = document.querySelector(selector);
+  if (!node) return null;
+  const clone = node.cloneNode(true);
+  node.replaceWith(clone);
+  return clone;
+}
+
 const reviewEls = {
-  file: document.querySelector("#reviewExcelInput"),
-  sample: document.querySelector("#reviewSampleBtn"),
+  file: freshControl("#reviewExcelInput"),
+  sample: freshControl("#reviewSampleBtn"),
   card: document.querySelector("#reviewCard"),
   total: document.querySelector("#reviewTotal"),
   done: document.querySelector("#reviewDone"),
   good: document.querySelector("#reviewGood"),
   bad: document.querySelector("#reviewBad"),
-  note: document.querySelector("#reviewNote"),
+  note: freshControl("#reviewNote"),
   status: document.querySelector("#reviewStatus"),
-  prev: document.querySelector("#reviewPrevBtn"),
-  next: document.querySelector("#reviewNextBtn"),
-  markGood: document.querySelector("#markGoodBtn"),
-  markBad: document.querySelector("#markBadBtn"),
-  clear: document.querySelector("#clearMarkBtn"),
-  export: document.querySelector("#exportReviewBtn")
+  prev: freshControl("#reviewPrevBtn"),
+  next: freshControl("#reviewNextBtn"),
+  markGood: freshControl("#markGoodBtn"),
+  markBad: freshControl("#markBadBtn"),
+  clear: freshControl("#clearMarkBtn"),
+  export: freshControl("#exportReviewBtn")
 };
 
 let reviewState = {
@@ -52,19 +60,36 @@ function findReviewHeader(rows) {
 function loadReviewRows(rows, fileName = "review.xlsx") {
   const headerIndex = findReviewHeader(rows);
   const headers = headerIndex >= 0 ? rows[headerIndex].map((cell, index) => String(cell || `Column ${index + 1}`)) : [];
-  const data = headerIndex >= 0
+  const raw = headerIndex >= 0
     ? rows.slice(headerIndex + 1).map((row, offset) => ({ row, rowIndex: headerIndex + 1 + offset })).filter((item) => item.row.some((cell) => String(cell ?? "").trim()))
     : [];
+  const qtyIndex = findIndex(headers, ["qty"]);
+  const lbhIndex = findIndex(headers, ["lbh"]);
+  const data = [];
+  raw.forEach((item) => {
+    const lbh = item.row[lbhIndex];
+    const lbhNumber = Number(lbh);
+    if (lbhIndex < 0 || !Number.isFinite(lbhNumber)) return;
+    const qty = Math.max(1, Math.round(Number(item.row[qtyIndex]) || 1));
+    for (let braceNo = 1; braceNo <= qty; braceNo += 1) {
+      data.push({ ...item, braceNo, qty, lbh: lbhNumber, cardKey: `${item.rowIndex}:${braceNo}` });
+    }
+  });
   reviewState = { fileName, rows, headerIndex, headers, data, current: 0, marks: new Map() };
   reviewEls.note.value = "";
   renderReview();
 }
 
 function reviewColumns() {
-  const wanted = ["cb id", "eor id", "line", "grids", "lvls", "mark", "qty", "wwp", "hwp", "lbh", "lwp h", "lwph", "lwp-h"];
+  const wanted = ["cb id", "eor id", "line", "grids", "lvls", "mark", "qty", "lbh"];
   const picked = reviewState.headers.map((header, index) => ({ header, index, k: key(header) }))
     .filter((item) => item.header && wanted.some((name) => item.k.includes(name)));
   return picked.length ? picked : reviewState.headers.map((header, index) => ({ header: header || `Column ${index + 1}`, index })).slice(0, 12);
+}
+
+function findIndex(headers, names) {
+  const normalized = headers.map(key);
+  return normalized.findIndex((header) => names.some((name) => header.includes(name)));
 }
 
 function currentItem() {
@@ -85,7 +110,8 @@ function cardLabel(item) {
     item.row[columnIndex(["line"])],
     item.row[columnIndex(["grids"])]
   ].filter(Boolean);
-  return values.join(" / ") || `Excel row ${item.rowIndex + 1}`;
+  const base = values.join(" / ") || `Excel row ${item.rowIndex + 1}`;
+  return `${base} / Brace ${item.braceNo} of ${item.qty}`;
 }
 
 function updateStats() {
@@ -106,10 +132,20 @@ function renderReview() {
     return;
   }
 
-  const mark = reviewState.marks.get(item.rowIndex);
+  const mark = reviewState.marks.get(item.cardKey);
   reviewEls.note.value = mark?.note || "";
   reviewEls.card.className = `review-card ${mark?.status || ""}`.trim();
   const statusText = mark?.status === "good" ? "Looks Good" : mark?.status === "bad" ? "Has Error" : "Unmarked";
+  const focus = `
+    <div class="review-field focus">
+      <span>Expected Lbh</span>
+      <b>${safeText(formatLbh(item.lbh))}</b>
+    </div>
+    <div class="review-field focus">
+      <span>Brace</span>
+      <b>${item.braceNo} / ${item.qty}</b>
+    </div>
+  `;
   const fields = reviewColumns().map(({ header, index }) => `
     <div class="review-field">
       <span>${safeText(header)}</span>
@@ -122,15 +158,32 @@ function renderReview() {
       <strong>${safeText(cardLabel(item))}</strong>
       <span class="review-pill ${mark?.status || ""}">${statusText}</span>
     </div>
-    <div class="review-fields">${fields}</div>
+    <div class="review-fields">${focus}${fields}</div>
   `;
-  reviewEls.status.textContent = `Card ${reviewState.current + 1} of ${reviewState.data.length}. Yellow = good, red = error.`;
+  reviewEls.status.textContent = `Lbh card ${reviewState.current + 1} of ${reviewState.data.length}. Yellow = good, red = error.`;
+}
+
+function formatLbh(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return value;
+  const whole = Math.floor(number);
+  const den = 16;
+  let numerator = Math.round((number - whole) * den);
+  if (!numerator) return `${whole}"`;
+  if (numerator === den) return `${whole + 1}"`;
+  const divisor = gcd(numerator, den);
+  return `${whole} ${numerator / divisor}/${den / divisor}"`;
+}
+
+function gcd(a, b) {
+  while (b) [a, b] = [b, a % b];
+  return a || 1;
 }
 
 function saveNote() {
   const item = currentItem();
   if (!item) return;
-  const mark = reviewState.marks.get(item.rowIndex);
+  const mark = reviewState.marks.get(item.cardKey);
   if (mark) mark.note = reviewEls.note.value.trim();
 }
 
@@ -144,7 +197,7 @@ function moveCard(delta) {
 function markCard(status) {
   const item = currentItem();
   if (!item) return;
-  reviewState.marks.set(item.rowIndex, { status, note: reviewEls.note.value.trim() });
+  reviewState.marks.set(item.cardKey, { status, note: reviewEls.note.value.trim(), rowIndex: item.rowIndex, braceNo: item.braceNo });
   if (reviewState.current < reviewState.data.length - 1) reviewState.current += 1;
   renderReview();
 }
@@ -152,9 +205,38 @@ function markCard(status) {
 function clearCard() {
   const item = currentItem();
   if (!item) return;
-  reviewState.marks.delete(item.rowIndex);
+  reviewState.marks.delete(item.cardKey);
   reviewEls.note.value = "";
   renderReview();
+}
+
+function rowReviewSummary(rowIndex) {
+  const rowCards = reviewState.data.filter((item) => item.rowIndex === rowIndex);
+  const marks = rowCards.map((item) => reviewState.marks.get(item.cardKey)).filter(Boolean);
+  const bad = marks.filter((mark) => mark.status === "bad");
+  const good = marks.filter((mark) => mark.status === "good");
+  if (bad.length) {
+    return {
+      status: "ERROR",
+      color: "#ff4d4d",
+      notes: bad.map((mark) => `Brace ${mark.braceNo}: ${mark.note || "Lbh error"}`).join("; ")
+    };
+  }
+  if (rowCards.length && good.length === rowCards.length) {
+    return {
+      status: "GOOD",
+      color: "#fff200",
+      notes: good.map((mark) => mark.note).filter(Boolean).join("; ")
+    };
+  }
+  if (good.length) {
+    return {
+      status: "PARTIAL GOOD",
+      color: "#fff2a8",
+      notes: good.map((mark) => `Brace ${mark.braceNo}: ${mark.note || "OK"}`).join("; ")
+    };
+  }
+  return { status: "", color: "", notes: "" };
 }
 
 function exportMarkedReview() {
@@ -166,12 +248,12 @@ function exportMarkedReview() {
 
   const maxCols = Math.max(...reviewState.rows.map((row) => row.length), reviewState.headers.length);
   const tableRows = reviewState.rows.map((row, rowIndex) => {
-    const mark = reviewState.marks.get(rowIndex);
-    const bg = mark?.status === "good" ? "#fff200" : mark?.status === "bad" ? "#ff4d4d" : rowIndex === reviewState.headerIndex ? "#ffffff" : "";
+    const summary = rowReviewSummary(rowIndex);
+    const bg = summary.color || (rowIndex === reviewState.headerIndex ? "#ffffff" : "");
     const style = bg ? ` style="background:${bg};color:#000;border:1px solid #999;"` : ` style="border:1px solid #999;"`;
     const values = Array.from({ length: maxCols }, (_, index) => row[index] ?? "");
     if (rowIndex === reviewState.headerIndex) values.push("Review Status", "Review Notes");
-    else if (rowIndex > reviewState.headerIndex) values.push(mark?.status === "good" ? "GOOD" : mark?.status === "bad" ? "ERROR" : "", mark?.note || "");
+    else if (rowIndex > reviewState.headerIndex) values.push(summary.status, summary.notes);
     return `<tr>${values.map((value) => `<td${style}>${safeText(value)}</td>`).join("")}</tr>`;
   }).join("");
 
