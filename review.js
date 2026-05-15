@@ -21,7 +21,9 @@ const reviewEls = {
   markGood: freshControl("#markGoodBtn"),
   markBad: freshControl("#markBadBtn"),
   clear: freshControl("#clearMarkBtn"),
-  export: freshControl("#exportReviewBtn")
+  export: freshControl("#exportReviewBtn"),
+  whiteWash: freshControl("#whiteWashBtn"),
+  board: document.querySelector("#braceBoard")
 };
 
 let reviewState = {
@@ -129,6 +131,7 @@ function renderReview() {
     reviewEls.card.className = "review-card idle";
     reviewEls.card.innerHTML = `<p class="note">Upload an Excel file above to create review cards.</p>`;
     reviewEls.status.textContent = "Waiting for Excel data.";
+    renderBoard();
     return;
   }
 
@@ -160,7 +163,40 @@ function renderReview() {
     </div>
     <div class="review-fields">${focus}${fields}</div>
   `;
-  reviewEls.status.textContent = `Lbh card ${reviewState.current + 1} of ${reviewState.data.length}. Yellow = good, red = error.`;
+  reviewEls.status.textContent = `Selected ${reviewState.current + 1} of ${reviewState.data.length}. Choose a tile below or mark this brace.`;
+  renderBoard();
+}
+
+function shortValue(item, names) {
+  const value = item.row[columnIndex(names)];
+  return value ?? "";
+}
+
+function renderBoard() {
+  if (!reviewEls.board) return;
+  if (!reviewState.data.length) {
+    reviewEls.board.innerHTML = `<p class="note">No brace cards loaded.</p>`;
+    return;
+  }
+  reviewEls.board.innerHTML = reviewState.data.map((item, index) => {
+    const mark = reviewState.marks.get(item.cardKey);
+    const classes = ["brace-tile", mark?.status || "", index === reviewState.current ? "selected" : ""].filter(Boolean).join(" ");
+    const status = mark?.status === "good" ? "GOOD" : mark?.status === "bad" ? "ERROR" : "OPEN";
+    return `
+      <button class="${classes}" type="button" data-index="${index}">
+        <strong>${safeText(shortValue(item, ["mark"]) || `Row ${item.rowIndex + 1}`)} / Brace ${item.braceNo}</strong>
+        <b>${safeText(formatLbh(item.lbh))}</b>
+        <span>${safeText(shortValue(item, ["cb id"]))} | ${safeText(shortValue(item, ["grids"]))} | ${status}</span>
+      </button>
+    `;
+  }).join("");
+  reviewEls.board.querySelectorAll(".brace-tile").forEach((tile) => {
+    tile.addEventListener("click", () => {
+      saveNote();
+      reviewState.current = Number(tile.dataset.index);
+      renderReview();
+    });
+  });
 }
 
 function formatLbh(value) {
@@ -267,6 +303,22 @@ function exportMarkedReview() {
   reviewEls.status.textContent = "Exported marked Excel file.";
 }
 
+function whiteWash() {
+  reviewState = {
+    fileName: "review.xlsx",
+    rows: [],
+    headerIndex: -1,
+    headers: [],
+    data: [],
+    current: 0,
+    marks: new Map()
+  };
+  if (reviewEls.file) reviewEls.file.value = "";
+  reviewEls.note.value = "";
+  renderReview();
+  reviewEls.status.textContent = "White wash complete. Upload a new Excel file.";
+}
+
 async function readReviewFile(file) {
   if (!window.XLSX) {
     reviewEls.status.textContent = "SheetJS did not load. Refresh with internet access.";
@@ -299,5 +351,6 @@ reviewEls.markGood.addEventListener("click", () => markCard("good"));
 reviewEls.markBad.addEventListener("click", () => markCard("bad"));
 reviewEls.clear.addEventListener("click", clearCard);
 reviewEls.export.addEventListener("click", exportMarkedReview);
+reviewEls.whiteWash.addEventListener("click", whiteWash);
 reviewEls.note.addEventListener("input", saveNote);
 loadReviewSample();
