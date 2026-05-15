@@ -1,37 +1,250 @@
 const $ = (selector) => document.querySelector(selector);
-const el = {a:$("#measureA"),b:$("#measureB"),tol:$("#tolerance"),swap:$("#swapBtn"),clear:$("#clearBtn"),copy:$("#copyBtn"),toast:$("#toast"),badge:$("#resultBadge"),title:$("#resultTitle"),detail:$("#resultDetail"),va:$("#valueA"),vb:$("#valueB"),dd:$("#diffDecimal"),df:$("#diffFraction"),dist:$("#distanceText"),corr:$("#correctionText"),ha:$("#hintA"),hb:$("#hintB"),file:$("#excelInput"),rowSelect:$("#rowSelect"),status:$("#excelStatus"),sheet:$("#sheetName"),pc:$("#paramCount"),dt:$("#detailType"),fc:$("#flagCount"),rows:$("#parameterRows"),checks:$("#checkpointList"),svg:$("#detailSvg")};
-let latestResult="",currentModel=null,rowModels=[];
-function gcd(a,b){while(b){const n=a%b;a=b;b=n}return a||1}
-function tokenVal(t){if(!t)return NaN;t=String(t).trim();if(/^\d+\/\d+$/.test(t)){const[n,d]=t.split('/').map(Number);return d?n/d:NaN}return Number(t)}
-function inchesPart(t){const xs=String(t).replace(/-/g,' ').replace(/[^\d./\s]/g,' ').trim().split(/\s+/).filter(Boolean);if(!xs.length)return 0;let sum=0;for(const x of xs){const v=tokenVal(x);if(!Number.isFinite(v))return NaN;sum+=v}return sum}
-function compactInches(t){return String(t).replace(/(^|\s|-)(\d{3})(?=\s*(?:in|")?\s*$)/,(m,p,d)=>{const w=d[0],n=d[1],den=d[2];return ['2','4','8'].includes(den)&&Number(n)<Number(den)?`${p}${w} ${n}/${den}`:m})}
-function parseMeasure(input){let t=String(input??'').trim().toLowerCase().replace(/[\u201c\u201d]/g,'"').replace(/[\u2018\u2019]/g,"'").replace(/\bfeet\b/g,'ft').replace(/\bfoot\b/g,'ft').replace(/\binches\b/g,'in').replace(/\binch\b/g,'in');if(!t)return{ok:false};if(/[^\d\s.'"/a-z-]/.test(t))return{ok:false};const metric=t.match(/^(\d+(?:\.\d+)?)\s*(mm|millimeter|millimeters|cm|centimeter|centimeters)$/);if(metric){const v=Number(metric[1]),u=metric[2];return{ok:true,inches:u.startsWith('mm')||u.startsWith('millimeter')?v/25.4:v/2.54}}const fm=t.match(/(\d+(?:\.\d+)?)\s*(?:'|ft\b)/);let ft=0;if(fm){ft=Number(fm[1]);t=`${t.slice(0,fm.index)} ${t.slice(fm.index+fm[0].length)}`}t=compactInches(t).replace(/\b(?:in|ft)\b/g,' ').replace(/["']/g,' ');const inch=inchesPart(t);return Number.isFinite(ft)&&Number.isFinite(inch)?{ok:true,inches:ft*12+inch}:{ok:false}}
-function dec(v){return Number.isFinite(v)?`${Number(v.toFixed(4)).toFixed(v%1===0?3:4)}"`:'--'}
-function frac(v,den=16){if(!Number.isFinite(v))return'--';const r=Math.round(v*den)/den,w=Math.floor(r);let n=Math.round((r-w)*den);if(!n)return`${w}"`;if(n===den)return`${w+1}"`;const g=gcd(n,den);n/=g;den/=g;return w?`${w} ${n}/${den}"`:`${n}/${den}"`}
-function fmtMeasure(v){if(!Number.isFinite(v))return'--';const ft=Math.floor(v/12),inch=v-ft*12;return ft?`${ft}'-${frac(inch)}`:frac(inch)}
-function setState(k,t,d){el.badge.className=`badge ${k}`;el.title.textContent=t;el.detail.textContent=d}
-function compare(){el.toast.textContent='';latestResult='';const a=parseMeasure(el.a.value),b=parseMeasure(el.b.value),tol=parseMeasure(el.tol.value);el.va.textContent=a.ok?dec(a.inches):'--';el.vb.textContent=b.ok?dec(b.inches):'--';el.dd.textContent=el.df.textContent=el.dist.textContent=el.corr.textContent='--';el.ha.className=el.hb.className='hint';el.ha.textContent=el.a.value.trim()?'Invalid measurement':'Example: 3\'-4 1/2"';el.hb.textContent=el.b.value.trim()?'Invalid measurement':'Example: 40 9/16"';if(a.ok){el.ha.className='hint valid';el.ha.textContent=`Looks like: ${fmtMeasure(a.inches)} (${dec(a.inches)})`}if(b.ok){el.hb.className='hint valid';el.hb.textContent=`Looks like: ${fmtMeasure(b.inches)} (${dec(b.inches)})`}if(!el.a.value.trim()&&!el.b.value.trim())return setState('idle','Ready','Enter measurements');if(!a.ok||!b.ok)return setState('idle','Invalid','Check A or B');if(!tol.ok||tol.inches<0)return setState('idle','Bad tolerance','Use 1/16"');const d=Math.abs(a.inches-b.inches),f=frac(d),signed=b.inches-a.inches;el.dd.textContent=dec(d);el.df.textContent=f;if(d===0){el.dist.textContent='A and B match';el.corr.textContent='No correction';latestResult=`A = ${dec(a.inches)}, B = ${dec(b.inches)}, Difference = 0, EXACT MATCH`;return setState('exact','MATCH','Difference is 0')}el.dist.textContent=signed>0?`B is larger by ${f}`:`A is larger by ${f}`;el.corr.textContent=signed>0?`Subtract ${f} from B`:`Subtract ${f} from A`;const pass=d<=tol.inches+Number.EPSILON,status=pass?`PASS within ${frac(tol.inches)}`:`FAIL beyond ${frac(tol.inches)}`;setState(pass?'pass':'fail',pass?'PASS':'FAIL',status.replace(/^PASS |^FAIL /,''));latestResult=`A = ${dec(a.inches)}, B = ${dec(b.inches)}, Difference = ${f}, ${el.dist.textContent}, ${el.corr.textContent}, ${status}`}
-function nk(v){return String(v??'').trim().toLowerCase().replace(/[_-]+/g,' ').replace(/\s+/g,' ')}
-function html(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function num(v,u=''){if(typeof v==='number')return v;const raw=Number(String(v??'').replace(/,/g,''));if(Number.isFinite(raw))return raw;const p=parseMeasure(`${v??''} ${u}`.trim());return p.ok?p.inches:NaN}
-function pin(p){const t=String(p.value??'').trim(),u=String(p.unit??'').trim(),m=parseMeasure(`${t} ${u}`.trim());if(m.ok)return m.inches;const r=Number(t);if(!Number.isFinite(r))return NaN;if(/^mm$/i.test(u))return r/25.4;if(/^cm$/i.test(u))return r/2.54;return r}
-function valueWithFraction(row,i){const first=String(row[i]??'').trim(),next=String(row[i+1]??'').trim();if(!first)return'';return /^\d+\/\d+$/.test(next)?`${first} ${next}`:first}
-function findHeaderRow(rows){return rows.findIndex(r=>{const j=r.map(nk).join(' ');return j.includes('cb id')&&(j.includes('lwp h')||j.includes('wwp')||j.includes('hwp'))})}
-function wideRowsToModels(rows,source){const hi=findHeaderRow(rows);if(hi<0)return[];const headers=rows[hi].map(nk),find=(aliases)=>headers.findIndex(h=>aliases.some(a=>h.includes(a)));const ix={cb:find(['cb id']),eor:find(['eor id']),line:find(['line']),grids:find(['grids']),mark:find(['mark']),qty:find(['qty']),wwp:find(['wwp']),hwp:find(['hwp']),lbh:find(['lbh']),lwph:find(['lwp h','lwph','lwp-h'])};return rows.slice(hi+1).filter(r=>r.some(c=>String(c??'').trim())).map((r,n)=>{const label=[r[ix.cb],r[ix.eor],r[ix.line],r[ix.grids],r[ix.mark]].filter(Boolean).join(' / ')||`Row ${n+1}`;const ps=[['CB-ID',r[ix.cb],'','High','Connection ID from Excel.'],['EOR-ID',r[ix.eor],'','High','Reference ID from Excel.'],['Line',r[ix.line],'','Medium','Line shown in client drawing.'],['Grids',r[ix.grids],'','Medium','Grid location cue.'],['Mark',r[ix.mark],'','High','Mark number to find in Bluebeam.'],['Qty',r[ix.qty],'','Low','Quantity check.'],['Wwp',valueWithFraction(r,ix.wwp),'in','High','Expected Wwp dimension.'],['Hwp',valueWithFraction(r,ix.hwp),'in','High','Expected Hwp dimension.'],['Lbh',valueWithFraction(r,ix.lbh),'in','High','Expected Lbh dimension.'],['Lwp-h',valueWithFraction(r,ix.lwph),'in','High','Triggers full.svg overlay.']].map(([name,value,unit,priority,notes])=>({name,value,unit,priority,notes})).filter(p=>String(p.value??'').trim());const m=buildModel(ps,source);m.rowLabel=label;m.template=findP(ps,['lwp h','lwph'])?'full':'generated';return m})}
-function paramsFromRows(rows){const useful=rows.filter(r=>r.some(c=>String(c??'').trim()));if(!useful.length)return[];const hi=useful.findIndex(r=>{const j=r.map(nk).join(' ');return/(parameter|param|name|item)/.test(j)&&/(value|dimension|size)/.test(j)});if(hi>=0){const h=useful[hi].map(nk),find=(xs)=>h.findIndex(v=>xs.some(x=>v.includes(x)));const ix={n:find(['parameter','param','name','item']),v:find(['value','dimension','size','qty','count']),u:find(['unit']),p:find(['priority','review']),note:find(['note','comment'])};return useful.slice(hi+1).map(r=>({name:r[ix.n],value:r[ix.v],unit:ix.u>=0?r[ix.u]:'',priority:ix.p>=0?r[ix.p]:'',notes:ix.note>=0?r[ix.note]:''})).filter(p=>String(p.name??'').trim()&&String(p.value??'').trim())}return useful.map(r=>({name:r[0],value:r[1],unit:r[2]??'',priority:r[3]??'',notes:r[4]??''})).filter(p=>String(p.name??'').trim()&&String(p.value??'').trim())}
-function findP(ps,aliases){return ps.find(p=>aliases.some(a=>nk(p.name).includes(a)))}
-function buildModel(ps,source='Manual'){const dim=(a,f)=>{const p=findP(ps,a),v=p?pin(p):NaN;return Number.isFinite(v)?v:f},qty=(a,f)=>{const p=findP(ps,a),v=p?num(p.value,p.unit):NaN;return Number.isFinite(v)?Math.max(1,Math.round(v)):f};const m={sourceName:source,parameters:ps,plateWidth:dim(['plate width','width','plate w','wwp'],10),plateHeight:dim(['plate height','plate length','height','hwp'],14),plateThickness:dim(['plate thickness','thickness'],.5),boltRows:qty(['bolt rows','rows'],2),boltCols:qty(['bolt columns','bolt cols','columns'],2),boltCount:qty(['bolt count','bolts','anchor count'],4),boltSpacingX:dim(['bolt spacing x','horizontal spacing','gage','gauge'],4),boltSpacingY:dim(['bolt spacing y','vertical spacing','pitch'],4),edgeDistance:dim(['edge distance','edge'],1.5),holeDiameter:dim(['hole diameter','hole dia','diameter'],.8125),weldSize:dim(['weld size','weld'],.25),braceAngle:qty(['brace angle','angle'],35),lwpH:dim(['lwp h','lwph','lwp-h'],NaN),lbh:dim(['lbh'],NaN)};if(m.boltCount>m.boltRows*m.boltCols)m.boltCols=Math.ceil(m.boltCount/m.boltRows);m.template=Number.isFinite(m.lwpH)?'full':'generated';m.flags=flags(m);m.checkpoints=checks(m);return m}
-function flags(m){const f=[];if(m.edgeDistance<1)f.push('Edge distance is under 1 in.');if(m.holeDiameter<.5||m.holeDiameter>1.5)f.push('Hole diameter looks unusual.');if(m.weldSize>.5)f.push('Weld size is large; verify symbol and notes.');if(Number.isFinite(m.lwpH)&&m.lwpH<6)f.push('Lwp-h looks unusually small.');return f}
-function pri(p,fb='Medium'){const v=nk(p.priority);if(v.includes('high'))return'High';if(v.includes('low'))return'Low';if(v.includes('medium')||v.includes('med'))return'Medium';return fb}
-function checks(m){const core=[['Template',m.template==='full'?'full.svg':'Generated SVG','High','Chosen from Excel parameters.'],['Wwp',frac(m.plateWidth),'High','Check expected Wwp dimension on the drawing.'],['Hwp',frac(m.plateHeight),'High','Check expected Hwp dimension on the drawing.']];if(Number.isFinite(m.lwpH))core.push(['Lwp-h',frac(m.lwpH),'High','This value is overlaid on full.svg for review.']);if(Number.isFinite(m.lbh))core.push(['Lbh',frac(m.lbh),'High','Check Lbh against the client detail.']);const custom=m.parameters.slice(0,12).map(p=>[String(p.name),`${p.value}${p.unit?` ${p.unit}`:''}`,pri(p,'Low'),p.notes||'Client drawing should be checked against this Excel parameter.']);return[...core,...custom]}
-function text(x,y,v,s=14,a='middle',fill='currentColor'){return`<text x="${x}" y="${y}" fill="${fill}" font-size="${s}" font-family="ui-monospace,Consolas,monospace" text-anchor="${a}">${html(v)}</text>`}
-function overlayForTemplate(m){const o=[];if(Number.isFinite(m.lwpH)){o.push('<rect x="675" y="96" width="238" height="78" rx="8" fill="rgba(0,0,0,.72)" stroke="#f5a524" stroke-width="3"/>');o.push(text(794,126,'Lwp-h',24,'middle','#f5a524'));o.push(text(794,158,frac(m.lwpH),28,'middle','#fff'));o.push('<line x1="678" y1="174" x2="586" y2="258" stroke="#f5a524" stroke-width="4"/>')}if(Number.isFinite(m.plateWidth))o.push(text(270,728,`Wwp ${frac(m.plateWidth)}`,20,'middle','#78c6ff'));if(Number.isFinite(m.plateHeight))o.push(text(928,388,`Hwp ${frac(m.plateHeight)}`,20,'middle','#78c6ff'));return o.join('')}
-function drawTemplate(m){el.svg.setAttribute('viewBox','0 0 1024 768');el.svg.innerHTML=`<image href="assets/full.svg" x="0" y="0" width="1024" height="768" preserveAspectRatio="xMidYMid meet"></image>${overlayForTemplate(m)}`}
-function drawGenerated(m){el.svg.setAttribute('viewBox','0 0 760 470');const scale=Math.min(360/m.plateWidth,310/m.plateHeight),w=m.plateWidth*scale,h=m.plateHeight*scale,x0=210-w/2,y0=225-h/2;el.svg.innerHTML=`<g color="${getComputedStyle(document.body).getPropertyValue('--text').trim()}"><rect x="${x0}" y="${y0}" width="${w}" height="${h}" rx="4" fill="rgba(120,198,255,.08)" stroke="#78c6ff" stroke-width="3"/>${text(210,y0-42,`PL ${frac(m.plateWidth)} x ${frac(m.plateHeight)} x ${frac(m.plateThickness)}`,15)}<path d="M430 345 L650 235 L650 300 L430 410 Z" fill="rgba(29,184,111,.08)" stroke="#1db86f" stroke-width="3"/>${text(545,230,`Brace cue ${m.braceAngle} deg`,14)}<path d="M92 388 h85 l22 -22" fill="none" stroke="#ef5350" stroke-width="3"/>${text(148,415,`Weld ${frac(m.weldSize)}`,14)}</g>`}
-function draw(m){m.template==='full'?drawTemplate(m):drawGenerated(m)}
-function render(m){currentModel=m;el.sheet.textContent=m.rowLabel||m.sourceName;el.dt.textContent=m.template==='full'?'full.svg':'Generated';el.pc.textContent=m.parameters.length;el.fc.textContent=m.flags.length;el.rows.innerHTML=m.parameters.length?m.parameters.map(p=>`<tr><td>${html(p.name)}</td><td class="mono">${html(p.value)}${p.unit?` ${html(p.unit)}`:''}</td><td>${html(pri(p))}</td></tr>`).join(''):'<tr><td colspan="3">No parameters found.</td></tr>';const flagged=m.flags.map(f=>`<div class="checkpoint high"><div class="checkpoint-top"><span>Suspicious value</span><span>High</span></div><div class="checkpoint-note">${html(f)}</div></div>`).join('');el.checks.innerHTML=flagged+m.checkpoints.map(([n,v,p,note])=>`<div class="checkpoint ${p.toLowerCase()}"><div class="checkpoint-top"><span>${html(n)}</span><span>${html(p)}</span></div><div class="mono">${html(v)}</div><div class="checkpoint-note">${html(note)}</div></div>`).join('');draw(m)}
-function setRowModels(models){rowModels=models;el.rowSelect.innerHTML=models.map((m,i)=>`<option value="${i}">${html(m.rowLabel||m.sourceName||`Row ${i+1}`)}</option>`).join('');el.rowSelect.disabled=models.length<=1;if(models.length)render(models[0])}
-async function loadExcel(file){if(!window.XLSX){el.status.textContent='SheetJS did not load. Check internet access, then refresh.';return}const buf=await file.arrayBuffer(),wb=XLSX.read(buf,{type:'array'}),s=wb.SheetNames[0],rows=XLSX.utils.sheet_to_json(wb.Sheets[s],{header:1,defval:''}),wide=wideRowsToModels(rows,s);if(wide.length){el.status.textContent=`Loaded ${file.name}. Found ${wide.length} Excel rows. Lwp-h uses full.svg.`;setRowModels(wide);return}const ps=paramsFromRows(rows);el.status.textContent=`Loaded ${file.name}. Parsed ${ps.length} parameters from ${s}.`;setRowModels([buildModel(ps,s)])}
-function sample(){const ps=[['CB-ID','CB-5.50','','High','Connection ID from Excel.'],['EOR-ID','BRB-5.50','','High','Reference ID from Excel.'],['Line','2','','Medium','Line shown in client drawing.'],['Grids','C-D','','Medium','Grid location cue.'],['Mark','1901','','High','Mark number to find in Bluebeam.'],['Wwp','184 8/16','in','High','Expected Wwp dimension.'],['Hwp','193 15/16','in','High','Expected Hwp dimension.'],['Lbh','226','in','High','Expected Lbh dimension.'],['Lwp-h','23 6/16','in','High','Triggers full.svg overlay.']].map(([name,value,unit,priority,notes])=>({name,value,unit,priority,notes}));el.status.textContent='Sample loaded using full.svg because Lwp-h exists.';setRowModels([buildModel(ps,'Sample / full.svg')])}
-function exportPng(){if(!currentModel)return;const xml=new XMLSerializer().serializeToString(el.svg),url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'})),img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=1600;c.height=1200;const ctx=c.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download='expected-detail.png';a.href=c.toDataURL('image/png');a.click()};img.src=url}
-[el.a,el.b,el.tol].forEach(i=>i.addEventListener('input',compare));el.swap.addEventListener('click',()=>{const v=el.a.value;el.a.value=el.b.value;el.b.value=v;compare()});el.clear.addEventListener('click',()=>{el.a.value='';el.b.value='';el.tol.value='1/16"';compare()});el.copy.addEventListener('click',async()=>{if(!latestResult){el.toast.textContent='Nothing valid to copy yet.';return}await navigator.clipboard.writeText(latestResult);el.toast.textContent='Copied.'});el.file.addEventListener('change',e=>{const [f]=e.target.files;if(f)loadExcel(f).catch(err=>el.status.textContent=`Could not read file: ${err.message}`)});el.rowSelect.addEventListener('change',()=>render(rowModels[Number(el.rowSelect.value)]));$('#loadSampleBtn').addEventListener('click',sample);$('#exportPngBtn').addEventListener('click',exportPng);$('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('light');if(currentModel)draw(currentModel)});compare();sample();
+
+const measure = {
+  a: $("#measureA"),
+  b: $("#measureB"),
+  tol: $("#tolerance"),
+  swap: $("#swapBtn"),
+  clear: $("#clearBtn"),
+  copy: $("#copyBtn"),
+  toast: $("#toast"),
+  badge: $("#resultBadge"),
+  title: $("#resultTitle"),
+  detail: $("#resultDetail"),
+  va: $("#valueA"),
+  vb: $("#valueB"),
+  dd: $("#diffDecimal"),
+  df: $("#diffFraction"),
+  dist: $("#distanceText"),
+  corr: $("#correctionText"),
+  ha: $("#hintA"),
+  hb: $("#hintB")
+};
+
+let latestResult = "";
+
+function gcd(a, b) {
+  while (b) [a, b] = [b, a % b];
+  return a || 1;
+}
+
+function tokenValue(token) {
+  if (/^\d+\/\d+$/.test(token)) {
+    const [num, den] = token.split("/").map(Number);
+    return den ? num / den : NaN;
+  }
+  return Number(token);
+}
+
+function parseMeasure(input) {
+  let text = String(input ?? "").trim().toLowerCase()
+    .replace(/[\u201c\u201d]/g, "\"")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/\bfeet|foot\b/g, "ft")
+    .replace(/\binches|inch\b/g, "in");
+
+  if (!text) return { ok: false };
+  if (/[^\d\s.'"/a-z-]/.test(text)) return { ok: false };
+
+  const metric = text.match(/^(\d+(?:\.\d+)?)\s*(mm|millimeters?|cm|centimeters?)$/);
+  if (metric) {
+    const value = Number(metric[1]);
+    return { ok: true, inches: metric[2].startsWith("mm") ? value / 25.4 : value / 2.54 };
+  }
+
+  const feetMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:'|ft\b)/);
+  let feet = 0;
+  if (feetMatch) {
+    feet = Number(feetMatch[1]);
+    text = `${text.slice(0, feetMatch.index)} ${text.slice(feetMatch.index + feetMatch[0].length)}`;
+  }
+
+  text = text.replace(/(^|\s|-)(\d{3})(?=\s*(?:in|")?\s*$)/, (match, prefix, digits) => {
+    const [whole, numerator, denominator] = digits;
+    return ["2", "4", "8"].includes(denominator) && Number(numerator) < Number(denominator)
+      ? `${prefix}${whole} ${numerator}/${denominator}`
+      : match;
+  });
+
+  const tokens = text
+    .replace(/\b(?:in|ft)\b/g, " ")
+    .replace(/["']/g, " ")
+    .replace(/-/g, " ")
+    .replace(/[^\d./\s]/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  let inches = 0;
+  for (const token of tokens) {
+    const value = tokenValue(token);
+    if (!Number.isFinite(value)) return { ok: false };
+    inches += value;
+  }
+  return { ok: true, inches: feet * 12 + inches };
+}
+
+function decimal(value) {
+  if (!Number.isFinite(value)) return "--";
+  return `${Number(value.toFixed(4)).toFixed(value % 1 === 0 ? 3 : 4)}"`;
+}
+
+function fraction(value, denominator = 16) {
+  if (!Number.isFinite(value)) return "--";
+  const rounded = Math.round(value * denominator) / denominator;
+  const whole = Math.floor(rounded);
+  let numerator = Math.round((rounded - whole) * denominator);
+  if (!numerator) return `${whole}"`;
+  if (numerator === denominator) return `${whole + 1}"`;
+  const divisor = gcd(numerator, denominator);
+  numerator /= divisor;
+  denominator /= divisor;
+  return whole ? `${whole} ${numerator}/${denominator}"` : `${numerator}/${denominator}"`;
+}
+
+function feetInches(value) {
+  const feet = Math.floor(value / 12);
+  const inches = value - feet * 12;
+  return feet ? `${feet}'-${fraction(inches)}` : fraction(inches);
+}
+
+function setResult(kind, title, detail) {
+  measure.badge.className = `badge ${kind}`;
+  measure.title.textContent = title;
+  measure.detail.textContent = detail;
+}
+
+function compare() {
+  const a = parseMeasure(measure.a.value);
+  const b = parseMeasure(measure.b.value);
+  const tolerance = parseMeasure(measure.tol.value);
+  latestResult = "";
+  measure.toast.textContent = "";
+
+  measure.va.textContent = a.ok ? decimal(a.inches) : "--";
+  measure.vb.textContent = b.ok ? decimal(b.inches) : "--";
+  measure.dd.textContent = measure.df.textContent = measure.dist.textContent = measure.corr.textContent = "--";
+  measure.ha.className = measure.hb.className = "hint";
+  measure.ha.textContent = measure.a.value.trim() ? "Invalid measurement" : "Example: 3'-4 1/2\"";
+  measure.hb.textContent = measure.b.value.trim() ? "Invalid measurement" : "Example: 40 9/16\"";
+
+  if (a.ok) {
+    measure.ha.className = "hint valid";
+    measure.ha.textContent = `Looks like: ${feetInches(a.inches)} (${decimal(a.inches)})`;
+  }
+  if (b.ok) {
+    measure.hb.className = "hint valid";
+    measure.hb.textContent = `Looks like: ${feetInches(b.inches)} (${decimal(b.inches)})`;
+  }
+  if (!measure.a.value.trim() && !measure.b.value.trim()) return setResult("idle", "Ready", "Enter measurements");
+  if (!a.ok || !b.ok) return setResult("idle", "Invalid", "Check A or B");
+  if (!tolerance.ok || tolerance.inches < 0) return setResult("idle", "Bad tolerance", "Use 1/16\"");
+
+  const diff = Math.abs(a.inches - b.inches);
+  const diffFraction = fraction(diff);
+  const signed = b.inches - a.inches;
+  measure.dd.textContent = decimal(diff);
+  measure.df.textContent = diffFraction;
+
+  if (diff === 0) {
+    measure.dist.textContent = "A and B match";
+    measure.corr.textContent = "No correction";
+    latestResult = `A = ${decimal(a.inches)}, B = ${decimal(b.inches)}, Difference = 0, EXACT MATCH`;
+    return setResult("exact", "MATCH", "Difference is 0");
+  }
+
+  measure.dist.textContent = signed > 0 ? `B is larger by ${diffFraction}` : `A is larger by ${diffFraction}`;
+  measure.corr.textContent = signed > 0 ? `Subtract ${diffFraction} from B` : `Subtract ${diffFraction} from A`;
+  const passed = diff <= tolerance.inches + Number.EPSILON;
+  const status = passed ? `PASS within ${fraction(tolerance.inches)}` : `FAIL beyond ${fraction(tolerance.inches)}`;
+  latestResult = `A = ${decimal(a.inches)}, B = ${decimal(b.inches)}, Difference = ${diffFraction}, ${measure.dist.textContent}, ${measure.corr.textContent}, ${status}`;
+  setResult(passed ? "pass" : "fail", passed ? "PASS" : "FAIL", status.replace(/^PASS |^FAIL /, ""));
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function drawAssistantSample(label = "Sample / full.svg", lbh = "226", lwph = "23 6/16") {
+  $("#sheetName").textContent = label;
+  $("#paramCount").textContent = "6";
+  $("#detailType").textContent = "full.svg";
+  $("#flagCount").textContent = "0";
+  $("#parameterRows").innerHTML = [
+    ["CB-ID", "CB-5.50", "High"],
+    ["Mark", "1901", "High"],
+    ["Wwp", "184 8/16 in", "High"],
+    ["Hwp", "193 15/16 in", "High"],
+    ["Lbh", `${lbh} in`, "High"],
+    ["Lwp-h", `${lwph} in`, "High"]
+  ].map((row) => `<tr><td>${row[0]}</td><td class="mono">${row[1]}</td><td>${row[2]}</td></tr>`).join("");
+  $("#checkpointList").innerHTML = `
+    <div class="checkpoint high"><div class="checkpoint-top"><span>Lbh</span><span>High</span></div><div class="mono">${escapeHtml(lbh)} in</div><div class="checkpoint-note">Check brace length against the client drawing.</div></div>
+    <div class="checkpoint high"><div class="checkpoint-top"><span>Lwp-h</span><span>High</span></div><div class="mono">${escapeHtml(lwph)} in</div><div class="checkpoint-note">Use full.svg overlay when this value exists.</div></div>
+  `;
+  $("#detailSvg").setAttribute("viewBox", "0 0 1024 768");
+  $("#detailSvg").innerHTML = `
+    <image href="assets/full.svg" x="0" y="0" width="1024" height="768" preserveAspectRatio="xMidYMid meet"></image>
+    <rect x="668" y="92" width="252" height="90" rx="8" fill="rgba(0,0,0,.74)" stroke="#f5a524" stroke-width="3"></rect>
+    <text x="794" y="126" fill="#f5a524" font-size="24" font-family="ui-monospace,Consolas,monospace" text-anchor="middle">Lwp-h</text>
+    <text x="794" y="160" fill="#fff" font-size="28" font-family="ui-monospace,Consolas,monospace" text-anchor="middle">${escapeHtml(lwph)}"</text>
+  `;
+}
+
+async function loadAssistantExcel(file) {
+  if (!window.XLSX) {
+    $("#excelStatus").textContent = "SheetJS did not load. Refresh and try again.";
+    return;
+  }
+  const workbook = XLSX.read(await file.arrayBuffer(), { type: "array" });
+  const sheet = workbook.SheetNames[0];
+  const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheet], { header: 1, defval: "" });
+  const headerIndex = rows.findIndex((row) => row.map((cell) => String(cell).toLowerCase()).join(" ").includes("lbh"));
+  const dataRow = rows.slice(headerIndex + 1).find((row) => row.some(Boolean)) || [];
+  $("#excelStatus").textContent = `Loaded ${file.name}. Basic preview ready.`;
+  drawAssistantSample(sheet, dataRow.join(" / ").includes("226") ? "226" : "See table", "See table");
+  $("#excelInput").value = "";
+}
+
+[measure.a, measure.b, measure.tol].forEach((input) => input?.addEventListener("input", compare));
+measure.swap?.addEventListener("click", () => {
+  [measure.a.value, measure.b.value] = [measure.b.value, measure.a.value];
+  compare();
+});
+measure.clear?.addEventListener("click", () => {
+  measure.a.value = "";
+  measure.b.value = "";
+  measure.tol.value = "1/16\"";
+  compare();
+});
+measure.copy?.addEventListener("click", async () => {
+  if (!latestResult) return measure.toast.textContent = "Nothing valid to copy yet.";
+  await navigator.clipboard.writeText(latestResult);
+  measure.toast.textContent = "Copied.";
+});
+$("#excelInput")?.addEventListener("change", (event) => {
+  const [file] = event.target.files;
+  if (file) loadAssistantExcel(file).catch((error) => {
+    $("#excelStatus").textContent = `Could not read file: ${error.message}`;
+    $("#excelInput").value = "";
+  });
+});
+$("#loadSampleBtn")?.addEventListener("click", () => drawAssistantSample());
+$("#exportPngBtn")?.addEventListener("click", () => {
+  const svg = $("#detailSvg");
+  const xml = new XMLSerializer().serializeToString(svg);
+  const link = document.createElement("a");
+  link.download = "expected-detail.svg";
+  link.href = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml;charset=utf-8" }));
+  link.click();
+});
+$("#themeBtn")?.addEventListener("click", () => document.body.classList.toggle("light"));
+
+compare();
+drawAssistantSample();
