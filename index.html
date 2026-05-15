@@ -90,20 +90,28 @@
               <div><span>Bad</span><b id="reviewBad">0</b></div>
             </div>
           </div>
-          <article id="reviewCard" class="review-card idle">
-            <div>
-              <p class="note">Upload an Excel file to create review cards.</p>
-            </div>
-          </article>
-          <div class="review-decision">
-            <label>Review Note<textarea id="reviewNote" rows="3" placeholder="Example: Lbh shown wrong on drawing"></textarea></label>
-            <div class="review-actions">
-              <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
-              <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
-              <button id="clearMarkBtn" type="button">Clear Mark</button>
+          <div class="review-workbench">
+            <aside class="brace-list-panel">
+              <h3>Brace List</h3>
+              <div id="braceList" class="brace-list"></div>
+            </aside>
+            <div class="review-main">
+              <article id="reviewCard" class="review-card idle">
+                <div>
+                  <p class="note">Upload an Excel file to create review cards.</p>
+                </div>
+              </article>
+              <div class="review-decision">
+                <label>Review Note<textarea id="reviewNote" rows="3" placeholder="Example: Lbh shown wrong on drawing"></textarea></label>
+                <div class="review-actions">
+                  <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
+                  <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
+                  <button id="clearMarkBtn" type="button">Clear Mark</button>
+                </div>
+              </div>
+              <div id="braceBoard" class="brace-board"></div>
             </div>
           </div>
-          <div id="braceBoard" class="brace-board"></div>
           <p id="reviewStatus" class="note">Waiting for Excel data.</p>
         </section>
       </section>
