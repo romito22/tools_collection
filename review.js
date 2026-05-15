@@ -63,7 +63,7 @@ function findReviewHeader(rows) {
 function loadReviewRows(rows, fileName = "review.xlsx") {
   const headerIndex = findReviewHeader(rows);
   const headers = headerIndex >= 0 ? rows[headerIndex].map((cell, index) => String(cell || `Column ${index + 1}`)) : [];
-  const groups = buildReviewGroups(headers);
+  const groups = buildReviewGroups(headers, rows[headerIndex - 1] || []);
   const raw = headerIndex >= 0
     ? rows.slice(headerIndex + 1).map((row, offset) => ({ row, rowIndex: headerIndex + 1 + offset })).filter((item) => item.row.some((cell) => String(cell ?? "").trim()))
     : [];
@@ -89,19 +89,23 @@ function loadReviewRows(rows, fileName = "review.xlsx") {
   renderReview();
 }
 
-function buildReviewGroups(headers) {
+function buildReviewGroups(headers, parentHeaders = []) {
   const ignored = new Set(["", "#"]);
   const groups = [];
   headers.forEach((header, index) => {
-    const name = String(header || "").trim();
+    let name = String(header || "").trim();
+    if (/^column \d+$/i.test(name)) name = String(parentHeaders[index] || "").trim();
     if (!name || ignored.has(name)) return;
-    const span = [index];
-    for (let next = index + 1; next < headers.length && !String(headers[next] || "").trim(); next += 1) {
-      span.push(next);
-    }
-    groups.push({ name, index, span, k: key(name) });
+    groups.push({ name, index, span: [index], k: key(name) });
   });
-  return groups.filter((group) => !["qty"].includes(group.k));
+  const wanted = new Set([
+    "cb id", "eor id", "line", "grids", "lvls", "mark",
+    "wwp", "hwp", "lbh", "lwp h", "lwph", "lwp-h",
+    "ni", "no", "e", "s", "gi", "go", "dhg", "tg", "trg", "wrg",
+    "fy g", "fy.g", "wl", "tl", "ts", "llg", "db", "g", "l'", "la",
+    "beam", "col", "gusset edges", "wt", "cb wt"
+  ]);
+  return groups.filter((group) => group.k !== "qty" && [...wanted].some((name) => group.k === name || group.k.includes(name)));
 }
 
 function groupValue(item, group) {
@@ -115,7 +119,11 @@ function reviewCells(item) {
   if (!item) return [];
   return reviewState.groups
     .map((group) => ({ ...group, value: groupValue(item, group), cellKey: `${item.cardKey}:${group.index}` }))
-    .filter((cell) => String(cell.value ?? "").trim() !== "");
+    .filter((cell) => {
+      const value = String(cell.value ?? "").trim();
+      const core = ["cb id", "eor id", "line", "grids", "lvls", "mark"].includes(cell.k);
+      return core || (value && value !== "-");
+    });
 }
 
 function findIndex(headers, names) {
@@ -174,12 +182,12 @@ function renderReview() {
   const statusText = mark?.status === "good" ? "Looks Good" : mark?.status === "bad" ? "Has Error" : "Unmarked";
   const focus = cell ? `
     <div class="review-field focus">
-      <span>Selected Value</span>
+      <span>${safeText(cell.name)}</span>
       <b>${safeText(cell.value)}</b>
     </div>
-    <div class="review-field focus">
-      <span>Field</span>
-      <b>${safeText(cell.name)}</b>
+    <div class="review-field meta">
+      <span>Brace</span>
+      <b>${item.braceNo} / ${item.qty}</b>
     </div>
   ` : `<p class="note">No reviewable values found for this brace.</p>`;
 
