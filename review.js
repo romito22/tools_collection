@@ -16,8 +16,6 @@ const reviewEls = {
   bad: document.querySelector("#reviewBad"),
   note: freshControl("#reviewNote"),
   status: document.querySelector("#reviewStatus"),
-  prev: freshControl("#reviewPrevBtn"),
-  next: freshControl("#reviewNextBtn"),
   markGood: freshControl("#markGoodBtn"),
   markBad: freshControl("#markBadBtn"),
   clear: freshControl("#clearMarkBtn"),
@@ -65,14 +63,19 @@ function loadReviewRows(rows, fileName = "review.xlsx") {
   const raw = headerIndex >= 0
     ? rows.slice(headerIndex + 1).map((row, offset) => ({ row, rowIndex: headerIndex + 1 + offset })).filter((item) => item.row.some((cell) => String(cell ?? "").trim()))
     : [];
+  const cbIndex = findIndex(headers, ["cb id"]);
+  const markIndex = findIndex(headers, ["mark"]);
   const qtyIndex = findIndex(headers, ["qty"]);
   const lbhIndex = findIndex(headers, ["lbh"]);
   const data = [];
   raw.forEach((item) => {
+    const cb = String(item.row[cbIndex] ?? "").trim();
+    const mark = String(item.row[markIndex] ?? "").trim();
+    const qtyNumber = Number(item.row[qtyIndex]);
     const lbh = item.row[lbhIndex];
     const lbhNumber = Number(lbh);
-    if (lbhIndex < 0 || !Number.isFinite(lbhNumber)) return;
-    const qty = Math.max(1, Math.round(Number(item.row[qtyIndex]) || 1));
+    if (!cb || !mark || !Number.isFinite(qtyNumber) || !Number.isFinite(lbhNumber)) return;
+    const qty = Math.max(1, Math.round(qtyNumber));
     for (let braceNo = 1; braceNo <= qty; braceNo += 1) {
       data.push({ ...item, braceNo, qty, lbh: lbhNumber, cardKey: `${item.rowIndex}:${braceNo}` });
     }
@@ -83,10 +86,9 @@ function loadReviewRows(rows, fileName = "review.xlsx") {
 }
 
 function reviewColumns() {
-  const wanted = ["cb id", "eor id", "line", "grids", "lvls", "mark", "qty", "lbh"];
-  const picked = reviewState.headers.map((header, index) => ({ header, index, k: key(header) }))
-    .filter((item) => item.header && wanted.some((name) => item.k.includes(name)));
-  return picked.length ? picked : reviewState.headers.map((header, index) => ({ header: header || `Column ${index + 1}`, index })).slice(0, 12);
+  return reviewState.headers
+    .map((header, index) => ({ header: String(header || "").trim(), index, k: key(header) }))
+    .filter((item) => item.header && item.header !== "#");
 }
 
 function findIndex(headers, names) {
@@ -149,7 +151,7 @@ function renderReview() {
       <b>${item.braceNo} / ${item.qty}</b>
     </div>
   `;
-  const fields = reviewColumns().map(({ header, index }) => `
+  const fields = reviewColumns().filter(({ index }) => String(item.row[index] ?? "").trim() !== "").map(({ header, index }) => `
     <div class="review-field">
       <span>${safeText(header)}</span>
       <b>${safeText(item.row[index] ?? "")}</b>
@@ -345,8 +347,6 @@ reviewEls.file.addEventListener("change", (event) => {
   });
 });
 reviewEls.sample.addEventListener("click", () => setTimeout(loadReviewSample, 0));
-reviewEls.prev.addEventListener("click", () => moveCard(-1));
-reviewEls.next.addEventListener("click", () => moveCard(1));
 reviewEls.markGood.addEventListener("click", () => markCard("good"));
 reviewEls.markBad.addEventListener("click", () => markCard("bad"));
 reviewEls.clear.addEventListener("click", clearCard);
