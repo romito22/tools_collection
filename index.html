@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260515-4">
 </head>
 <body>
   <div class="app-shell">
@@ -71,21 +71,21 @@
       <section id="reviewView" class="view">
         <header class="topbar">
           <div>
-            <h2>Lbh Brace Review Deck</h2>
-            <p>Upload a connection schedule, review each brace length one card at a time, then export a marked copy.</p>
+            <h2>Brace Value Review Deck</h2>
+            <p>Upload a connection schedule, pick a brace, review its important values one by one, then export a marked copy.</p>
           </div>
         </header>
 
         <section class="card review-deck">
           <div class="section-head">
-            <div><h2>Brace Length Practice</h2><p>Each card focuses on Lbh. Yellow means the brace length looks right. Red means it has an error.</p></div>
+            <div><h2>Brace Review</h2><p>Select a brace on the left. Then mark each value tile as good or error.</p></div>
             <div class="actions"><button id="reviewSampleBtn" type="button">Sample</button><button id="whiteWashBtn" type="button">White Wash</button><button id="exportReviewBtn" type="button">Export Marked Excel</button></div>
           </div>
           <div class="review-controls">
             <label>Excel File<input id="reviewExcelInput" type="file" accept=".xlsx,.xls,.csv"></label>
             <div class="stats">
               <div><span>Brace Cards</span><b id="reviewTotal">0</b></div>
-              <div><span>Reviewed</span><b id="reviewDone">0</b></div>
+              <div><span>Values Reviewed</span><b id="reviewDone">0</b></div>
               <div><span>Good</span><b id="reviewGood">0</b></div>
               <div><span>Bad</span><b id="reviewBad">0</b></div>
             </div>
@@ -119,8 +119,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="app.js"></script>
-  <script src="review.js"></script>
-  <script src="nav.js"></script>
+  <script src="app.js?v=20260515-4"></script>
+  <script src="review.js?v=20260515-4"></script>
+  <script src="nav.js?v=20260515-4"></script>
 </body>
 </html>
