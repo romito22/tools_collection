@@ -1,6 +1,6 @@
 const reviewEls = {
-  file: document.querySelector("#excelInput"),
-  sample: document.querySelector("#loadSampleBtn"),
+  file: document.querySelector("#reviewExcelInput"),
+  sample: document.querySelector("#reviewSampleBtn"),
   card: document.querySelector("#reviewCard"),
   total: document.querySelector("#reviewTotal"),
   done: document.querySelector("#reviewDone"),
