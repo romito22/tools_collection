@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
-  <link rel="stylesheet" href="styles.css?v=20260518-assembly">
+  <link rel="stylesheet" href="styles.css?v=20260518-manual">
 </head>
 <body>
   <div class="app-shell">
@@ -16,7 +16,9 @@
       <nav>
         <button class="nav-btn active" type="button" data-target="toolsView">Tools</button>
         <button class="nav-btn" type="button" data-target="reviewView">Review Deck</button>
-        <button class="nav-btn" type="button" data-target="assemblyView">Assembly</button>
+        <button class="nav-btn" type="button" data-target="hssView">HSS</button>
+        <button class="nav-btn" type="button" data-target="pimView">PIM</button>
+        <button class="nav-btn" type="button" data-target="coreView">Core</button>
       </nav>
       <button id="themeBtn" type="button">Theme</button>
     </aside>
@@ -117,59 +119,133 @@
         </section>
       </section>
 
-      <section id="assemblyView" class="view">
+      <section id="hssView" class="view">
         <header class="topbar">
           <div>
-            <h2>Assembly Review Deck</h2>
-            <p>Upload an assembly or parts schedule, pick an item, review its important values one by one, then export a marked copy.</p>
+            <h2>HSS Manual Review Deck</h2>
+            <p>Static HSS casing data ordered by Mark. Pick a mark, review its variables, and mark each value good or error.</p>
           </div>
         </header>
 
         <section class="card review-deck">
           <div class="section-head">
-            <div><h2>Assembly Review</h2><p>Select an item on the left. Then mark each value tile as good or error.</p></div>
-            <div class="actions"><button id="assemblySampleBtn" type="button">Sample</button><button id="assemblyWhiteWashBtn" type="button">White Wash</button><button id="assemblyExportReviewBtn" type="button">Export Marked Excel</button></div>
+            <div><h2>HSS Casing Parts</h2><p>Type mark numbers to filter fast, for example 1251, 1254, 1260.</p></div>
+            <div class="actions"><button id="hssResetBtn" type="button">Show All</button></div>
           </div>
           <div class="review-controls">
-            <label>Excel File<input id="assemblyExcelInput" type="file" accept=".xlsx,.xls,.csv"></label>
+            <label>Mark Numbers<input id="hssMarkInput" placeholder="1251, 1254, 1260"></label>
+            <div class="actions"><button id="hssShowBtn" type="button">Show Marks</button></div>
             <div class="stats">
-              <div><span>Items</span><b id="assemblyTotal">0</b></div>
-              <div><span>Values Reviewed</span><b id="assemblyDone">0</b></div>
-              <div><span>Good</span><b id="assemblyGood">0</b></div>
-              <div><span>Bad</span><b id="assemblyBad">0</b></div>
+              <div><span>Total Marks</span><b id="hssTotal">0</b></div>
+              <div><span>Shown</span><b id="hssShown">0</b></div>
+              <div><span>Good</span><b id="hssGood">0</b></div>
+              <div><span>Bad</span><b id="hssBad">0</b></div>
             </div>
           </div>
           <div class="review-workbench">
             <aside class="brace-list-panel">
-              <h3>Assembly List</h3>
-              <div id="assemblyList" class="brace-list"></div>
+              <h3>HSS Marks</h3>
+              <div id="hssList" class="brace-list"></div>
             </aside>
             <div class="review-main">
-              <article id="assemblyCard" class="review-card idle">
+              <article id="hssCard" class="review-card idle">
                 <div>
-                  <p class="note">Upload an Excel file to create assembly review cards.</p>
+                  <p class="note">Select a mark to review its variables.</p>
                 </div>
               </article>
               <div class="review-decision">
-                <label>Review Note<textarea id="assemblyNote" rows="3" placeholder="Example: cap plate value shown wrong"></textarea></label>
+                <label>Review Note<textarea id="hssNote" rows="3" placeholder="Example: Lc shown wrong on image"></textarea></label>
                 <div class="review-actions">
-                  <button id="assemblyMarkGoodBtn" class="mark-good" type="button">Looks Good</button>
-                  <button id="assemblyMarkBadBtn" class="mark-bad" type="button">Has Error</button>
-                  <button id="assemblyClearMarkBtn" type="button">Clear Mark</button>
+                  <button id="hssMarkGoodBtn" class="mark-good" type="button">Looks Good</button>
+                  <button id="hssMarkBadBtn" class="mark-bad" type="button">Has Error</button>
+                  <button id="hssClearMarkBtn" type="button">Clear Mark</button>
                 </div>
               </div>
-              <div id="assemblyBoard" class="brace-board"></div>
+              <div id="hssBoard" class="brace-board"></div>
             </div>
           </div>
-          <p id="assemblyStatus" class="note">Waiting for Excel data.</p>
+          <p id="hssStatus" class="note">Manual HSS data loaded.</p>
+        </section>
+      </section>
+
+      <section id="pimView" class="view">
+        <header class="topbar">
+          <div>
+            <h2>PIM Manual Review Deck</h2>
+            <p>Manual PIM data will live here, ordered by Mark, once you send the numbers.</p>
+          </div>
+        </header>
+        <section class="card review-deck manual-placeholder" data-manual-prefix="pim">
+          <div class="section-head">
+            <div><h2>PIM</h2><p>No Excel upload. Send me the marks and variables, and I will place them here.</p></div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="pimMarkInput" placeholder="Example: 2101, 2102"></label>
+            <div class="actions"><button id="pimShowBtn" type="button">Show Marks</button><button id="pimResetBtn" type="button">Show All</button></div>
+            <div class="stats">
+              <div><span>Total Marks</span><b id="pimTotal">0</b></div>
+              <div><span>Shown</span><b id="pimShown">0</b></div>
+              <div><span>Good</span><b id="pimGood">0</b></div>
+              <div><span>Bad</span><b id="pimBad">0</b></div>
+            </div>
+          </div>
+          <div class="review-workbench">
+            <aside class="brace-list-panel"><h3>PIM Marks</h3><div id="pimList" class="brace-list"></div></aside>
+            <div class="review-main">
+              <article id="pimCard" class="review-card idle"><p class="note">PIM data is ready to be added.</p></article>
+              <div class="review-decision">
+                <label>Review Note<textarea id="pimNote" rows="3" placeholder="Example: value shown wrong on image"></textarea></label>
+                <div class="review-actions"><button id="pimMarkGoodBtn" class="mark-good" type="button">Looks Good</button><button id="pimMarkBadBtn" class="mark-bad" type="button">Has Error</button><button id="pimClearMarkBtn" type="button">Clear Mark</button></div>
+              </div>
+              <div id="pimBoard" class="brace-board"></div>
+            </div>
+          </div>
+          <p id="pimStatus" class="note">Waiting for manual PIM data.</p>
+        </section>
+      </section>
+
+      <section id="coreView" class="view">
+        <header class="topbar">
+          <div>
+            <h2>Core Manual Review Deck</h2>
+            <p>Manual Core data will live here, ordered by Mark, once you send the numbers.</p>
+          </div>
+        </header>
+        <section class="card review-deck manual-placeholder" data-manual-prefix="core">
+          <div class="section-head">
+            <div><h2>Core</h2><p>No Excel upload. Send me the marks and variables, and I will place them here.</p></div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="coreMarkInput" placeholder="Example: 3101, 3102"></label>
+            <div class="actions"><button id="coreShowBtn" type="button">Show Marks</button><button id="coreResetBtn" type="button">Show All</button></div>
+            <div class="stats">
+              <div><span>Total Marks</span><b id="coreTotal">0</b></div>
+              <div><span>Shown</span><b id="coreShown">0</b></div>
+              <div><span>Good</span><b id="coreGood">0</b></div>
+              <div><span>Bad</span><b id="coreBad">0</b></div>
+            </div>
+          </div>
+          <div class="review-workbench">
+            <aside class="brace-list-panel"><h3>Core Marks</h3><div id="coreList" class="brace-list"></div></aside>
+            <div class="review-main">
+              <article id="coreCard" class="review-card idle"><p class="note">Core data is ready to be added.</p></article>
+              <div class="review-decision">
+                <label>Review Note<textarea id="coreNote" rows="3" placeholder="Example: value shown wrong on image"></textarea></label>
+                <div class="review-actions"><button id="coreMarkGoodBtn" class="mark-good" type="button">Looks Good</button><button id="coreMarkBadBtn" class="mark-bad" type="button">Has Error</button><button id="coreClearMarkBtn" type="button">Clear Mark</button></div>
+              </div>
+              <div id="coreBoard" class="brace-board"></div>
+            </div>
+          </div>
+          <p id="coreStatus" class="note">Waiting for manual Core data.</p>
         </section>
       </section>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="app.js?v=20260518-assembly"></script>
-  <script src="review.js?v=20260518-assembly"></script>
-  <script src="nav.js?v=20260518-assembly"></script>
+  <script src="app.js?v=20260518-manual"></script>
+  <script src="review.js?v=20260518-manual"></script>
+  <script src="manual.js?v=20260518-manual"></script>
+  <script src="nav.js?v=20260518-manual"></script>
 </body>
 </html>
