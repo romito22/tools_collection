@@ -21,6 +21,34 @@ function coreParseFilter(text) {
   return String(text || "").split(/[\s,;]+/).map((value) => value.trim()).filter(Boolean);
 }
 
+function coreCompact(values) {
+  const clean = [...new Set(values.map((value) => String(value ?? "").trim()).filter(Boolean))];
+  return clean.length ? clean.join(" / ") : "-";
+}
+
+function coreCombineByMark(rows) {
+  const groups = new Map();
+  rows.forEach((row) => {
+    const mark = String(row.Mark ?? "").trim();
+    if (!mark) return;
+    if (!groups.has(mark)) groups.set(mark, []);
+    groups.get(mark).push(row);
+  });
+
+  return [...groups.entries()].map(([mark, groupRows]) => {
+    const row = { Mark: mark, _combined: groupRows.length };
+    const keys = [...new Set(groupRows.flatMap((item) => Object.keys(item)))];
+    keys.forEach((key) => {
+      if (key === "Mark") return;
+      row[key] = key === "Qty"
+        ? groupRows.reduce((sum, item) => sum + (Number(item.Qty) || 0), 0)
+        : coreCompact(groupRows.map((item) => item[key]));
+    });
+    row.Location = coreCompact(groupRows.map((item) => `${item.Line || "-"} / ${item.Grids || "-"} / Lv ${item.Lvls || "-"}`));
+    return row;
+  });
+}
+
 function setupCoreRows(rows) {
   const els = {
     input: coreById("coreMarkInput"),
@@ -36,10 +64,9 @@ function setupCoreRows(rows) {
   if (!els.board) return;
 
   const visibleFields = ["CB-ID", "Location", "Lsc", "Fy min", "Fy max", "Wsc", "# Plies", "tply", "tsc", "Wsg", "Whpsc", "rhpsc", "Lsg", "Lsc-2*Lsg"];
-  const source = rows.map((row, index) => ({
+  const source = coreCombineByMark(rows).map((row, index) => ({
     ...row,
-    _id: `${row.Mark || "row"}-${index}`,
-    Location: `${row.Line || "-"} / ${row.Grids || "-"} / Lv ${row.Lvls || "-"}`
+    _id: `${row.Mark || "row"}-${index}`
   })).sort((a, b) => coreMarkSort(a.Mark) - coreMarkSort(b.Mark) || a._id.localeCompare(b._id));
   const state = { visible: source, reviewed: new Set() };
 
@@ -72,7 +99,7 @@ function setupCoreRows(rows) {
       </div>
     `).join("");
     els.board.innerHTML = header + body;
-    els.status.textContent = `Showing ${state.visible.length} of ${source.length} Core rows. Check the left box when the full row is reviewed.`;
+    els.status.textContent = `Showing ${state.visible.length} of ${source.length} combined Core marks. Check the left box when the full mark row is reviewed.`;
   }
 
   function applyFilter() {
