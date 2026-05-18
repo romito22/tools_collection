@@ -1,0 +1,6 @@
+.review-workbench{align-items:stretch;min-height:0}
+.review-main{min-height:0}
+.brace-list-panel{grid-template-rows:auto minmax(0,1fr);height:min(620px,calc(100vh - 180px));min-height:0;overflow:hidden}
+.brace-list{align-content:start;min-height:0;overflow:auto}
+.brace-board{max-height:clamp(260px,42vh,520px);min-height:0;overflow:auto}
+@media(max-width:1180px){.brace-list-panel{height:260px;max-height:none}}
