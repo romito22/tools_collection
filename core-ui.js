@@ -44,9 +44,37 @@ function coreDisplay(value) {
   return coreReduceFractionText(coreEscape(value || "-"));
 }
 
+function coreParseMixedInches(value) {
+  const text = coreReduceFractionText(String(value ?? "").trim().replace(/"/g, ""));
+  if (!text || text === "-" || text.includes("'")) return null;
+  const mixed = text.match(/^(\d+(?:\.\d+)?)(?:\s+(\d+)\/(\d+))?$/);
+  if (!mixed) return null;
+  const whole = Number(mixed[1] || 0);
+  const numerator = Number(mixed[2] || 0);
+  const denominator = Number(mixed[3] || 1);
+  return whole + numerator / denominator;
+}
+
+function coreFormatInchesAsFeet(value) {
+  const total = coreParseMixedInches(value);
+  if (total === null) return coreReduceFractionText(value || "-");
+  const roundedSixteenths = Math.round(total * 16);
+  const feet = Math.floor(roundedSixteenths / 192);
+  const remaining = roundedSixteenths - feet * 192;
+  const inches = Math.floor(remaining / 16);
+  const fraction = remaining % 16;
+  const divisor = fraction ? coreGcd(fraction, 16) : 1;
+  const fractionText = fraction ? `${fraction / divisor}/${16 / divisor}` : "";
+  const inchText = [inches || (!feet ? 0 : ""), fractionText].filter((part) => part !== "").join(" ");
+  return feet ? `${feet}' ${inchText || 0}"` : `${inchText}"`;
+}
+
+function coreFormatMeasure(value) {
+  return String(value ?? "").split(" / ").map((part) => coreFormatInchesAsFeet(part)).join(" / ");
+}
+
 function coreInchDisplay(row, field) {
-  const inches = coreReduceFractionText(row[field] || "-");
-  return inches === "-" ? "-" : `${inches}"`;
+  return coreFormatMeasure(row[field] || "-");
 }
 
 function coreCombineByMark(rows) {
@@ -94,6 +122,7 @@ function setupCoreRows(rows) {
   if (!els.board) return;
 
   const visibleFields = ["CB-ID", "Location", "Lsc", "Fy min", "Fy max", "Wsc", "# Plies", "tply", "tsc", "Wsg", "Whpsc", "rhpsc", "Lsg", "Lsc-2*Lsg"];
+  const measureFields = new Set(["Lsc", "Wsc", "tply", "tsc", "Wsg", "Whpsc", "rhpsc", "Lsg", "Lsc-2*Lsg"]);
   const source = coreCombineByMark(rows).map((row, index) => ({
     ...row,
     _id: `${row.Mark || "row"}-${index}`
@@ -143,8 +172,8 @@ function setupCoreRows(rows) {
     if (els.viewerEyebrow) els.viewerEyebrow.textContent = row.Location || "Core brace display";
 
     if (els.viewerSvg) {
-      const overall = coreReduceFractionText(row.Lsc || "-");
-      const net = coreReduceFractionText(row["Lsc-2*Lsg"] || "-");
+      const overall = coreFormatMeasure(row.Lsc || "-");
+      const net = coreFormatMeasure(row["Lsc-2*Lsg"] || "-");
       const endLength = coreInchDisplay(row, "Lsg");
       const plate = `(${row["# Plies"] || "-"} PL) ${coreInchDisplay(row, "tply")} X ${coreInchDisplay(row, "Wsc")} X ${overall}`;
       const fy = `Fy ${coreDisplay(row["Fy min"])} - ${coreDisplay(row["Fy max"])} ksi`;
@@ -173,8 +202,8 @@ function setupCoreRows(rows) {
 
     if (els.viewerMeta) {
       const meta = [
-        ["Lsc", row.Lsc],
-        ["Lsc-2*Lsg", row["Lsc-2*Lsg"]],
+        ["Lsc", coreFormatMeasure(row.Lsc)],
+        ["Lsc-2*Lsg", coreFormatMeasure(row["Lsc-2*Lsg"])],
         ["Wsc", coreInchDisplay(row, "Wsc")],
         ["# Plies", row["# Plies"]],
         ["tply", coreInchDisplay(row, "tply")],
@@ -206,7 +235,7 @@ function setupCoreRows(rows) {
       <div class="core-row ${state.reviewed.has(row._id) ? "reviewed" : ""} ${current && current._id === row._id ? "active" : ""}" data-row="${coreEscape(row._id)}">
         <label class="core-cell core-check"><input type="checkbox" ${state.reviewed.has(row._id) ? "checked" : ""} aria-label="Reviewed mark ${coreEscape(row.Mark)}"></label>
         <div class="core-cell"><b>${coreDisplay(row.Mark || "-")}</b></div>
-        ${visibleFields.map((field) => `<div class="core-cell">${coreDisplay(row[field] || "-")}</div>`).join("")}
+        ${visibleFields.map((field) => `<div class="core-cell">${measureFields.has(field) ? coreDisplay(coreFormatMeasure(row[field])) : coreDisplay(row[field] || "-")}</div>`).join("")}
       </div>
     `).join("");
     els.board.innerHTML = header + body;
