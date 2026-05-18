@@ -192,7 +192,7 @@ function setupCoreRows(rows) {
         <line x1="715" y1="110" x2="715" y2="190" class="ext-line"></line>
         <line x1="820" y1="120" x2="820" y2="184" class="ext-line"></line>
         <text x="65" y="156" text-anchor="middle" class="side-text" transform="rotate(-90 65 156)">Wsc ${coreInchDisplay(row, "Wsc")}</text>
-        <text x="855" y="156" text-anchor="middle" class="side-text" transform="rotate(90 855 156)">tsc ${coreInchDisplay(row, "tsc")}</text>
+        <text x="855" y="156" text-anchor="middle" class="side-text" transform="rotate(90 855 156)">Wsg ${coreInchDisplay(row, "Wsg")}</text>
         <text x="110" y="226" class="note-text">${coreDisplay(row["# Plies"] || "-")}</text>
         <text x="110" y="252" class="note-text">${fy}</text>
         <text x="460" y="226" text-anchor="middle" class="title-block">${coreDisplay(plate)}</text>
