@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
   <link rel="stylesheet" href="styles.css?v=20260518-scrollfix">
-  <link rel="stylesheet" href="scrollfix.css?v=20260518-core">
+  <link rel="stylesheet" href="scrollfix.css?v=20260518-core-viewer">
 </head>
 <body>
   <div class="app-shell">
@@ -101,11 +101,17 @@
             </aside>
             <div class="review-main">
               <article id="reviewCard" class="review-card idle">
-                <div><p class="note">Upload an Excel file to create review cards.</p></div>
+                <div>
+                  <p class="note">Upload an Excel file to create review cards.</p>
+                </div>
               </article>
               <div class="review-decision">
                 <label>Review Note<textarea id="reviewNote" rows="3" placeholder="Example: Lbh shown wrong on drawing"></textarea></label>
-                <div class="review-actions"><button id="markGoodBtn" class="mark-good" type="button">Looks Good</button><button id="markBadBtn" class="mark-bad" type="button">Has Error</button><button id="clearMarkBtn" type="button">Clear Mark</button></div>
+                <div class="review-actions">
+                  <button id="markGoodBtn" class="mark-good" type="button">Looks Good</button>
+                  <button id="markBadBtn" class="mark-bad" type="button">Has Error</button>
+                  <button id="clearMarkBtn" type="button">Clear Mark</button>
+                </div>
               </div>
               <div id="braceBoard" class="brace-board"></div>
             </div>
@@ -115,25 +121,126 @@
       </section>
 
       <section id="hssView" class="view">
-        <header class="topbar"><div><h2>HSS Manual Review Deck</h2><p>Static HSS casing data ordered by Mark. Pick a mark, review its variables, and mark each value good or error.</p></div></header>
+        <header class="topbar">
+          <div>
+            <h2>HSS Manual Review Deck</h2>
+            <p>Static HSS casing data ordered by Mark. Pick a mark, review its variables, and mark each value good or error.</p>
+          </div>
+        </header>
+
         <section class="card review-deck">
-          <div class="section-head"><div><h2>HSS Casing Parts</h2><p>Type mark numbers to filter fast, for example 1251, 1254, 1260.</p></div><div class="actions"><button id="hssResetBtn" type="button">Show All</button></div></div>
-          <div class="review-controls"><label>Mark Numbers<input id="hssMarkInput" placeholder="1251, 1254, 1260"></label><div class="actions"><button id="hssShowBtn" type="button">Show Marks</button></div><div class="stats"><div><span>Total Marks</span><b id="hssTotal">0</b></div><div><span>Shown</span><b id="hssShown">0</b></div><div><span>Good</span><b id="hssGood">0</b></div><div><span>Bad</span><b id="hssBad">0</b></div></div></div>
-          <div class="review-workbench"><aside class="brace-list-panel"><h3>HSS Marks</h3><div id="hssList" class="brace-list"></div></aside><div class="review-main"><article id="hssCard" class="review-card idle"><div><p class="note">Select a mark to review its variables.</p></div></article><div class="review-decision"><label>Review Note<textarea id="hssNote" rows="3" placeholder="Example: Lc shown wrong on image"></textarea></label><div class="review-actions"><button id="hssMarkGoodBtn" class="mark-good" type="button">Looks Good</button><button id="hssMarkBadBtn" class="mark-bad" type="button">Has Error</button><button id="hssClearMarkBtn" type="button">Clear Mark</button></div></div><div id="hssBoard" class="brace-board"></div></div></div>
+          <div class="section-head">
+            <div><h2>HSS Casing Parts</h2><p>Type mark numbers to filter fast, for example 1251, 1254, 1260.</p></div>
+            <div class="actions"><button id="hssResetBtn" type="button">Show All</button></div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="hssMarkInput" placeholder="1251, 1254, 1260"></label>
+            <div class="actions"><button id="hssShowBtn" type="button">Show Marks</button></div>
+            <div class="stats">
+              <div><span>Total Marks</span><b id="hssTotal">0</b></div>
+              <div><span>Shown</span><b id="hssShown">0</b></div>
+              <div><span>Good</span><b id="hssGood">0</b></div>
+              <div><span>Bad</span><b id="hssBad">0</b></div>
+            </div>
+          </div>
+          <div class="review-workbench">
+            <aside class="brace-list-panel">
+              <h3>HSS Marks</h3>
+              <div id="hssList" class="brace-list"></div>
+            </aside>
+            <div class="review-main">
+              <article id="hssCard" class="review-card idle">
+                <div>
+                  <p class="note">Select a mark to review its variables.</p>
+                </div>
+              </article>
+              <div class="review-decision">
+                <label>Review Note<textarea id="hssNote" rows="3" placeholder="Example: Lc shown wrong on image"></textarea></label>
+                <div class="review-actions">
+                  <button id="hssMarkGoodBtn" class="mark-good" type="button">Looks Good</button>
+                  <button id="hssMarkBadBtn" class="mark-bad" type="button">Has Error</button>
+                  <button id="hssClearMarkBtn" type="button">Clear Mark</button>
+                </div>
+              </div>
+              <div id="hssBoard" class="brace-board"></div>
+            </div>
+          </div>
           <p id="hssStatus" class="note">Manual HSS data loaded.</p>
         </section>
       </section>
 
       <section id="pimView" class="view">
-        <header class="topbar"><div><h2>PIM Manual Review Deck</h2><p>Manual PIM data will live here, ordered by Mark, once you send the numbers.</p></div></header>
-        <section class="card review-deck manual-placeholder" data-manual-prefix="pim"><div class="section-head"><div><h2>PIM</h2><p>No Excel upload. Send me the marks and variables, and I will place them here.</p></div></div><div class="review-controls"><label>Mark Numbers<input id="pimMarkInput" placeholder="Example: 2101, 2102"></label><div class="actions"><button id="pimShowBtn" type="button">Show Marks</button><button id="pimResetBtn" type="button">Show All</button></div><div class="stats"><div><span>Total Marks</span><b id="pimTotal">0</b></div><div><span>Shown</span><b id="pimShown">0</b></div><div><span>Good</span><b id="pimGood">0</b></div><div><span>Bad</span><b id="pimBad">0</b></div></div></div><div class="review-workbench"><aside class="brace-list-panel"><h3>PIM Marks</h3><div id="pimList" class="brace-list"></div></aside><div class="review-main"><article id="pimCard" class="review-card idle"><p class="note">PIM data is ready to be added.</p></article><div class="review-decision"><label>Review Note<textarea id="pimNote" rows="3" placeholder="Example: value shown wrong on image"></textarea></label><div class="review-actions"><button id="pimMarkGoodBtn" class="mark-good" type="button">Looks Good</button><button id="pimMarkBadBtn" class="mark-bad" type="button">Has Error</button><button id="pimClearMarkBtn" type="button">Clear Mark</button></div></div><div id="pimBoard" class="brace-board"></div></div></div><p id="pimStatus" class="note">Waiting for manual PIM data.</p></section>
+        <header class="topbar">
+          <div>
+            <h2>PIM Manual Review Deck</h2>
+            <p>Manual PIM data will live here, ordered by Mark, once you send the numbers.</p>
+          </div>
+        </header>
+        <section class="card review-deck manual-placeholder" data-manual-prefix="pim">
+          <div class="section-head">
+            <div><h2>PIM</h2><p>No Excel upload. Send me the marks and variables, and I will place them here.</p></div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="pimMarkInput" placeholder="Example: 2101, 2102"></label>
+            <div class="actions"><button id="pimShowBtn" type="button">Show Marks</button><button id="pimResetBtn" type="button">Show All</button></div>
+            <div class="stats">
+              <div><span>Total Marks</span><b id="pimTotal">0</b></div>
+              <div><span>Shown</span><b id="pimShown">0</b></div>
+              <div><span>Good</span><b id="pimGood">0</b></div>
+              <div><span>Bad</span><b id="pimBad">0</b></div>
+            </div>
+          </div>
+          <div class="review-workbench">
+            <aside class="brace-list-panel"><h3>PIM Marks</h3><div id="pimList" class="brace-list"></div></aside>
+            <div class="review-main">
+              <article id="pimCard" class="review-card idle"><p class="note">PIM data is ready to be added.</p></article>
+              <div class="review-decision">
+                <label>Review Note<textarea id="pimNote" rows="3" placeholder="Example: value shown wrong on image"></textarea></label>
+                <div class="review-actions"><button id="pimMarkGoodBtn" class="mark-good" type="button">Looks Good</button><button id="pimMarkBadBtn" class="mark-bad" type="button">Has Error</button><button id="pimClearMarkBtn" type="button">Clear Mark</button></div>
+              </div>
+              <div id="pimBoard" class="brace-board"></div>
+            </div>
+          </div>
+          <p id="pimStatus" class="note">Waiting for manual PIM data.</p>
+        </section>
       </section>
 
       <section id="coreView" class="view">
-        <header class="topbar"><div><h2>Core Manual Review Deck</h2><p>Core MIL brace rows from the tabbed text file. Check a row when the full brace line has been reviewed.</p></div></header>
+        <header class="topbar">
+          <div>
+            <h2>Core Manual Review Deck</h2>
+            <p>Core MIL brace rows from the tabbed text file. Check a row when the full brace line has been reviewed.</p>
+          </div>
+        </header>
         <section class="card review-deck manual-placeholder" data-manual-prefix="core">
-          <div class="section-head"><div><h2>Core MIL Braces</h2><p>Only review variables are shown. Wt, Lst, xt1, W3, and unneeded columns are ignored.</p></div></div>
-          <div class="review-controls"><label>Mark Numbers<input id="coreMarkInput" placeholder="1190, 1271, 1263"></label><div class="actions"><button id="coreShowBtn" type="button">Show Marks</button><button id="coreResetBtn" type="button">Show All</button></div><div class="stats"><div><span>Total Rows</span><b id="coreTotal">0</b></div><div><span>Shown</span><b id="coreShown">0</b></div><div><span>Reviewed</span><b id="coreGood">0</b></div><div><span>Open</span><b id="coreBad">0</b></div></div></div>
+          <div class="section-head">
+            <div><h2>Core MIL Braces</h2><p>Only review variables are shown. Wt, Lst, xt1, W3, and unneeded columns are ignored.</p></div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="coreMarkInput" placeholder="1190, 1271, 1263"></label>
+            <div class="actions"><button id="coreShowBtn" type="button">Show Marks</button><button id="coreResetBtn" type="button">Show All</button></div>
+            <div class="stats">
+              <div><span>Total Rows</span><b id="coreTotal">0</b></div>
+              <div><span>Shown</span><b id="coreShown">0</b></div>
+              <div><span>Reviewed</span><b id="coreGood">0</b></div>
+              <div><span>Open</span><b id="coreBad">0</b></div>
+            </div>
+          </div>
+          <section class="core-viewer" aria-label="Core brace visual viewer">
+            <button id="corePrevBtn" class="core-arrow" type="button" aria-label="Previous Core mark">&lt;</button>
+            <div class="core-viewer-body">
+              <div class="core-viewer-top">
+                <div>
+                  <span id="coreViewerEyebrow">Core brace display</span>
+                  <h3 id="coreViewerTitle">Select a mark</h3>
+                </div>
+                <b id="coreViewerCount">0 of 0</b>
+              </div>
+              <svg id="coreViewerSvg" class="core-svg" viewBox="0 0 920 300" role="img" aria-label="Core brace schematic"></svg>
+              <div id="coreViewerMeta" class="core-viewer-meta"></div>
+            </div>
+            <button id="coreNextBtn" class="core-arrow" type="button" aria-label="Next Core mark">&gt;</button>
+          </section>
           <div id="coreBoard" class="core-table"></div>
           <p id="coreStatus" class="note">Core rows loaded from core_mil_braces.txt.</p>
         </section>
@@ -145,8 +252,8 @@
   <script src="app.js?v=20260518-scrollfix"></script>
   <script src="review.js?v=20260518-scrollfix"></script>
   <script src="core-data.js?v=20260518-core"></script>
-  <script src="manual.js?v=20260518-core"></script>
-  <script src="core-ui.js?v=20260518-core"></script>
+  <script src="manual.js?v=20260518-core-viewer"></script>
+  <script src="core-ui.js?v=20260518-core-viewer"></script>
   <script src="nav.js?v=20260518-scrollfix"></script>
 </body>
 </html>
