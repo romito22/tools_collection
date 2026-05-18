@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
-  <link rel="stylesheet" href="styles.css?v=20260515-4">
+  <link rel="stylesheet" href="styles.css?v=20260518-assembly">
 </head>
 <body>
   <div class="app-shell">
@@ -16,6 +16,7 @@
       <nav>
         <button class="nav-btn active" type="button" data-target="toolsView">Tools</button>
         <button class="nav-btn" type="button" data-target="reviewView">Review Deck</button>
+        <button class="nav-btn" type="button" data-target="assemblyView">Assembly</button>
       </nav>
       <button id="themeBtn" type="button">Theme</button>
     </aside>
@@ -115,12 +116,60 @@
           <p id="reviewStatus" class="note">Waiting for Excel data.</p>
         </section>
       </section>
+
+      <section id="assemblyView" class="view">
+        <header class="topbar">
+          <div>
+            <h2>Assembly Review Deck</h2>
+            <p>Upload an assembly or parts schedule, pick an item, review its important values one by one, then export a marked copy.</p>
+          </div>
+        </header>
+
+        <section class="card review-deck">
+          <div class="section-head">
+            <div><h2>Assembly Review</h2><p>Select an item on the left. Then mark each value tile as good or error.</p></div>
+            <div class="actions"><button id="assemblySampleBtn" type="button">Sample</button><button id="assemblyWhiteWashBtn" type="button">White Wash</button><button id="assemblyExportReviewBtn" type="button">Export Marked Excel</button></div>
+          </div>
+          <div class="review-controls">
+            <label>Excel File<input id="assemblyExcelInput" type="file" accept=".xlsx,.xls,.csv"></label>
+            <div class="stats">
+              <div><span>Items</span><b id="assemblyTotal">0</b></div>
+              <div><span>Values Reviewed</span><b id="assemblyDone">0</b></div>
+              <div><span>Good</span><b id="assemblyGood">0</b></div>
+              <div><span>Bad</span><b id="assemblyBad">0</b></div>
+            </div>
+          </div>
+          <div class="review-workbench">
+            <aside class="brace-list-panel">
+              <h3>Assembly List</h3>
+              <div id="assemblyList" class="brace-list"></div>
+            </aside>
+            <div class="review-main">
+              <article id="assemblyCard" class="review-card idle">
+                <div>
+                  <p class="note">Upload an Excel file to create assembly review cards.</p>
+                </div>
+              </article>
+              <div class="review-decision">
+                <label>Review Note<textarea id="assemblyNote" rows="3" placeholder="Example: cap plate value shown wrong"></textarea></label>
+                <div class="review-actions">
+                  <button id="assemblyMarkGoodBtn" class="mark-good" type="button">Looks Good</button>
+                  <button id="assemblyMarkBadBtn" class="mark-bad" type="button">Has Error</button>
+                  <button id="assemblyClearMarkBtn" type="button">Clear Mark</button>
+                </div>
+              </div>
+              <div id="assemblyBoard" class="brace-board"></div>
+            </div>
+          </div>
+          <p id="assemblyStatus" class="note">Waiting for Excel data.</p>
+        </section>
+      </section>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="app.js?v=20260515-4"></script>
-  <script src="review.js?v=20260515-4"></script>
-  <script src="nav.js?v=20260515-4"></script>
+  <script src="app.js?v=20260518-assembly"></script>
+  <script src="review.js?v=20260518-assembly"></script>
+  <script src="nav.js?v=20260518-assembly"></script>
 </body>
 </html>
