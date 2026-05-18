@@ -1,12 +1,16 @@
-function freshControl(selector) {
-  const node = document.querySelector(selector);
+function $(selector) {
+  return document.querySelector(selector);
+}
+
+function fresh(selector) {
+  const node = $(selector);
   if (!node) return null;
   const clone = node.cloneNode(true);
   node.replaceWith(clone);
   return clone;
 }
 
-function safeText(value) {
+function html(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;",
     "<": "&lt;",
@@ -16,140 +20,95 @@ function safeText(value) {
   })[char]);
 }
 
-function key(value) {
+function norm(value) {
   return String(value ?? "").trim().toLowerCase().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
 }
 
 function findIndex(headers, names) {
-  const normalized = headers.map(key);
-  return normalized.findIndex((header) => names.some((name) => header.includes(name)));
+  const keys = headers.map(norm);
+  return keys.findIndex((header) => names.some((name) => header.includes(name)));
 }
 
-function findHeaderRow(rows) {
-  const match = rows.findIndex((row) => {
-    const joined = row.map(key).join(" ");
-    return joined.includes("cb id") && (joined.includes("mark") || joined.includes("qty"));
+function findHeader(rows) {
+  const index = rows.findIndex((row) => {
+    const line = row.map(norm).join(" ");
+    return line.includes("cb id") && line.includes("qty") && line.includes("mark");
   });
-  if (match >= 0) return match;
-  return rows.findIndex((row) => row.some((cell) => String(cell ?? "").trim()));
+  return index >= 0 ? index : rows.findIndex((row) => row.some((cell) => String(cell ?? "").trim()));
 }
 
-function buildReviewGroups(headers, parentHeaders = [], mode = "review") {
-  const ignored = new Set(["", "#", "qty"]);
-  const wanted = new Set([
-    "cb id", "eor id", "line", "grids", "lvls", "mark",
-    "wwp", "hwp", "lbh", "lwp h", "lwph", "lwp-h",
+function groupsFrom(headers, parent = [], mode = "review") {
+  const wanted = [
+    "cb id", "eor id", "line", "grids", "lvls", "mark", "wwp", "hwp", "lbh", "lwp h", "lwph",
     "lc", "type", "hc", "wc", "tc", "w1cc", "h1cc", "t1cc", "t2cc", "dwl", "dwc",
-    "ni", "no", "e", "s", "gi", "go", "dhg", "tg", "trg", "wrg",
-    "fy g", "fy.g", "wl", "tl", "ts", "llg", "db", "g", "l'", "la",
-    "beam", "col", "gusset edges", "wt", "cb wt"
-  ]);
+    "ni", "no", "e", "s", "gi", "go", "dhg", "tg", "trg", "wrg", "wl", "tl", "ts",
+    "llg", "db", "g", "la", "beam", "col", "gusset edges", "wt", "cb wt"
+  ];
   return headers.map((header, index) => {
     let name = String(header || "").trim();
-    if (/^column \d+$/i.test(name)) name = String(parentHeaders[index] || "").trim();
-    return { name, index, span: [index], k: key(name) };
+    if (/^column \d+$/i.test(name)) name = String(parent[index] || "").trim();
+    return { name, index, k: norm(name) };
   }).filter((group) => {
-    if (!group.name || ignored.has(group.k)) return false;
+    if (!group.name || group.k === "#" || group.k === "qty") return false;
     if (mode === "assembly") return !/^column \d+$/i.test(group.name);
-    return [...wanted].some((name) => group.k === name || group.k.includes(name));
+    return wanted.some((name) => group.k === name || group.k.includes(name));
   });
 }
 
-function groupValue(item, group) {
-  return group.span
-    .map((index) => item.row[index])
-    .filter((value) => String(value ?? "").trim() !== "")
-    .join(" ");
-}
-
-function gcd(a, b) {
-  while (b) [a, b] = [b, a % b];
-  return a || 1;
-}
-
-function formatFraction(value) {
-  const number = Number(value);
-  if (!Number.isFinite(number)) return value ?? "";
-  const whole = Math.floor(number);
-  const den = 16;
-  let numerator = Math.round((number - whole) * den);
-  if (!numerator) return `${whole}"`;
-  if (numerator === den) return `${whole + 1}"`;
-  const divisor = gcd(numerator, den);
-  return `${whole} ${numerator / divisor}/${den / divisor}"`;
-}\n
-function setupDeck(config) {
+function setupDeck(cfg) {
   const els = {
-    file: freshControl(`#${config.prefix}ExcelInput`),
-    sample: freshControl(`#${config.prefix}SampleBtn`),
-    card: document.querySelector(`#${config.prefix}Card`),
-    total: document.querySelector(`#${config.prefix}Total`),
-    done: document.querySelector(`#${config.prefix}Done`),
-    good: document.querySelector(`#${config.prefix}Good`),
-    bad: document.querySelector(`#${config.prefix}Bad`),
-    note: freshControl(`#${config.prefix}Note`),
-    status: document.querySelector(`#${config.prefix}Status`),
-    markGood: freshControl(`#${config.prefix}MarkGoodBtn`),
-    markBad: freshControl(`#${config.prefix}MarkBadBtn`),
-    clear: freshControl(`#${config.prefix}ClearMarkBtn`),
-    export: freshControl(`#${config.prefix}ExportReviewBtn`),
-    whiteWash: freshControl(`#${config.prefix}WhiteWashBtn`),
-    list: document.querySelector(`#${config.prefix}List`),
-    board: document.querySelector(`#${config.prefix}Board`)
+    file: fresh(`#${cfg.prefix}ExcelInput`),
+    sample: fresh(`#${cfg.prefix}SampleBtn`),
+    card: $(`#${cfg.prefix}Card`),
+    total: $(`#${cfg.prefix}Total`),
+    done: $(`#${cfg.prefix}Done`),
+    good: $(`#${cfg.prefix}Good`),
+    bad: $(`#${cfg.prefix}Bad`),
+    note: fresh(`#${cfg.prefix}Note`),
+    status: $(`#${cfg.prefix}Status`),
+    markGood: fresh(`#${cfg.prefix}MarkGoodBtn`),
+    markBad: fresh(`#${cfg.prefix}MarkBadBtn`),
+    clear: fresh(`#${cfg.prefix}ClearMarkBtn`),
+    export: fresh(`#${cfg.prefix}ExportReviewBtn`),
+    whiteWash: fresh(`#${cfg.prefix}WhiteWashBtn`),
+    list: $(`#${cfg.prefix}List`),
+    board: $(`#${cfg.prefix}Board`)
   };
+  if (!els.card || !els.list || !els.board) return;
 
-  if (!els.card || !els.board || !els.list) return;
+  let state = resetState();
 
-  let state = {
-    fileName: `${config.prefix}.xlsx`,
-    rows: [],
-    headerIndex: -1,
-    headers: [],
-    groups: [],
-    data: [],
-    current: 0,
-    currentCell: 0,
-    marks: new Map()
-  };
+  function resetState() {
+    return { fileName: `${cfg.prefix}.xlsx`, rows: [], headerIndex: -1, headers: [], groups: [], data: [], current: 0, currentCell: 0, marks: new Map() };
+  }
 
-  function columnIndex(names) {
+  function col(names) {
     return findIndex(state.headers, names);
   }
 
-  function currentItem() {
-    return state.data[state.current];
+  function value(item, names) {
+    const index = col(names);
+    return index >= 0 ? item.row[index] : "";
   }
 
-  function itemLabel(item) {
-    if (!item) return "No item";
-    const values = [
-      item.row[columnIndex(["cb id"])],
-      item.row[columnIndex(["eor id"])],
-      item.row[columnIndex(["mark"])],
-      item.row[columnIndex(["line"])],
-      item.row[columnIndex(["grids"])]
-    ].filter(Boolean);
-    const base = values.join(" / ") || `Excel row ${item.rowIndex + 1}`;
-    return `${base} / ${config.itemName} ${item.itemNo} of ${item.qty}`;
+  function label(item) {
+    const parts = [value(item, ["cb id"]), value(item, ["eor id"]), value(item, ["mark"]), value(item, ["line"]), value(item, ["grids"])].filter(Boolean);
+    return `${parts.join(" / ") || `Excel row ${item.rowIndex + 1}`} / ${cfg.itemName} ${item.itemNo} of ${item.qty}`;
   }
 
-  function shortValue(item, names) {
-    const value = item.row[columnIndex(names)];
-    return value ?? "";
-  }
-
-  function reviewCells(item) {
+  function cells(item) {
     if (!item) return [];
-    return state.groups
-      .map((group) => ({ ...group, value: groupValue(item, group), cellKey: `${item.cardKey}:${group.index}` }))
-      .filter((cell) => {
-        const value = String(cell.value ?? "").trim();
-        const core = ["cb id", "eor id", "line", "grids", "lvls", "mark"].includes(cell.k);
-        return core || (value && value !== "-");
-      });
+    return state.groups.map((group) => {
+      const raw = item.row[group.index];
+      return { ...group, value: raw, cellKey: `${item.cardKey}:${group.index}` };
+    }).filter((cell) => {
+      const text = String(cell.value ?? "").trim();
+      const core = ["cb id", "eor id", "line", "grids", "lvls", "mark"].includes(cell.k);
+      return core || (text && text !== "-");
+    });
   }
 
-  function updateStats() {
+  function stats() {
     const marks = [...state.marks.values()];
     els.total.textContent = state.data.length;
     els.done.textContent = marks.length;
@@ -157,35 +116,38 @@ function setupDeck(config) {
     els.bad.textContent = marks.filter((mark) => mark.status === "bad").length;
   }
 
-  function itemStatus(item) {
-    const cells = reviewCells(item);
-    const marks = cells.map((cell) => state.marks.get(cell.cellKey)).filter(Boolean);
+  function itemState(item) {
+    const itemCells = cells(item);
+    const marks = itemCells.map((cell) => state.marks.get(cell.cellKey)).filter(Boolean);
     if (marks.some((mark) => mark.status === "bad")) return "bad";
-    if (cells.length && marks.length === cells.length && marks.every((mark) => mark.status === "good")) return "good";
+    if (itemCells.length && marks.length === itemCells.length) return "good";
     if (marks.length) return "partial";
     return "";
   }
 
+  function saveNote() {
+    const item = state.data[state.current];
+    const cell = cells(item)[state.currentCell];
+    const mark = cell && state.marks.get(cell.cellKey);
+    if (mark) mark.note = els.note.value.trim();
+  }
+
   function renderList() {
     if (!state.data.length) {
-      els.list.innerHTML = `<p class="note">No ${config.itemName.toLowerCase()}s loaded.</p>`;
+      els.list.innerHTML = `<p class="note">No ${cfg.itemName.toLowerCase()}s loaded.</p>`;
       return;
     }
-    els.list.innerHTML = state.data.map((item, index) => {
-      const status = itemStatus(item);
-      const classes = ["brace-list-item", status, index === state.current ? "selected" : ""].filter(Boolean).join(" ");
-      return `
-        <button class="${classes}" type="button" data-index="${index}">
-          <strong>${safeText(shortValue(item, ["mark"]) || `Row ${item.rowIndex + 1}`)}</strong>
-          <span>${safeText(config.itemName)} ${item.itemNo}/${item.qty}</span>
-          <small>${safeText(shortValue(item, ["cb id"]))} ${safeText(shortValue(item, ["grids"]))}</small>
-        </button>
-      `;
-    }).join("");
-    els.list.querySelectorAll(".brace-list-item").forEach((tile) => {
-      tile.addEventListener("click", () => {
+    els.list.innerHTML = state.data.map((item, index) => `
+      <button class="${["brace-list-item", itemState(item), index === state.current ? "selected" : ""].filter(Boolean).join(" ")}" type="button" data-index="${index}">
+        <strong>${html(value(item, ["mark"]) || `Row ${item.rowIndex + 1}`)}</strong>
+        <span>${html(cfg.itemName)} ${item.itemNo}/${item.qty}</span>
+        <small>${html(value(item, ["cb id"]))} ${html(value(item, ["grids"]))}</small>
+      </button>
+    `).join("");
+    els.list.querySelectorAll(".brace-list-item").forEach((button) => {
+      button.addEventListener("click", () => {
         saveNote();
-        state.current = Number(tile.dataset.index);
+        state.current = Number(button.dataset.index);
         state.currentCell = 0;
         render();
       });
@@ -193,87 +155,74 @@ function setupDeck(config) {
   }
 
   function renderBoard() {
-    const item = currentItem();
-    const cells = reviewCells(item);
-    if (!cells.length) {
-      els.board.innerHTML = `<p class="note">No reviewable values loaded for this ${config.itemName.toLowerCase()}.</p>`;
+    const item = state.data[state.current];
+    const itemCells = cells(item);
+    if (!itemCells.length) {
+      els.board.innerHTML = `<p class="note">No reviewable values loaded.</p>`;
       return;
     }
-    els.board.innerHTML = cells.map((cell, index) => {
+    els.board.innerHTML = itemCells.map((cell, index) => {
       const mark = state.marks.get(cell.cellKey);
-      const classes = ["value-tile", mark?.status || "", index === state.currentCell ? "selected" : ""].filter(Boolean).join(" ");
       const status = mark?.status === "good" ? "GOOD" : mark?.status === "bad" ? "ERROR" : "OPEN";
       return `
-        <button class="${classes}" type="button" data-index="${index}">
-          <span>${safeText(cell.name)}</span>
-          <b>${safeText(cell.value)}</b>
+        <button class="${["value-tile", mark?.status || "", index === state.currentCell ? "selected" : ""].filter(Boolean).join(" ")}" type="button" data-index="${index}">
+          <span>${html(cell.name)}</span>
+          <b>${html(cell.value)}</b>
           <small>${status}</small>
         </button>
       `;
     }).join("");
-    els.board.querySelectorAll(".value-tile").forEach((tile) => {
-      tile.addEventListener("click", () => {
+    els.board.querySelectorAll(".value-tile").forEach((button) => {
+      button.addEventListener("click", () => {
         saveNote();
-        state.currentCell = Number(tile.dataset.index);
+        state.currentCell = Number(button.dataset.index);
         render();
       });
     });
   }
 
   function render() {
-    updateStats();
-    const item = currentItem();
+    stats();
+    const item = state.data[state.current];
     if (!item) {
       els.card.className = "review-card idle";
-      els.card.innerHTML = `<p class="note">Upload an Excel file to create ${config.itemName.toLowerCase()} review cards.</p>`;
+      els.card.innerHTML = `<p class="note">Upload an Excel file to create ${cfg.itemName.toLowerCase()} review cards.</p>`;
       els.status.textContent = "Waiting for Excel data.";
       renderList();
       renderBoard();
       return;
     }
-
-    const cells = reviewCells(item);
-    if (state.currentCell >= cells.length) state.currentCell = 0;
-    const cell = cells[state.currentCell];
-    const mark = cell ? state.marks.get(cell.cellKey) : null;
+    const itemCells = cells(item);
+    if (state.currentCell >= itemCells.length) state.currentCell = 0;
+    const cell = itemCells[state.currentCell];
+    const mark = cell && state.marks.get(cell.cellKey);
     els.note.value = mark?.note || "";
     els.card.className = `review-card ${mark?.status || ""}`.trim();
-    const statusText = mark?.status === "good" ? "Looks Good" : mark?.status === "bad" ? "Has Error" : "Unmarked";
-    const focus = cell ? `
-      <div class="review-field focus">
-        <span>${safeText(cell.name)}</span>
-        <b>${safeText(cell.k === "lbh" ? formatFraction(cell.value) : cell.value)}</b>
-      </div>
-      <div class="review-field meta">
-        <span>${safeText(config.itemName)}</span>
-        <b>${item.itemNo} / ${item.qty}</b>
-      </div>
-    ` : `<p class="note">No reviewable values found for this ${config.itemName.toLowerCase()}.</p>`;
-
     els.card.innerHTML = `
       <div class="review-title">
-        <strong>${safeText(itemLabel(item))}</strong>
-        <span class="review-pill ${mark?.status || ""}">${statusText}</span>
+        <strong>${html(label(item))}</strong>
+        <span class="review-pill ${mark?.status || ""}">${mark?.status === "good" ? "Looks Good" : mark?.status === "bad" ? "Has Error" : "Unmarked"}</span>
       </div>
-      <div class="review-fields">${focus}</div>
+      <div class="review-fields">
+        <div class="review-field focus"><span>${html(cell?.name || "Value")}</span><b>${html(cell?.value || "--")}</b></div>
+        <div class="review-field meta"><span>${html(cfg.itemName)}</span><b>${item.itemNo} / ${item.qty}</b></div>
+      </div>
     `;
-    els.status.textContent = `${config.itemName} ${state.current + 1} of ${state.data.length}. Select a value tile, then mark that specific value.`;
+    els.status.textContent = `${cfg.itemName} ${state.current + 1} of ${state.data.length}. Select a value tile, then mark that value.`;
     renderList();
     renderBoard();
   }
 
-  function loadRows(rows, fileName = `${config.prefix}.xlsx`) {
-    const headerIndex = findHeaderRow(rows);
+  function loadRows(rows, fileName) {
+    const headerIndex = findHeader(rows);
     const headers = headerIndex >= 0 ? rows[headerIndex].map((cell, index) => String(cell || `Column ${index + 1}`)) : [];
-    const groups = buildReviewGroups(headers, rows[headerIndex - 1] || [], config.mode);
+    const groups = groupsFrom(headers, rows[headerIndex - 1] || [], cfg.mode);
     const qtyIndex = findIndex(headers, ["qty"]);
     const cbIndex = findIndex(headers, ["cb id"]);
     const markIndex = findIndex(headers, ["mark"]);
     const data = [];
-
     if (headerIndex >= 0) {
       rows.slice(headerIndex + 1).forEach((row, offset) => {
-        if (!row.some((cell) => String(cell ?? "").trim())) return;
         const cb = String(row[cbIndex] ?? "").trim();
         const mark = String(row[markIndex] ?? "").trim();
         const qtyNumber = Number(row[qtyIndex]);
@@ -285,34 +234,19 @@ function setupDeck(config) {
         }
       });
     }
-
     state = { fileName, rows, headerIndex, headers, groups, data, current: 0, currentCell: 0, marks: new Map() };
-    els.note.value = "";
     if (els.file) els.file.value = "";
+    els.note.value = "";
     render();
   }
 
-  function saveNote() {
-    const item = currentItem();
-    const cell = reviewCells(item)[state.currentCell];
-    const mark = cell ? state.marks.get(cell.cellKey) : null;
-    if (mark) mark.note = els.note.value.trim();
-  }
-
-  function markCell(status) {
-    const item = currentItem();
-    const cells = reviewCells(item);
-    const cell = cells[state.currentCell];
-    if (!item || !cell) return;
-    state.marks.set(cell.cellKey, {
-      status,
-      note: els.note.value.trim(),
-      rowIndex: item.rowIndex,
-      itemNo: item.itemNo,
-      field: cell.name,
-      value: cell.value
-    });
-    if (state.currentCell < cells.length - 1) state.currentCell += 1;
+  function mark(status) {
+    const item = state.data[state.current];
+    const itemCells = cells(item);
+    const cell = itemCells[state.currentCell];
+    if (!cell) return;
+    state.marks.set(cell.cellKey, { status, note: els.note.value.trim(), rowIndex: item.rowIndex, itemNo: item.itemNo, field: cell.name, value: cell.value });
+    if (state.currentCell < itemCells.length - 1) state.currentCell += 1;
     else if (state.current < state.data.length - 1) {
       state.current += 1;
       state.currentCell = 0;
@@ -320,24 +254,23 @@ function setupDeck(config) {
     render();
   }
 
-  function clearCell() {
-    const item = currentItem();
-    const cell = reviewCells(item)[state.currentCell];
-    if (!cell) return;
-    state.marks.delete(cell.cellKey);
+  function clearMark() {
+    const item = state.data[state.current];
+    const cell = cells(item)[state.currentCell];
+    if (cell) state.marks.delete(cell.cellKey);
     els.note.value = "";
     render();
   }
 
   function rowSummary(rowIndex) {
     const rowItems = state.data.filter((item) => item.rowIndex === rowIndex);
-    const marks = rowItems.flatMap((item) => reviewCells(item).map((cell) => state.marks.get(cell.cellKey)).filter(Boolean));
+    const marks = rowItems.flatMap((item) => cells(item).map((cell) => state.marks.get(cell.cellKey)).filter(Boolean));
     const bad = marks.filter((mark) => mark.status === "bad");
     const good = marks.filter((mark) => mark.status === "good");
-    const totalCells = rowItems.reduce((sum, item) => sum + reviewCells(item).length, 0);
-    if (bad.length) return { status: "ERROR", color: "#ff4d4d", notes: bad.map((mark) => `${config.itemName} ${mark.itemNo} ${mark.field}: ${mark.note || "error"}`).join("; ") };
-    if (totalCells && good.length === totalCells) return { status: "GOOD", color: "#fff200", notes: good.map((mark) => mark.note).filter(Boolean).join("; ") };
-    if (good.length) return { status: "PARTIAL GOOD", color: "#fff2a8", notes: good.map((mark) => `${config.itemName} ${mark.itemNo}: ${mark.note || "OK"}`).join("; ") };
+    const total = rowItems.reduce((sum, item) => sum + cells(item).length, 0);
+    if (bad.length) return { status: "ERROR", color: "#ff4d4d", notes: bad.map((mark) => `${cfg.itemName} ${mark.itemNo} ${mark.field}: ${mark.note || "error"}`).join("; ") };
+    if (total && good.length === total) return { status: "GOOD", color: "#fff200", notes: good.map((mark) => mark.note).filter(Boolean).join("; ") };
+    if (good.length) return { status: "PARTIAL GOOD", color: "#fff2a8", notes: good.map((mark) => `${cfg.itemName} ${mark.itemNo}: ${mark.note || "OK"}`).join("; ") };
     return { status: "", color: "", notes: "" };
   }
 
@@ -350,29 +283,20 @@ function setupDeck(config) {
     const maxCols = Math.max(...state.rows.map((row) => row.length), state.headers.length);
     const tableRows = state.rows.map((row, rowIndex) => {
       const summary = rowSummary(rowIndex);
-      const bg = summary.color || (rowIndex === state.headerIndex ? "#ffffff" : "");
+      const bg = summary.color || (rowIndex === state.headerIndex ? "#fff" : "");
       const style = bg ? ` style="background:${bg};color:#000;border:1px solid #999;"` : ` style="border:1px solid #999;"`;
       const values = Array.from({ length: maxCols }, (_, index) => row[index] ?? "");
       if (rowIndex === state.headerIndex) values.push("Review Status", "Review Notes");
       else if (rowIndex > state.headerIndex) values.push(summary.status, summary.notes);
-      return `<tr>${values.map((value) => `<td${style}>${safeText(value)}</td>`).join("")}</tr>`;
+      return `<tr>${values.map((value) => `<td${style}>${html(value)}</td>`).join("")}</tr>`;
     }).join("");
-    const htmlDoc = `<!doctype html><html><head><meta charset="utf-8"></head><body><table>${tableRows}</table></body></html>`;
     const link = document.createElement("a");
-    const cleanName = state.fileName.replace(/\.[^.]+$/, "").replace(/[^\w.-]+/g, "_") || config.prefix;
-    link.href = URL.createObjectURL(new Blob([htmlDoc], { type: "application/vnd.ms-excel;charset=utf-8" }));
-    link.download = `${cleanName}_marked_review.xls`;
+    const name = state.fileName.replace(/\.[^.]+$/, "").replace(/[^\w.-]+/g, "_") || cfg.prefix;
+    link.href = URL.createObjectURL(new Blob([`<!doctype html><html><body><table>${tableRows}</table></body></html>`], { type: "application/vnd.ms-excel;charset=utf-8" }));
+    link.download = `${name}_marked_review.xls`;
     link.click();
     URL.revokeObjectURL(link.href);
     els.status.textContent = "Exported marked Excel file.";
-  }
-
-  function whiteWash() {
-    state = { fileName: `${config.prefix}.xlsx`, rows: [], headerIndex: -1, headers: [], groups: [], data: [], current: 0, currentCell: 0, marks: new Map() };
-    if (els.file) els.file.value = "";
-    els.note.value = "";
-    render();
-    els.status.textContent = "White wash complete. Upload a new Excel file.";
   }
 
   async function readFile(file) {
@@ -382,39 +306,47 @@ function setupDeck(config) {
     }
     const workbook = XLSX.read(await file.arrayBuffer(), { type: "array" });
     const sheet = workbook.SheetNames[0];
-    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheet], { header: 1, defval: "" });
-    loadRows(rows, file.name);
+    loadRows(XLSX.utils.sheet_to_json(workbook.Sheets[sheet], { header: 1, defval: "" }), file.name);
   }
 
   els.file?.addEventListener("change", (event) => {
     const [file] = event.target.files;
-    if (file) readFile(file).catch((error) => {
-      els.status.textContent = `Could not read data: ${error.message}`;
-      if (els.file) els.file.value = "";
-    });
+    if (file) readFile(file).catch((error) => els.status.textContent = `Could not read data: ${error.message}`);
   });
-  els.sample?.addEventListener("click", () => setTimeout(() => loadRows(config.sampleRows, `${config.prefix}_sample.xlsx`), 0));
-  els.markGood?.addEventListener("click", () => markCell("good"));
-  els.markBad?.addEventListener("click", () => markCell("bad"));
-  els.clear?.addEventListener("click", clearCell);
+  els.sample?.addEventListener("click", () => loadRows(cfg.sampleRows, `${cfg.prefix}_sample.xlsx`));
+  els.markGood?.addEventListener("click", () => mark("good"));
+  els.markBad?.addEventListener("click", () => mark("bad"));
+  els.clear?.addEventListener("click", clearMark);
   els.export?.addEventListener("click", exportMarked);
-  els.whiteWash?.addEventListener("click", whiteWash);
+  els.whiteWash?.addEventListener("click", () => {
+    state = resetState();
+    if (els.file) els.file.value = "";
+    els.note.value = "";
+    render();
+    els.status.textContent = "White wash complete. Upload a new Excel file.";
+  });
   els.note?.addEventListener("input", saveNote);
-
-  loadRows(config.sampleRows, `${config.prefix}_sample.xlsx`);
+  loadRows(cfg.sampleRows, `${cfg.prefix}_sample.xlsx`);
 }
 
-const reviewSampleRows = [
-  ["CB-ID", "EOR-ID", "Line", "Grids", "Lvls", "Mark", "Qty", "Wwp", "Hwp", "Lbh", "Lwp-h"],
-  ["CB-5.50", "BRB-5.50", 2, "C-D", 2, 1901, 2, "184 8/16", "193 15/16", 226, "23 6/16"],
-  ["CB-6.50", "BRB-6.50", 6, "C-D", 1, 1902, 2, "184 8/16", "182 15/16", 228, "8 4/16"]
-];
+setupDeck({
+  prefix: "review",
+  itemName: "Brace",
+  mode: "review",
+  sampleRows: [
+    ["CB-ID", "EOR-ID", "Line", "Grids", "Lvls", "Mark", "Qty", "Wwp", "Hwp", "Lbh", "Lwp-h"],
+    ["CB-5.50", "BRB-5.50", 2, "C-D", 2, 1901, 2, "184 8/16", "193 15/16", 226, "23 6/16"],
+    ["CB-6.50", "BRB-6.50", 6, "C-D", 1, 1902, 2, "184 8/16", "182 15/16", 228, "8 4/16"]
+  ]
+});
 
-const assemblySampleRows = [
-  ["CB-ID", "EOR-ID", "Line", "Grids", "Lvls", "Mark", "Qty", "Lc", "Type", "Hc", "Wc", "tc", "DWL", "DWC"],
-  ["CB-13.5", "BRB13.5", "12.3", "W.8 to Y", 250, 1251, 1, "29'-6 1/4\"", "t", 14, 14, 0.5, 6, 0],
-  ["CB-23.0", "BRB23", "Z", "12.3 to 11.6", 290, 1253, 1, "28'-6 3/4\"", "p", 16, 16, 0.5, 5, 0]
-];
-
-setupDeck({ prefix: "review", itemName: "Brace", mode: "review", sampleRows: reviewSampleRows });
-setupDeck({ prefix: "assembly", itemName: "Assembly", mode: "assembly", sampleRows: assemblySampleRows });
+setupDeck({
+  prefix: "assembly",
+  itemName: "Assembly",
+  mode: "assembly",
+  sampleRows: [
+    ["CB-ID", "EOR-ID", "Line", "Grids", "Lvls", "Mark", "Qty", "Lc", "Type", "Hc", "Wc", "tc", "DWL", "DWC"],
+    ["CB-13.5", "BRB13.5", "12.3", "W.8 to Y", 250, 1251, 1, "29'-6 1/4\"", "t", 14, 14, 0.5, 6, 0],
+    ["CB-23.0", "BRB23", "Z", "12.3 to 11.6", 290, 1253, 1, "28'-6 3/4\"", "p", 16, 16, 0.5, 5, 0]
+  ]
+});
