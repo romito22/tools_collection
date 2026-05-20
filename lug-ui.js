@@ -19,6 +19,12 @@ const lugRows = [
     TipRadius: "3/16\" TYP.",
     SlotHeight: "1 1/2\"",
     TipHeight: "3/8\"",
+    EdgeLeft: "8 1/4\"",
+    BottomMain: "2'-3 1/16\"",
+    BottomStep: "5\"",
+    SmallStep: "1 3/16\"",
+    RightThicknessA: "3/8\"",
+    RightThicknessB: "7/16\"",
     Notes: "Use this as a placeholder until spreadsheet values arrive."
   }
 ];
@@ -73,23 +79,18 @@ function setupLugRows(rows) {
     els.open.textContent = Math.max(0, source.length - state.reviewed.size);
   }
 
-  function dim(x1, x2, y, label) {
-    return `
-      <line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" class="dim-line"></line>
-      <line x1="${x1}" y1="${y - 10}" x2="${x1}" y2="${y + 18}" class="dim-line"></line>
-      <line x1="${x2}" y1="${y - 10}" x2="${x2}" y2="${y + 18}" class="dim-line"></line>
-      <text x="${(x1 + x2) / 2}" y="${y - 8}" text-anchor="middle" class="dim-text">${lugEscape(label)}</text>
-    `;
+  function renderHoles() {
+    return "";
   }
 
-  function renderHoles() {
-    const holes = [];
-    for (let row = 0; row < 4; row += 1) {
-      for (let col = 0; col < 8; col += 1) {
-        holes.push(`<circle cx="${205 + col * 34}" cy="${156 + row * 30}" r="7" class="lug-hole"></circle>`);
-      }
-    }
-    return holes.join("");
+  function boxText(x, y, width, height, label, rotate = 0) {
+    const cx = x + width / 2;
+    const cy = y + height / 2 + 6;
+    const transform = rotate ? ` transform="rotate(${rotate} ${cx} ${cy})"` : "";
+    return `
+      <rect x="${x}" y="${y}" width="${width}" height="${height}" class="lug-value-box"></rect>
+      <text x="${cx}" y="${cy}" text-anchor="middle" class="lug-box-text"${transform}>${lugEscape(label)}</text>
+    `;
   }
 
   function renderViewer() {
@@ -99,28 +100,30 @@ function setupLugRows(rows) {
     els.count.textContent = `${state.active + 1} of ${state.visible.length}`;
     els.eyebrow.textContent = row.Plate;
     els.svg.innerHTML = `
-      <rect x="18" y="18" width="944" height="394" rx="8" class="core-paper"></rect>
-      ${dim(150, 760, 74, row.Overall)}
-      ${dim(190, 500, 118, row.MainBody)}
-      ${dim(545, 760, 118, row.Neck)}
-      ${dim(650, 760, 346, row.Tail)}
-      <path d="M150 150 Q115 210 150 270 L500 270 L545 238 L675 238 L760 270 L885 270 L885 210 L760 210 L675 180 L545 180 L500 150 Z" class="lug-outline"></path>
-      <line x1="110" y1="210" x2="910" y2="210" class="brace-center"></line>
-      <line x1="150" y1="150" x2="150" y2="270" class="ext-line"></line>
-      <line x1="500" y1="135" x2="500" y2="286" class="ext-line"></line>
-      <line x1="545" y1="170" x2="545" y2="250" class="ext-line"></line>
-      <line x1="760" y1="118" x2="760" y2="300" class="ext-line"></line>
+      <rect x="0" y="0" width="1600" height="900" class="lug-template-bg"></rect>
       ${renderHoles()}
-      <text x="104" y="213" text-anchor="middle" class="side-text" transform="rotate(-90 104 213)">${lugEscape(row.LeftWidth)}</text>
-      <text x="872" y="218" text-anchor="middle" class="side-text" transform="rotate(90 872 218)">${lugEscape(row.TipHeight)}</text>
-      <text x="305" y="140" text-anchor="middle" class="note-text">${lugEscape(row.HolePattern)}</text>
-      <text x="205" y="315" text-anchor="middle" class="note-text">Dia ${lugEscape(row.HoleDia)}</text>
-      <text x="126" y="330" text-anchor="middle" class="note-text">R=${lugEscape(row.LeftRadius)}</text>
-      <text x="580" y="160" class="note-text">R=${lugEscape(row.NeckRadius)}</text>
-      <text x="615" y="304" class="note-text">R=${lugEscape(row.LowerRadius)}</text>
-      <text x="795" y="160" class="note-text">R=${lugEscape(row.TipRadius)}</text>
-      <text x="490" y="386" text-anchor="middle" class="title-block">${lugEscape(row.Plate)}</text>
-      <text x="900" y="386" text-anchor="end" class="mark-block">${lugEscape(row.Mark)}</text>
+      ${boxText(401, 33, 144, 26, row.Overall)}
+      ${boxText(239, 119, 55, 34, row.TopInset)}
+      ${boxText(399, 119, 55, 34, row.MainBody)}
+      ${boxText(520, 119, 74, 34, row.HolePattern)}
+      ${boxText(719, 114, 73, 36, row.Neck)}
+      ${boxText(76, 255, 70, 38, row.LeftWidth)}
+      ${boxText(649, 216, 63, 31, row.NeckRadius)}
+      ${boxText(920, 192, 80, 31, row.TipRadius)}
+      ${boxText(1076, 207, 32, 31, row.RightThicknessA)}
+      ${boxText(1123, 207, 41, 32, row.RightThicknessB)}
+      ${boxText(1170, 207, 39, 31, row.TipHeight)}
+      ${boxText(229, 212, 45, 22, row.HoleDia)}
+      ${boxText(231, 247, 43, 20, row.LeftRadius)}
+      ${boxText(229, 281, 44, 20, row.SlotHeight)}
+      ${boxText(258, 414, 54, 34, row.EdgeLeft)}
+      ${boxText(407, 417, 55, 35, row.BottomMain)}
+      ${boxText(611, 426, 53, 35, row.BottomStep)}
+      ${boxText(702, 376, 70, 35, row.LowerRadius)}
+      ${boxText(742, 429, 68, 32, row.SmallStep)}
+      ${boxText(878, 426, 68, 31, row.Tail)}
+      ${boxText(158, 513, 850, 47, row.Plate)}
+      <text x="900" y="620" text-anchor="middle" class="lug-mark-text">${lugEscape(row.Mark)} | Qty ${lugEscape(row.Qty)}</text>
     `;
     const meta = ["Overall", "Plate", "LeftWidth", "MainBody", "Neck", "Tail", "HolePattern", "HoleDia"];
     els.meta.innerHTML = meta.map((field) => `<span><b>${lugEscape(field)}</b>${lugEscape(row[field] || "-")}</span>`).join("");
