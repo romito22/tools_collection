@@ -20,6 +20,7 @@
         <button class="nav-btn" type="button" data-target="hssView">HSS</button>
         <button class="nav-btn" type="button" data-target="pimView">PIM</button>
         <button class="nav-btn" type="button" data-target="coreView">Core</button>
+        <button class="nav-btn" type="button" data-target="lugView">LUG</button>
       </nav>
       <button id="themeBtn" type="button">Theme</button>
     </aside>
@@ -245,6 +246,47 @@
           <p id="coreStatus" class="note">Core rows loaded from core_mil_braces.txt.</p>
         </section>
       </section>
+
+      <section id="lugView" class="view">
+        <header class="topbar">
+          <div>
+            <h2>LUG Manual Review Deck</h2>
+            <p>Lug plate display arranged like the drawing so dimensions are easy to recognize.</p>
+          </div>
+        </header>
+        <section class="card review-deck manual-placeholder">
+          <div class="section-head">
+            <div><h2>LUG Parts</h2><p>Sample data is loaded from the image. Spreadsheet data can replace it later.</p></div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="lugMarkInput" placeholder="1210A, 1211A"></label>
+            <div class="actions"><button id="lugShowBtn" type="button">Show Marks</button><button id="lugResetBtn" type="button">Show All</button></div>
+            <div class="stats">
+              <div><span>Total Rows</span><b id="lugTotal">0</b></div>
+              <div><span>Shown</span><b id="lugShown">0</b></div>
+              <div><span>Reviewed</span><b id="lugGood">0</b></div>
+              <div><span>Open</span><b id="lugBad">0</b></div>
+            </div>
+          </div>
+          <section class="core-viewer lug-viewer" aria-label="LUG visual viewer">
+            <button id="lugPrevBtn" class="core-arrow" type="button" aria-label="Previous LUG mark">&lt;</button>
+            <div class="core-viewer-body">
+              <div class="core-viewer-top">
+                <div>
+                  <span id="lugViewerEyebrow">LUG display</span>
+                  <h3 id="lugViewerTitle">Select a mark</h3>
+                </div>
+                <b id="lugViewerCount">0 of 0</b>
+              </div>
+              <svg id="lugViewerSvg" class="core-svg lug-svg" viewBox="0 0 980 430" role="img" aria-label="LUG schematic"></svg>
+              <div id="lugViewerMeta" class="core-viewer-meta"></div>
+            </div>
+            <button id="lugNextBtn" class="core-arrow" type="button" aria-label="Next LUG mark">&gt;</button>
+          </section>
+          <div id="lugBoard" class="core-table lug-table"></div>
+          <p id="lugStatus" class="note">LUG sample rows loaded.</p>
+        </section>
+      </section>
     </main>
   </div>
 
@@ -254,6 +296,7 @@
   <script src="core-data.js?v=20260518-core"></script>
   <script src="manual.js?v=20260518-core-viewer"></script>
   <script src="core-ui.js?v=20260518-core-wsg"></script>
+  <script src="lug-ui.js?v=20260520-lug"></script>
   <script src="nav.js?v=20260518-scrollfix"></script>
 </body>
 </html>
