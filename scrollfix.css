@@ -38,6 +38,10 @@
 @media(max-width:1180px){.core-viewer{grid-template-columns:38px minmax(0,1fr) 38px}.core-viewer-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.core-table{max-height:calc(100vh - 560px)}}
 @media(max-width:720px){.core-viewer{grid-template-columns:1fr}.core-arrow{height:38px}.core-svg{height:210px}.core-viewer-meta{grid-template-columns:1fr}.core-table{max-height:360px}}
 .lug-svg{height:clamp(260px,42vh,430px)}
+.lug-template-bg{fill:#000}
+.lug-value-box{fill:#be9092;stroke:#be9092;stroke-width:1}
 .lug-outline{fill:none;stroke:#111;stroke-width:2}
 .lug-hole{fill:#fbfaf5;stroke:#111;stroke-width:1.4}
+.lug-box-text{fill:#050505;font:900 22px/1 Arial,Helvetica,sans-serif}
+.lug-mark-text{fill:#f4f4f4;font:900 30px/1 Arial,Helvetica,sans-serif}
 .lug-table .core-head,.lug-table .core-row{grid-template-columns:44px 120px repeat(17,minmax(100px,1fr));min-width:2050px}
