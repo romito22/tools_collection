@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
   <link rel="stylesheet" href="styles.css?v=20260518-scrollfix">
-  <link rel="stylesheet" href="scrollfix.css?v=20260518-core-viewer">
+  <link rel="stylesheet" href="scrollfix.css?v=20260521-p15-title">
 </head>
 <body>
   <div class="app-shell">
@@ -15,18 +15,64 @@
         <p>Engineering helper tools for quick review work.</p>
       </div>
       <nav>
-        <button class="nav-btn active" type="button" data-target="toolsView">Tools</button>
+        <button class="nav-btn active" type="button" data-target="p15View">P_15</button>
+        <button class="nav-btn" type="button" data-target="lugView">LUG</button>
+        <button class="nav-btn" type="button" data-target="toolsView">Tools</button>
         <button class="nav-btn" type="button" data-target="reviewView">Review Deck</button>
         <button class="nav-btn" type="button" data-target="hssView">HSS</button>
         <button class="nav-btn" type="button" data-target="pimView">PIM</button>
         <button class="nav-btn" type="button" data-target="coreView">Core</button>
-        <button class="nav-btn" type="button" data-target="lugView">LUG</button>
       </nav>
       <button id="themeBtn" type="button">Theme</button>
     </aside>
 
     <main>
-      <section id="toolsView" class="view active">
+      <section id="p15View" class="view active">
+        <header class="topbar">
+          <div>
+            <h2>P_15 Manual Review Deck</h2>
+            <p>P15 part template ready for dimension mapping and quick drawing review.</p>
+          </div>
+        </header>
+        <section class="card review-deck p15-deck">
+          <div class="section-head">
+            <div>
+              <h2>P_15 Parts</h2>
+              <p>Cap Plate rows from the P15 text file, grouped for visual review.</p>
+            </div>
+          </div>
+          <div class="review-controls">
+            <label>Mark Numbers<input id="p15RowInput" placeholder="1271, 1190, 1208"></label>
+            <div class="actions"><button id="p15ShowBtn" type="button">Show Marks</button><button id="p15ResetBtn" type="button">Show All</button></div>
+            <div class="stats">
+              <div><span>Total Rows</span><b id="p15Total">0</b></div>
+              <div><span>Shown</span><b id="p15Shown">0</b></div>
+              <div><span>Reviewed</span><b id="p15Reviewed">0</b></div>
+              <div><span>Open</span><b id="p15Open">0</b></div>
+            </div>
+          </div>
+          <section class="core-viewer p15-viewer" aria-label="P15 visual template">
+            <button id="p15PrevBtn" class="core-arrow" type="button" aria-label="Previous P15 row">&lt;</button>
+            <div class="core-viewer-body">
+              <div class="core-viewer-top">
+                <div>
+                  <span id="p15ViewerEyebrow">P_15 cap plate display</span>
+                  <h3 id="p15ViewerTitle">Select a row</h3>
+                </div>
+                <b id="p15ViewerCount">0 of 0</b>
+              </div>
+              <svg id="p15ViewerSvg" class="core-svg p15-svg" viewBox="0 0 1920 1080" role="img" aria-label="P15 cap plate schematic"></svg>
+              <div id="p15ViewerMeta" class="core-viewer-meta"></div>
+              <div id="p15SameBox" class="lug-same-box"></div>
+            </div>
+            <button id="p15NextBtn" class="core-arrow" type="button" aria-label="Next P15 row">&gt;</button>
+          </section>
+          <div id="p15Board" class="core-table p15-table"></div>
+          <p id="p15Status" class="note">P15 rows loaded from p15 Cap Plate.txt.</p>
+        </section>
+      </section>
+
+      <section id="toolsView" class="view">
         <header class="topbar">
           <div>
             <h2>Measurement + Drawing Helpers</h2>
@@ -280,6 +326,7 @@
               </div>
               <svg id="lugViewerSvg" class="core-svg lug-svg" viewBox="0 0 1600 900" role="img" aria-label="LUG schematic"></svg>
               <div id="lugViewerMeta" class="core-viewer-meta"></div>
+              <div id="lugSameBox" class="lug-same-box"></div>
             </div>
             <button id="lugNextBtn" class="core-arrow" type="button" aria-label="Next LUG mark">&gt;</button>
           </section>
@@ -296,7 +343,10 @@
   <script src="core-data.js?v=20260518-core"></script>
   <script src="manual.js?v=20260518-core-viewer"></script>
   <script src="core-ui.js?v=20260518-core-wsg"></script>
-  <script src="lug-ui.js?v=20260520-lug-template"></script>
+  <script src="p15-data.js?v=20260520-local"></script>
+  <script src="p15-ui.js?v=20260521-p15-title-tcc"></script>
+  <script src="lug-data.js?v=20260520-local"></script>
+  <script src="lug-ui.js?v=20260520-local"></script>
   <script src="nav.js?v=20260518-scrollfix"></script>
 </body>
 </html>

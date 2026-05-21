@@ -1,39 +1,959 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1024" height="768" fill="#05090d"/>
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="58" y="58" width="908" height="650" stroke="#d7e7ff" stroke-width="2"/>
-    <text x="512" y="118" text-anchor="middle" fill="#7fb4ff" stroke="#7fb4ff" stroke-width="1" font-family="Arial, sans-serif" font-size="54">BOLTED GUSSET OVERALL LAYOUT</text>
-    <line x1="114" y1="548" x2="460" y2="188" stroke="#f7d849" stroke-width="3" stroke-dasharray="8 6"/>
-    <rect x="132" y="164" width="312" height="46" stroke="#ff5252" stroke-width="3"/>
-    <rect x="132" y="524" width="312" height="46" stroke="#ff5252" stroke-width="3"/>
-    <rect x="98" y="144" width="33" height="444" stroke="#ff5252" stroke-width="3"/>
-    <rect x="444" y="144" width="33" height="444" stroke="#ff5252" stroke-width="3"/>
-    <path d="M132 524 L182 524 L182 503 L155 477 L132 477 Z" stroke="#ff5252" stroke-width="3"/>
-    <path d="M444 211 L394 211 L394 230 L420 256 L444 256 Z" stroke="#ff5252" stroke-width="3"/>
-    <path d="M169 466 L382 244 L407 268 L193 489 Z" stroke="#ff9d28" stroke-width="4"/>
-    <circle cx="527" cy="217" r="13" stroke="#ffffff" stroke-width="3"/>
-    <circle cx="527" cy="274" r="13" stroke="#ffffff" stroke-width="3"/>
-    <circle cx="250" cy="468" r="13" stroke="#ffffff" stroke-width="3"/>
-    <text x="527" y="224" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18">B</text>
-    <text x="527" y="281" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18">C</text>
-    <text x="250" y="475" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18">A</text>
-    <line x1="115" y1="622" x2="460" y2="622" stroke="#ffffff" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-    <line x1="549" y1="188" x2="549" y2="546" stroke="#ffffff" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-    <line x1="375" y1="105" x2="455" y2="183" stroke="#ffffff" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="262" y="596" width="88" height="38" fill="#05090d" stroke="#ffffff" stroke-width="2"/>
-    <text x="306" y="623" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="28">Wwp</text>
-    <rect x="522" y="348" width="38" height="72" fill="#05090d" stroke="#ffffff" stroke-width="2"/>
-    <text x="547" y="385" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="24" transform="rotate(-90 547 385)">Hwp</text>
-    <text x="150" y="96" fill="#ffffff" font-family="Arial, sans-serif" font-size="26">Lwp-h AT UPPER END OF BRACE</text>
-    <text x="585" y="112" fill="#ffffff" font-family="Arial, sans-serif" font-size="24">OVERALL PROCEDURE</text>
-    <text x="606" y="198" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">A  LAYOUT BOTTOM BRACE CONNECTION</text>
-    <text x="606" y="255" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">B  ESTABLISH UPPER-MOST BOLT-HOLE</text>
-    <text x="606" y="342" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">C  LAYOUT UPPER BOLT-HOLE PATTERN</text>
-  </g>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 Z" fill="#ffffff"/>
-    </marker>
-  </defs>
+<?xml version="1.0" standalone="no"?>
+<svg viewBox="0 0 1024 768" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd" xml:space="preserve" style="background-color:rgb(0,0,0);" >
+<defs >
+<style >g[clip-path] > * {vector-effect: non-scaling-stroke;}</style>
+<clipPath id="clipId0" >
+<path d="M0,768 1024,768 1024,0 0,0 z" />
+</clipPath>
+</defs>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" />
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,0,0)" stroke-width="1px" >
+<polyline points="97.8811,587.856 97.8811,143.973 " />
+<polyline points="101.272,587.856 101.272,143.973 " />
+<polyline points="128.117,587.856 128.117,143.973 " />
+<polyline points="131.507,587.856 131.507,143.973 " />
+<polyline points="477.324,587.856 477.324,143.973 " />
+<polyline points="473.933,587.856 473.933,143.973 " />
+<polyline points="447.088,587.856 447.088,143.973 " />
+<polyline points="443.698,587.856 443.698,143.973 " />
+<polyline points="131.507,210.758 443.698,210.758 " />
+<polyline points="131.507,207.368 443.698,207.368 " />
+<polyline points="131.507,166.926 443.698,166.926 " />
+<polyline points="131.507,163.536 443.698,163.536 " />
+<polyline points="131.507,570.172 443.698,570.172 " />
+<polyline points="131.507,566.781 443.698,566.781 " />
+<polyline points="131.507,526.339 443.698,526.339 " />
+<polyline points="131.507,522.949 443.698,522.949 " />
+<polyline points="443.698,210.758 443.698,263.849 " />
+<polyline points="395.992,210.758 443.698,210.758 " />
+<polyline points="131.507,522.949 184.598,522.949 " />
+<polyline points="131.507,475.243 131.507,522.949 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(0,255,0)" stroke-width="1px" >
+<polyline points="65.3484,143.973 105.628,143.973 110.275,131.579 119.571,156.367 124.218,143.973 164.498,143.973 " />
+<polyline points="411.165,143.973 451.445,143.973 456.092,131.579 465.387,156.367 470.035,143.973 510.314,143.973 " />
+<polyline points="65.3484,587.856 105.628,587.856 110.275,575.462 119.571,600.25 124.218,587.856 164.498,587.856 " />
+<polyline points="411.165,587.856 451.445,587.856 456.092,575.462 465.387,600.25 470.035,587.856 510.314,587.856 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="114.839,609.276 114.839,132.595 " stroke-dasharray="0.527791,0.087965,0.087965,0.087965" />
+<polyline points="487.726,545.5 86.014,545.5 " stroke-dasharray="0.527791,0.087965,0.087965,0.087965" />
+<polyline points="460.463,594.264 460.463,117.583 " stroke-dasharray="0.527791,0.087965,0.087965,0.087965" />
+<polyline points="88.1149,188.102 491.021,188.102 " stroke-dasharray="0.527791,0.087965,0.087965,0.087965" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,0,0)" stroke-width="1px" >
+<polyline points="131.507,522.949 182.268,522.949 " />
+<polyline points="131.507,477.374 131.507,522.949 " />
+<polyline points="155.185,477.374 131.507,477.374 " />
+<polyline points="182.268,503.417 182.268,522.949 " />
+<polyline points="131.507,477.374 155.338,477.374 " />
+<polyline points="182.268,503.417 182.268,522.949 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="114.839,545.5 460.463,188.102 " stroke-dasharray="0.527791,0.087965,0.087965,0.087965" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="177.694,498.994 159.221,481.129 " stroke-dasharray="0.087965,0.043983" />
+<polyline points="415.988,252.582 397.514,234.717 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<polyline points="181.695,478.427 149.587,511.629 " />
+<polyline points="179.642,476.442 147.534,509.644 " />
+<polyline points="406.856,268.187 192.985,489.344 " />
+<polyline points="382.224,244.366 168.353,465.524 " />
+<polyline points="182.715,489.838 187.924,484.451 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="209.919,461.706 217.484,443.205 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<polyline points="168.204,475.804 173.413,470.418 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="195.408,447.673 213.646,439.493 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<path d="M148.201,492.524  A12.8496,12.8496 0 0,0 166.674,510.389 " />
+<polyline points="177.694,498.994 182.715,489.838 " />
+<polyline points="166.674,510.389 177.694,498.994 " />
+<polyline points="159.221,481.129 168.204,475.804 " />
+<polyline points="148.201,492.524 159.221,481.129 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="214.539,440.357 213.646,439.493 " stroke-dasharray="0.043983,0.021991" />
+<polyline points="217.484,443.205 216.591,442.342 " stroke-dasharray="0.043983,0.021991" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<polyline points="192.985,489.344 168.353,465.524 " />
+<polyline points="193.257,489.063 168.625,465.242 " />
+<polyline points="154.426,502.517 156.479,504.502 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="220.005,434.704 222.057,436.689 " stroke-dasharray="8.796519,4.398260" />
+<polyline points="214.539,440.357 216.591,442.342 " stroke-dasharray="8.796519,4.398260" />
+<polyline points="395.566,257.269 181.695,478.427 " stroke-dasharray="0.087965,0.043983" />
+<polyline points="179.642,476.442 393.513,255.284 " stroke-dasharray="0.087965,0.043983" />
+<polyline points="187.924,484.451 209.919,461.706 " stroke-dasharray="0.087965,0.043983" />
+<polyline points="195.408,447.673 173.413,470.418 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<polyline points="395.566,257.269 427.675,224.067 " />
+<polyline points="393.513,255.284 425.622,222.082 " />
+<polyline points="407.005,257.906 401.795,263.293 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="379.8,286.037 361.563,294.217 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<polyline points="392.494,243.873 387.284,249.26 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="365.289,272.004 357.724,290.505 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<path d="M427.008,241.187  A12.8496,12.8496 0 0,0 408.534,223.321 " />
+<polyline points="415.988,252.582 407.005,257.906 " />
+<polyline points="427.008,241.187 415.988,252.582 " />
+<polyline points="397.514,234.717 392.494,243.873 " />
+<polyline points="408.534,223.321 397.514,234.717 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="358.617,291.369 357.724,290.505 " stroke-dasharray="0.043983,0.021991" />
+<polyline points="361.563,294.217 360.67,293.354 " stroke-dasharray="0.043983,0.021991" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<polyline points="406.856,268.187 382.224,244.366 " />
+<polyline points="406.583,268.468 381.952,244.648 " />
+<polyline points="418.73,229.209 420.782,231.194 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="353.151,297.021 355.204,299.006 " stroke-dasharray="8.796519,4.398260" />
+<polyline points="358.617,291.369 360.67,293.354 " stroke-dasharray="8.796519,4.398260" />
+<polyline points="401.795,263.293 379.8,286.037 " stroke-dasharray="0.087965,0.043983" />
+<polyline points="365.289,272.004 387.284,249.26 " stroke-dasharray="0.087965,0.043983" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<circle cx="425.91" cy="231.791" r="1.21444" />
+<circle cx="425.356" cy="237.666" r="1.21444" />
+<circle cx="419.503" cy="238.416" r="1.21444" />
+<circle cx="418.949" cy="244.291" r="1.21444" />
+<circle cx="413.096" cy="245.041" r="1.21444" />
+<circle cx="405.09" cy="237.298" r="1.21444" />
+<circle cx="405.643" cy="231.423" r="1.21444" />
+<circle cx="411.496" cy="230.673" r="1.21444" />
+<circle cx="412.05" cy="224.798" r="1.21444" />
+<circle cx="417.903" cy="224.048" r="1.21444" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="417.572,223.728 418.234,224.368 " />
+<polyline points="417.583,224.379 418.224,223.717 " />
+<polyline points="418.544,223.386 419.825,222.061 " />
+<polyline points="418.566,224.689 419.891,225.97 " />
+<polyline points="417.241,223.407 415.916,222.126 " />
+<polyline points="417.263,224.711 415.981,226.036 " />
+<polyline points="411.718,224.478 412.381,225.118 " />
+<polyline points="411.729,225.129 412.37,224.467 " />
+<polyline points="412.69,224.135 413.972,222.81 " />
+<polyline points="412.712,225.439 414.037,226.72 " />
+<polyline points="411.387,224.157 410.062,222.876 " />
+<polyline points="411.409,225.46 410.128,226.785 " />
+<polyline points="411.165,230.353 411.828,230.994 " />
+<polyline points="411.176,231.005 411.817,230.342 " />
+<polyline points="412.137,230.011 413.418,228.686 " />
+<polyline points="412.159,231.314 413.484,232.595 " />
+<polyline points="410.834,230.033 409.509,228.751 " />
+<polyline points="410.856,231.336 409.574,232.661 " />
+<polyline points="405.312,231.103 405.974,231.743 " />
+<polyline points="405.323,231.754 405.963,231.092 " />
+<polyline points="406.284,230.761 407.565,229.436 " />
+<polyline points="406.305,232.064 407.63,233.345 " />
+<polyline points="404.98,230.782 403.655,229.501 " />
+<polyline points="405.002,232.086 403.721,233.411 " />
+<polyline points="404.758,236.978 405.421,237.619 " />
+<polyline points="404.769,237.63 405.41,236.967 " />
+<polyline points="405.73,236.636 407.012,235.311 " />
+<polyline points="405.752,237.939 407.077,239.22 " />
+<polyline points="404.427,236.658 403.102,235.376 " />
+<polyline points="404.449,237.961 403.168,239.286 " />
+<polyline points="412.765,244.721 413.427,245.361 " />
+<polyline points="412.776,245.372 413.416,244.71 " />
+<polyline points="413.737,244.378 415.018,243.053 " />
+<polyline points="413.758,245.682 415.083,246.963 " />
+<polyline points="412.433,244.4 411.108,243.119 " />
+<polyline points="412.455,245.703 411.174,247.028 " />
+<polyline points="418.618,243.971 419.281,244.611 " />
+<polyline points="418.629,244.622 419.27,243.96 " />
+<polyline points="419.59,243.629 420.871,242.304 " />
+<polyline points="419.612,244.932 420.937,246.213 " />
+<polyline points="418.287,243.65 416.962,242.369 " />
+<polyline points="418.309,244.954 417.027,246.279 " />
+<polyline points="419.171,238.095 419.834,238.736 " />
+<polyline points="419.182,238.747 419.823,238.084 " />
+<polyline points="420.143,237.753 421.425,236.428 " />
+<polyline points="420.165,239.056 421.49,240.338 " />
+<polyline points="418.84,237.775 417.515,236.494 " />
+<polyline points="418.862,239.078 417.581,240.403 " />
+<polyline points="425.025,237.346 425.687,237.986 " />
+<polyline points="425.036,237.997 425.677,237.335 " />
+<polyline points="425.997,237.003 427.278,235.678 " />
+<polyline points="426.019,238.307 427.344,239.588 " />
+<polyline points="424.694,237.025 423.369,235.744 " />
+<polyline points="424.715,238.328 423.434,239.653 " />
+<polyline points="425.578,231.47 426.241,232.111 " />
+<polyline points="425.589,232.122 426.23,231.459 " />
+<polyline points="426.55,231.128 427.832,229.803 " />
+<polyline points="426.572,232.431 427.897,233.713 " />
+<polyline points="425.247,231.15 423.922,229.869 " />
+<polyline points="425.269,232.453 423.987,233.778 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,127,0)" stroke-width="1px" >
+<circle cx="157.248" cy="509.607" r="1.21444" />
+<circle cx="163.102" cy="508.858" r="1.21444" />
+<circle cx="163.655" cy="502.982" r="1.21444" />
+<circle cx="169.509" cy="502.232" r="1.21444" />
+<circle cx="170.062" cy="496.357" r="1.21444" />
+<circle cx="162.056" cy="488.615" r="1.21444" />
+<circle cx="156.202" cy="489.365" r="1.21444" />
+<circle cx="155.649" cy="495.24" r="1.21444" />
+<circle cx="149.795" cy="495.99" r="1.21444" />
+<circle cx="149.242" cy="501.865" r="1.21444" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,0)" stroke-width="1px" >
+<polyline points="148.911,501.545 149.573,502.185 " />
+<polyline points="149.562,501.534 148.922,502.196 " />
+<polyline points="148.601,502.527 147.32,503.852 " />
+<polyline points="149.905,502.506 151.23,503.787 " />
+<polyline points="148.58,501.224 147.255,499.943 " />
+<polyline points="149.883,501.202 151.164,499.877 " />
+<polyline points="149.464,495.669 150.127,496.31 " />
+<polyline points="150.116,495.658 149.475,496.321 " />
+<polyline points="149.155,496.652 147.873,497.977 " />
+<polyline points="150.458,496.63 151.783,497.912 " />
+<polyline points="149.133,495.349 147.808,494.068 " />
+<polyline points="150.436,495.327 151.717,494.002 " />
+<polyline points="155.318,494.919 155.98,495.56 " />
+<polyline points="155.969,494.909 155.329,495.571 " />
+<polyline points="155.008,495.902 153.727,497.227 " />
+<polyline points="156.311,495.881 157.636,497.162 " />
+<polyline points="154.986,494.599 153.661,493.318 " />
+<polyline points="156.29,494.577 157.571,493.252 " />
+<polyline points="155.871,489.044 156.534,489.685 " />
+<polyline points="156.523,489.033 155.882,489.696 " />
+<polyline points="155.562,490.027 154.28,491.352 " />
+<polyline points="156.865,490.005 158.19,491.287 " />
+<polyline points="155.54,488.724 154.215,487.442 " />
+<polyline points="156.843,488.702 158.124,487.377 " />
+<polyline points="161.724,488.294 162.387,488.935 " />
+<polyline points="162.376,488.283 161.735,488.946 " />
+<polyline points="161.415,489.277 160.134,490.602 " />
+<polyline points="162.718,489.255 164.043,490.537 " />
+<polyline points="161.393,487.974 160.068,486.693 " />
+<polyline points="162.696,487.952 163.978,486.627 " />
+<polyline points="169.731,496.037 170.393,496.678 " />
+<polyline points="170.382,496.026 169.742,496.688 " />
+<polyline points="169.421,497.02 168.14,498.345 " />
+<polyline points="170.725,496.998 172.05,498.279 " />
+<polyline points="169.4,495.717 168.074,494.435 " />
+<polyline points="170.703,495.695 171.984,494.37 " />
+<polyline points="169.177,501.912 169.84,502.553 " />
+<polyline points="169.829,501.901 169.188,502.564 " />
+<polyline points="168.868,502.895 167.587,504.22 " />
+<polyline points="170.171,502.873 171.496,504.155 " />
+<polyline points="168.846,501.592 167.521,500.31 " />
+<polyline points="170.149,501.57 171.431,500.245 " />
+<polyline points="163.324,502.662 163.986,503.303 " />
+<polyline points="163.976,502.651 163.335,503.314 " />
+<polyline points="163.015,503.645 161.733,504.97 " />
+<polyline points="164.318,503.623 165.643,504.904 " />
+<polyline points="162.993,502.342 161.668,501.06 " />
+<polyline points="164.296,502.32 165.577,500.995 " />
+<polyline points="162.771,508.537 163.433,509.178 " />
+<polyline points="163.422,508.526 162.782,509.189 " />
+<polyline points="162.461,509.52 161.18,510.845 " />
+<polyline points="163.764,509.498 165.089,510.78 " />
+<polyline points="162.439,508.217 161.114,506.936 " />
+<polyline points="163.743,508.195 165.024,506.87 " />
+<polyline points="156.917,509.287 157.58,509.928 " />
+<polyline points="157.569,509.276 156.928,509.939 " />
+<polyline points="156.608,510.27 155.326,511.595 " />
+<polyline points="157.911,510.248 159.236,511.529 " />
+<polyline points="156.586,508.967 155.261,507.685 " />
+<polyline points="157.889,508.945 159.17,507.62 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,0,0)" stroke-width="1px" >
+<polyline points="159.221,481.129 155.338,477.374 " />
+<polyline points="177.688,498.987 182.268,503.417 " />
+<polyline points="443.698,210.758 392.937,210.758 " />
+<polyline points="443.698,256.333 443.698,210.758 " />
+<polyline points="420.02,256.333 443.698,256.333 " />
+<polyline points="392.937,230.29 392.937,210.758 " />
+<polyline points="443.698,256.333 419.867,256.333 " />
+<polyline points="392.937,230.29 392.937,210.758 " />
+<polyline points="415.985,252.579 419.867,256.333 " />
+<polyline points="397.517,234.72 392.937,230.29 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="588.09" cy="135.339" r="10.8092" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 604.951 142.376)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >CIRCLED NOTES ARE KEYED ON DETAIL.</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="588.09" cy="191.637" r="10.8092" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(11.4847 0 -0 11.4847 582.739 197.379)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >A</text>
+<text transform="matrix(14.0744 0 -0 14.0744 604.501 198.554)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >LAYOUT BOTTOM BRACE CONNECTION</text>
+<text transform="matrix(14.0744 0 -0 14.0744 576.338 112.145)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >OVERALL PROCEDURE</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="576.338,116.31 797.954,116.31 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 797.954 112.145)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >:</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="588.716" cy="247.928" r="10.8092" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(11.4847 0 -0 11.4847 583.365 253.67)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >B</text>
+<text transform="matrix(14.0744 0 -0 14.0744 605.014 253.578)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >ESTABLISH UPPER-MOST BOLT-HOLE,</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="588.716" cy="333.646" r="10.8092" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(11.4847 0 -0 11.4847 582.923 339.389)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >C</text>
+<text transform="matrix(14.0744 0 -0 14.0744 605.127 340.564)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >LAYOUT UPPER BOLT-HOLE PATTERN</text>
+<text transform="matrix(14.0744 0 -0 14.0744 605.127 282.994)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >LOCATED AT DISTANCE L</text>
+<text transform="matrix(9.8521 0 -0 9.8521 848.773 287.609)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >bh</text>
+<text transform="matrix(14.0744 0 -0 14.0744 869.525 282.994)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >FROM</text>
+<text transform="matrix(14.0744 0 -0 14.0744 605.662 368.713)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >SIMILAR TO LOWER BOLT-HOLE PATTERN.</text>
+<text transform="matrix(14.0744 0 -0 14.0744 604.994 224.149)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >ON GUSSET. (SEE DETAIL 2/-)</text>
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="111.792,547.259 111.864,547.379 114.839,545.5 114.839,545.5 " />
+<polygon points="111.864,547.379 111.941,547.496 114.839,545.5 114.839,545.5 " />
+<polygon points="111.941,547.496 112.023,547.609 114.839,545.5 114.839,545.5 " />
+<polygon points="112.023,547.609 112.109,547.72 114.839,545.5 114.839,545.5 " />
+<polygon points="112.109,547.72 112.199,547.826 114.839,545.5 114.839,545.5 " />
+<polygon points="112.199,547.826 112.294,547.929 114.839,545.5 114.839,545.5 " />
+<polygon points="112.294,547.929 112.392,548.029 114.839,545.5 114.839,545.5 " />
+<polygon points="112.392,548.029 112.495,548.124 114.839,545.5 114.839,545.5 " />
+<polygon points="112.495,548.124 112.601,548.215 114.839,545.5 114.839,545.5 " />
+<polygon points="112.601,548.215 112.711,548.302 114.839,545.5 114.839,545.5 " />
+<polygon points="112.711,548.302 112.824,548.384 114.839,545.5 114.839,545.5 " />
+<polygon points="112.824,548.384 112.94,548.462 114.839,545.5 114.839,545.5 " />
+<polygon points="112.94,548.462 113.059,548.535 114.839,545.5 114.839,545.5 " />
+<polygon points="113.059,548.535 113.181,548.604 114.839,545.5 114.839,545.5 " />
+<polygon points="113.181,548.604 113.306,548.667 114.839,545.5 114.839,545.5 " />
+<polygon points="113.306,548.667 113.433,548.725 114.839,545.5 114.839,545.5 " />
+<polygon points="113.433,548.725 113.563,548.779 114.839,545.5 114.839,545.5 " />
+<polygon points="113.563,548.779 113.694,548.827 114.839,545.5 114.839,545.5 " />
+<polygon points="113.694,548.827 113.827,548.87 114.839,545.5 114.839,545.5 " />
+<polygon points="113.827,548.87 113.962,548.907 114.839,545.5 114.839,545.5 " />
+<polygon points="113.962,548.907 114.098,548.94 114.839,545.5 114.839,545.5 " />
+<polygon points="114.098,548.94 114.235,548.966 114.839,545.5 114.839,545.5 " />
+<polygon points="114.235,548.966 114.374,548.988 114.839,545.5 114.839,545.5 " />
+<polygon points="114.374,548.988 114.513,549.003 114.839,545.5 114.839,545.5 " />
+<polygon points="114.513,549.003 114.652,549.013 114.839,545.5 114.839,545.5 " />
+<polygon points="114.652,549.013 114.792,549.018 114.839,545.5 114.839,545.5 " />
+<polygon points="114.792,549.018 114.932,549.017 114.839,545.5 114.839,545.5 " />
+<polygon points="114.932,549.017 115.072,549.011 114.839,545.5 114.839,545.5 " />
+<polygon points="115.072,549.011 115.211,548.999 114.839,545.5 114.839,545.5 " />
+<polygon points="115.211,548.999 115.35,548.981 114.839,545.5 114.839,545.5 " />
+<polygon points="115.35,548.981 115.488,548.958 114.839,545.5 114.839,545.5 " />
+<polygon points="115.488,548.958 115.625,548.929 114.839,545.5 114.839,545.5 " />
+<polygon points="115.625,548.929 115.761,548.895 114.839,545.5 114.839,545.5 " />
+<polygon points="115.761,548.895 115.895,548.856 114.839,545.5 114.839,545.5 " />
+<polygon points="115.895,548.856 116.028,548.811 114.839,545.5 114.839,545.5 " />
+<polygon points="116.028,548.811 116.158,548.762 114.839,545.5 114.839,545.5 " />
+<polygon points="116.158,548.762 116.287,548.707 114.839,545.5 114.839,545.5 " />
+<polygon points="116.287,548.707 116.413,548.646 114.839,545.5 114.839,545.5 " />
+<polygon points="116.413,548.646 116.537,548.581 114.839,545.5 114.839,545.5 " />
+<polygon points="116.537,548.581 116.658,548.511 114.839,545.5 114.839,545.5 " />
+<polygon points="116.658,548.511 116.777,548.437 114.839,545.5 114.839,545.5 " />
+<polygon points="116.777,548.437 116.892,548.357 114.839,545.5 114.839,545.5 " />
+<polygon points="116.892,548.357 117.004,548.273 114.839,545.5 114.839,545.5 " />
+<polygon points="117.004,548.273 117.112,548.185 114.839,545.5 114.839,545.5 " />
+<polygon points="117.112,548.185 117.217,548.093 114.839,545.5 114.839,545.5 " />
+<polygon points="117.217,548.093 117.318,547.996 114.839,545.5 114.839,545.5 " />
+<polygon points="117.318,547.996 117.416,547.895 114.839,545.5 114.839,545.5 " />
+<polygon points="117.416,547.895 117.509,547.791 114.839,545.5 114.839,545.5 " />
+<polygon points="117.509,547.791 117.598,547.683 114.839,545.5 114.839,545.5 " />
+<polygon points="117.598,547.683 117.683,547.572 114.839,545.5 114.839,545.5 " />
+<polygon points="117.683,547.572 117.763,547.457 114.839,545.5 114.839,545.5 " />
+<polygon points="117.763,547.457 117.838,547.339 114.839,545.5 114.839,545.5 " />
+<polygon points="117.838,547.339 117.909,547.219 114.839,545.5 114.839,545.5 " />
+<polygon points="117.909,547.219 117.975,547.095 114.839,545.5 114.839,545.5 " />
+<polygon points="117.975,547.095 118.036,546.969 114.839,545.5 114.839,545.5 " />
+<polygon points="118.036,546.969 118.092,546.841 114.839,545.5 114.839,545.5 " />
+<polygon points="118.092,546.841 118.142,546.711 114.839,545.5 114.839,545.5 " />
+<polygon points="118.142,546.711 118.188,546.578 114.839,545.5 114.839,545.5 " />
+<polygon points="118.188,546.578 118.228,546.444 114.839,545.5 114.839,545.5 " />
+<polygon points="118.228,546.444 118.263,546.309 114.839,545.5 114.839,545.5 " />
+<polygon points="118.263,546.309 118.293,546.172 114.839,545.5 114.839,545.5 " />
+<polygon points="118.293,546.172 118.317,546.034 114.839,545.5 114.839,545.5 " />
+<polygon points="118.317,546.034 118.335,545.895 114.839,545.5 114.839,545.5 " />
+<polygon points="118.335,545.895 118.348,545.756 114.839,545.5 114.839,545.5 " />
+<polygon points="118.348,545.756 118.355,545.616 114.839,545.5 114.839,545.5 " />
+<polygon points="118.355,545.616 118.357,545.476 114.839,545.5 114.839,545.5 " />
+<polygon points="118.357,545.476 118.354,545.337 114.839,545.5 114.839,545.5 " />
+<polygon points="118.354,545.337 118.344,545.197 114.839,545.5 114.839,545.5 " />
+<polygon points="118.344,545.197 118.329,545.058 114.839,545.5 114.839,545.5 " />
+<polygon points="118.329,545.058 118.309,544.919 114.839,545.5 114.839,545.5 " />
+<polygon points="118.309,544.919 118.283,544.782 114.839,545.5 114.839,545.5 " />
+<polygon points="118.283,544.782 118.252,544.646 114.839,545.5 114.839,545.5 " />
+<polygon points="118.252,544.646 118.215,544.511 114.839,545.5 114.839,545.5 " />
+<polygon points="118.215,544.511 118.173,544.377 114.839,545.5 114.839,545.5 " />
+<polygon points="118.173,544.377 118.126,544.245 114.839,545.5 114.839,545.5 " />
+<polygon points="118.126,544.245 118.074,544.116 114.839,545.5 114.839,545.5 " />
+<polygon points="118.074,544.116 118.016,543.988 114.839,545.5 114.839,545.5 " />
+<polygon points="118.016,543.988 117.953,543.863 114.839,545.5 114.839,545.5 " />
+<polygon points="117.953,543.863 117.886,543.74 114.839,545.5 114.839,545.5 " />
+<polygon points="117.886,543.74 117.814,543.621 114.839,545.5 114.839,545.5 " />
+<polygon points="117.814,543.621 117.737,543.504 114.839,545.5 114.839,545.5 " />
+<polygon points="117.737,543.504 117.655,543.39 114.839,545.5 114.839,545.5 " />
+<polygon points="117.655,543.39 117.569,543.28 114.839,545.5 114.839,545.5 " />
+<polygon points="117.569,543.28 117.478,543.173 114.839,545.5 114.839,545.5 " />
+<polygon points="117.478,543.173 117.384,543.07 114.839,545.5 114.839,545.5 " />
+<polygon points="117.384,543.07 117.285,542.971 114.839,545.5 114.839,545.5 " />
+<polygon points="117.285,542.971 117.183,542.876 114.839,545.5 114.839,545.5 " />
+<polygon points="117.183,542.876 117.077,542.784 114.839,545.5 114.839,545.5 " />
+<polygon points="117.077,542.784 116.967,542.698 114.839,545.5 114.839,545.5 " />
+<polygon points="116.967,542.698 116.854,542.615 114.839,545.5 114.839,545.5 " />
+<polygon points="116.854,542.615 116.737,542.537 114.839,545.5 114.839,545.5 " />
+<polygon points="116.737,542.537 116.618,542.464 114.839,545.5 114.839,545.5 " />
+<polygon points="116.618,542.464 116.496,542.396 114.839,545.5 114.839,545.5 " />
+<polygon points="116.496,542.396 116.371,542.333 114.839,545.5 114.839,545.5 " />
+<polygon points="116.371,542.333 116.244,542.274 114.839,545.5 114.839,545.5 " />
+<polygon points="116.244,542.274 116.115,542.221 114.839,545.5 114.839,545.5 " />
+<polygon points="116.115,542.221 115.984,542.173 114.839,545.5 114.839,545.5 " />
+<polygon points="115.984,542.173 115.85,542.13 114.839,545.5 114.839,545.5 " />
+<polygon points="115.85,542.13 115.716,542.092 114.839,545.5 114.839,545.5 " />
+<polygon points="115.716,542.092 115.579,542.06 114.839,545.5 114.839,545.5 " />
+<polygon points="115.579,542.06 115.442,542.033 114.839,545.5 114.839,545.5 " />
+<polygon points="115.442,542.033 115.304,542.012 114.839,545.5 114.839,545.5 " />
+<polygon points="115.304,542.012 115.165,541.996 114.839,545.5 114.839,545.5 " />
+<polygon points="115.165,541.996 115.025,541.986 114.839,545.5 114.839,545.5 " />
+<polygon points="115.025,541.986 114.885,541.981 114.839,545.5 114.839,545.5 " />
+<polygon points="114.885,541.981 114.745,541.982 114.839,545.5 114.839,545.5 " />
+<polygon points="114.745,541.982 114.606,541.989 114.839,545.5 114.839,545.5 " />
+<polygon points="114.606,541.989 114.466,542.001 114.839,545.5 114.839,545.5 " />
+<polygon points="114.466,542.001 114.327,542.019 114.839,545.5 114.839,545.5 " />
+<polygon points="114.327,542.019 114.189,542.042 114.839,545.5 114.839,545.5 " />
+<polygon points="114.189,542.042 114.052,542.07 114.839,545.5 114.839,545.5 " />
+<polygon points="114.052,542.07 113.917,542.104 114.839,545.5 114.839,545.5 " />
+<polygon points="113.917,542.104 113.782,542.143 114.839,545.5 114.839,545.5 " />
+<polygon points="113.782,542.143 113.65,542.188 114.839,545.5 114.839,545.5 " />
+<polygon points="113.65,542.188 113.519,542.238 114.839,545.5 114.839,545.5 " />
+<polygon points="113.519,542.238 113.391,542.293 114.839,545.5 114.839,545.5 " />
+<polygon points="113.391,542.293 113.264,542.353 114.839,545.5 114.839,545.5 " />
+<polygon points="113.264,542.353 113.14,542.418 114.839,545.5 114.839,545.5 " />
+<polygon points="113.14,542.418 113.019,542.488 114.839,545.5 114.839,545.5 " />
+<polygon points="113.019,542.488 112.901,542.563 114.839,545.5 114.839,545.5 " />
+<polygon points="112.901,542.563 112.786,542.642 114.839,545.5 114.839,545.5 " />
+<polygon points="112.786,542.642 112.674,542.726 114.839,545.5 114.839,545.5 " />
+<polygon points="112.674,542.726 112.565,542.814 114.839,545.5 114.839,545.5 " />
+<polygon points="112.565,542.814 112.46,542.907 114.839,545.5 114.839,545.5 " />
+<polygon points="112.46,542.907 112.359,543.004 114.839,545.5 114.839,545.5 " />
+<polygon points="112.359,543.004 112.262,543.104 114.839,545.5 114.839,545.5 " />
+<polygon points="112.262,543.104 112.168,543.208 114.839,545.5 114.839,545.5 " />
+<polygon points="112.168,543.208 112.079,543.316 114.839,545.5 114.839,545.5 " />
+<polygon points="112.079,543.316 111.995,543.428 114.839,545.5 114.839,545.5 " />
+<polygon points="111.995,543.428 111.915,543.543 114.839,545.5 114.839,545.5 " />
+<polygon points="111.915,543.543 111.839,543.66 114.839,545.5 114.839,545.5 " />
+<polygon points="111.839,543.66 111.768,543.781 114.839,545.5 114.839,545.5 " />
+<polygon points="111.768,543.781 111.703,543.904 114.839,545.5 114.839,545.5 " />
+<polygon points="111.703,543.904 111.642,544.03 114.839,545.5 114.839,545.5 " />
+<polygon points="111.642,544.03 111.586,544.159 114.839,545.5 114.839,545.5 " />
+<polygon points="111.586,544.159 111.535,544.289 114.839,545.5 114.839,545.5 " />
+<polygon points="111.535,544.289 111.489,544.421 114.839,545.5 114.839,545.5 " />
+<polygon points="111.489,544.421 111.449,544.555 114.839,545.5 114.839,545.5 " />
+<polygon points="111.449,544.555 111.414,544.691 114.839,545.5 114.839,545.5 " />
+<polygon points="111.414,544.691 111.385,544.828 114.839,545.5 114.839,545.5 " />
+<polygon points="111.385,544.828 111.361,544.965 114.839,545.5 114.839,545.5 " />
+<polygon points="111.361,544.965 111.342,545.104 114.839,545.5 114.839,545.5 " />
+<polygon points="111.342,545.104 111.329,545.243 114.839,545.5 114.839,545.5 " />
+<polygon points="111.329,545.243 111.322,545.383 114.839,545.5 114.839,545.5 " />
+<polygon points="111.322,545.383 111.32,545.523 114.839,545.5 114.839,545.5 " />
+<polygon points="111.32,545.523 111.324,545.663 114.839,545.5 114.839,545.5 " />
+<polygon points="111.324,545.663 111.333,545.803 114.839,545.5 114.839,545.5 " />
+<polygon points="111.333,545.803 111.348,545.942 114.839,545.5 114.839,545.5 " />
+<polygon points="111.348,545.942 111.368,546.08 114.839,545.5 114.839,545.5 " />
+<polygon points="111.368,546.08 111.394,546.218 114.839,545.5 114.839,545.5 " />
+<polygon points="111.394,546.218 111.425,546.354 114.839,545.5 114.839,545.5 " />
+<polygon points="111.425,546.354 111.462,546.489 114.839,545.5 114.839,545.5 " />
+<polygon points="111.462,546.489 111.504,546.623 114.839,545.5 114.839,545.5 " />
+<polygon points="111.504,546.623 111.551,546.754 114.839,545.5 114.839,545.5 " />
+<polygon points="111.551,546.754 111.604,546.884 114.839,545.5 114.839,545.5 " />
+<polygon points="111.604,546.884 111.661,547.011 114.839,545.5 114.839,545.5 " />
+<polygon points="111.661,547.011 111.724,547.137 114.839,545.5 114.839,545.5 " />
+<polygon points="111.724,547.137 111.792,547.259 114.839,545.5 114.839,545.5 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="111.792,547.259 108.744,549.018 " />
+<polyline points="108.744,549.018 79.8612,565.694 " />
+<polyline points="79.8612,565.694 65.7867,565.694 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 24.4361 572.731)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >WP</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="347.658,157.309 484.916,157.309 484.916,294.568 347.658,294.568 347.658,157.309 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="144.204,496.951 66.8956,421.544 " />
+<polyline points="412.866,219.134 336.747,144.888 " />
+<polyline points="79.3038,418.901 334.414,157.358 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="178.469,276.421 203.431,250.829 225.583,272.437 200.621,298.028 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(9.82744 -10.0753 10.0753 9.82744 192.518 287.214)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >L</text>
+<text transform="matrix(9.82744 -10.0753 10.0753 9.82744 206.128 287.021)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >bh</text>
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<path d="M78.0444,417.673 80.5633,420.13 71.9333,426.458 71.9333,426.458 z" />
+<path d="M333.154,156.13 335.673,158.587 341.784,149.802 341.784,149.802 z" />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="144.204,496.951 66.983,421.629 " />
+<polyline points="109.801,540.586 28.399,461.186 " />
+<polyline points="64.65,434.099 40.8072,458.543 " />
+<polyline points="52.7286,446.321 24.7782,424.311 " />
+<polyline points="24.7782,424.311 87.0969,360.421 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="10.0392,387.912 50.3416,346.593 77.753,373.33 37.4507,414.649 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(9.82744 -10.0753 10.0753 9.82744 24.0878 398.705)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >L</text>
+<text transform="matrix(9.82744 -10.0753 10.0753 9.82744 41.1921 400.191)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >wp-h</text>
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<path d="M63.3906,432.871 65.9094,435.328 72.0206,426.543 72.0206,426.543 z" />
+<path d="M39.5478,457.315 42.0666,459.772 33.4366,466.1 33.4366,466.1 z" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="488.671,258.305 484.916,248.284 491.718,256.546 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="490.194,257.426 499.929,274.287 " />
+<polyline points="499.929,274.287 514.004,274.287 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="79.0403,440.179 216.299,440.179 216.299,577.437 79.0403,577.437 79.0403,440.179 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="224.636,481.531 216.299,488.24 222.01,479.19 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="223.323,480.361 234.615,467.694 " />
+<polyline points="234.615,467.694 238.738,467.694 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="360.851,127.332 360.73,127.348 361.143,129.955 361.143,129.955 " />
+<polygon points="360.73,127.348 360.61,127.37 361.143,129.955 361.143,129.955 " />
+<polygon points="360.61,127.37 360.491,127.397 361.143,129.955 361.143,129.955 " />
+<polygon points="360.491,127.397 360.374,127.43 361.143,129.955 361.143,129.955 " />
+<polygon points="360.374,127.43 360.258,127.469 361.143,129.955 361.143,129.955 " />
+<polygon points="360.258,127.469 360.144,127.512 361.143,129.955 361.143,129.955 " />
+<polygon points="360.144,127.512 360.033,127.561 361.143,129.955 361.143,129.955 " />
+<polygon points="360.033,127.561 359.923,127.615 361.143,129.955 361.143,129.955 " />
+<polygon points="359.923,127.615 359.817,127.673 361.143,129.955 361.143,129.955 " />
+<polygon points="359.817,127.673 359.713,127.737 361.143,129.955 361.143,129.955 " />
+<polygon points="359.713,127.737 359.612,127.806 361.143,129.955 361.143,129.955 " />
+<polygon points="359.612,127.806 359.514,127.879 361.143,129.955 361.143,129.955 " />
+<polygon points="359.514,127.879 359.42,127.956 361.143,129.955 361.143,129.955 " />
+<polygon points="359.42,127.956 359.329,128.038 361.143,129.955 361.143,129.955 " />
+<polygon points="359.329,128.038 359.243,128.124 361.143,129.955 361.143,129.955 " />
+<polygon points="359.243,128.124 359.16,128.213 361.143,129.955 361.143,129.955 " />
+<polygon points="359.16,128.213 359.082,128.307 361.143,129.955 361.143,129.955 " />
+<polygon points="359.082,128.307 359.008,128.404 361.143,129.955 361.143,129.955 " />
+<polygon points="359.008,128.404 358.939,128.504 361.143,129.955 361.143,129.955 " />
+<polygon points="358.939,128.504 358.874,128.607 361.143,129.955 361.143,129.955 " />
+<polygon points="358.874,128.607 358.814,128.714 361.143,129.955 361.143,129.955 " />
+<polygon points="358.814,128.714 358.759,128.822 361.143,129.955 361.143,129.955 " />
+<polygon points="358.759,128.822 358.71,128.934 361.143,129.955 361.143,129.955 " />
+<polygon points="358.71,128.934 358.665,129.047 361.143,129.955 361.143,129.955 " />
+<polygon points="358.665,129.047 358.626,129.163 361.143,129.955 361.143,129.955 " />
+<polygon points="358.626,129.163 358.592,129.28 361.143,129.955 361.143,129.955 " />
+<polygon points="358.592,129.28 358.564,129.398 361.143,129.955 361.143,129.955 " />
+<polygon points="358.564,129.398 358.541,129.518 361.143,129.955 361.143,129.955 " />
+<polygon points="358.541,129.518 358.523,129.639 361.143,129.955 361.143,129.955 " />
+<polygon points="358.523,129.639 358.511,129.76 361.143,129.955 361.143,129.955 " />
+<polygon points="358.511,129.76 358.505,129.882 361.143,129.955 361.143,129.955 " />
+<polygon points="358.505,129.882 358.505,130.004 361.143,129.955 361.143,129.955 " />
+<polygon points="358.505,130.004 358.51,130.125 361.143,129.955 361.143,129.955 " />
+<polygon points="358.51,130.125 358.52,130.247 361.143,129.955 361.143,129.955 " />
+<polygon points="358.52,130.247 358.537,130.368 361.143,129.955 361.143,129.955 " />
+<polygon points="358.537,130.368 358.559,130.488 361.143,129.955 361.143,129.955 " />
+<polygon points="358.559,130.488 358.586,130.606 361.143,129.955 361.143,129.955 " />
+<polygon points="358.586,130.606 358.619,130.724 361.143,129.955 361.143,129.955 " />
+<polygon points="358.619,130.724 358.657,130.84 361.143,129.955 361.143,129.955 " />
+<polygon points="358.657,130.84 358.701,130.953 361.143,129.955 361.143,129.955 " />
+<polygon points="358.701,130.953 358.749,131.065 361.143,129.955 361.143,129.955 " />
+<polygon points="358.749,131.065 358.803,131.175 361.143,129.955 361.143,129.955 " />
+<polygon points="358.803,131.175 358.862,131.281 361.143,129.955 361.143,129.955 " />
+<polygon points="358.862,131.281 358.926,131.385 361.143,129.955 361.143,129.955 " />
+<polygon points="358.926,131.385 358.994,131.486 361.143,129.955 361.143,129.955 " />
+<polygon points="358.994,131.486 359.067,131.584 361.143,129.955 361.143,129.955 " />
+<polygon points="359.067,131.584 359.145,131.678 361.143,129.955 361.143,129.955 " />
+<polygon points="359.145,131.678 359.226,131.768 361.143,129.955 361.143,129.955 " />
+<polygon points="359.226,131.768 359.312,131.855 361.143,129.955 361.143,129.955 " />
+<polygon points="359.312,131.855 359.402,131.938 361.143,129.955 361.143,129.955 " />
+<polygon points="359.402,131.938 359.495,132.016 361.143,129.955 361.143,129.955 " />
+<polygon points="359.495,132.016 359.592,132.09 361.143,129.955 361.143,129.955 " />
+<polygon points="359.592,132.09 359.693,132.159 361.143,129.955 361.143,129.955 " />
+<polygon points="359.693,132.159 359.796,132.224 361.143,129.955 361.143,129.955 " />
+<polygon points="359.796,132.224 359.902,132.284 361.143,129.955 361.143,129.955 " />
+<polygon points="359.902,132.284 360.011,132.338 361.143,129.955 361.143,129.955 " />
+<polygon points="360.011,132.338 360.122,132.388 361.143,129.955 361.143,129.955 " />
+<polygon points="360.122,132.388 360.236,132.433 361.143,129.955 361.143,129.955 " />
+<polygon points="360.236,132.433 360.351,132.472 361.143,129.955 361.143,129.955 " />
+<polygon points="360.351,132.472 360.468,132.506 361.143,129.955 361.143,129.955 " />
+<polygon points="360.468,132.506 360.587,132.534 361.143,129.955 361.143,129.955 " />
+<polygon points="360.587,132.534 360.707,132.557 361.143,129.955 361.143,129.955 " />
+<polygon points="360.707,132.557 360.827,132.575 361.143,129.955 361.143,129.955 " />
+<polygon points="360.827,132.575 360.949,132.586 361.143,129.955 361.143,129.955 " />
+<polygon points="360.949,132.586 361.07,132.593 361.143,129.955 361.143,129.955 " />
+<polygon points="361.07,132.593 361.192,132.593 361.143,129.955 361.143,129.955 " />
+<polygon points="361.192,132.593 361.314,132.588 361.143,129.955 361.143,129.955 " />
+<polygon points="361.314,132.588 361.435,132.577 361.143,129.955 361.143,129.955 " />
+<polygon points="361.435,132.577 361.556,132.561 361.143,129.955 361.143,129.955 " />
+<polygon points="361.556,132.561 361.676,132.539 361.143,129.955 361.143,129.955 " />
+<polygon points="361.676,132.539 361.795,132.512 361.143,129.955 361.143,129.955 " />
+<polygon points="361.795,132.512 361.912,132.479 361.143,129.955 361.143,129.955 " />
+<polygon points="361.912,132.479 362.028,132.441 361.143,129.955 361.143,129.955 " />
+<polygon points="362.028,132.441 362.142,132.397 361.143,129.955 361.143,129.955 " />
+<polygon points="362.142,132.397 362.254,132.349 361.143,129.955 361.143,129.955 " />
+<polygon points="362.254,132.349 362.363,132.295 361.143,129.955 361.143,129.955 " />
+<polygon points="362.363,132.295 362.47,132.236 361.143,129.955 361.143,129.955 " />
+<polygon points="362.47,132.236 362.574,132.172 361.143,129.955 361.143,129.955 " />
+<polygon points="362.574,132.172 362.675,132.104 361.143,129.955 361.143,129.955 " />
+<polygon points="362.675,132.104 362.772,132.031 361.143,129.955 361.143,129.955 " />
+<polygon points="362.772,132.031 362.866,131.953 361.143,129.955 361.143,129.955 " />
+<polygon points="362.866,131.953 362.957,131.872 361.143,129.955 361.143,129.955 " />
+<polygon points="362.957,131.872 363.044,131.786 361.143,129.955 361.143,129.955 " />
+<polygon points="363.044,131.786 363.126,131.696 361.143,129.955 361.143,129.955 " />
+<polygon points="363.126,131.696 363.204,131.603 361.143,129.955 361.143,129.955 " />
+<polygon points="363.204,131.603 363.278,131.506 361.143,129.955 361.143,129.955 " />
+<polygon points="363.278,131.506 363.348,131.405 361.143,129.955 361.143,129.955 " />
+<polygon points="363.348,131.405 363.412,131.302 361.143,129.955 361.143,129.955 " />
+<polygon points="363.412,131.302 363.472,131.196 361.143,129.955 361.143,129.955 " />
+<polygon points="363.472,131.196 363.527,131.087 361.143,129.955 361.143,129.955 " />
+<polygon points="363.527,131.087 363.577,130.976 361.143,129.955 361.143,129.955 " />
+<polygon points="363.577,130.976 363.621,130.862 361.143,129.955 361.143,129.955 " />
+<polygon points="363.621,130.862 363.661,130.747 361.143,129.955 361.143,129.955 " />
+<polygon points="363.661,130.747 363.694,130.63 361.143,129.955 361.143,129.955 " />
+<polygon points="363.694,130.63 363.723,130.511 361.143,129.955 361.143,129.955 " />
+<polygon points="363.723,130.511 363.746,130.391 361.143,129.955 361.143,129.955 " />
+<polygon points="363.746,130.391 363.763,130.271 361.143,129.955 361.143,129.955 " />
+<polygon points="363.763,130.271 363.775,130.149 361.143,129.955 361.143,129.955 " />
+<polygon points="363.775,130.149 363.781,130.028 361.143,129.955 361.143,129.955 " />
+<polygon points="363.781,130.028 363.782,129.906 361.143,129.955 361.143,129.955 " />
+<polygon points="363.782,129.906 363.777,129.784 361.143,129.955 361.143,129.955 " />
+<polygon points="363.777,129.784 363.766,129.662 361.143,129.955 361.143,129.955 " />
+<polygon points="363.766,129.662 363.75,129.542 361.143,129.955 361.143,129.955 " />
+<polygon points="363.75,129.542 363.728,129.422 361.143,129.955 361.143,129.955 " />
+<polygon points="363.728,129.422 363.7,129.303 361.143,129.955 361.143,129.955 " />
+<polygon points="363.7,129.303 363.668,129.186 361.143,129.955 361.143,129.955 " />
+<polygon points="363.668,129.186 363.629,129.07 361.143,129.955 361.143,129.955 " />
+<polygon points="363.629,129.07 363.586,128.956 361.143,129.955 361.143,129.955 " />
+<polygon points="363.586,128.956 363.537,128.844 361.143,129.955 361.143,129.955 " />
+<polygon points="363.537,128.844 363.483,128.735 361.143,129.955 361.143,129.955 " />
+<polygon points="363.483,128.735 363.424,128.628 361.143,129.955 361.143,129.955 " />
+<polygon points="363.424,128.628 363.361,128.524 361.143,129.955 361.143,129.955 " />
+<polygon points="363.361,128.524 363.292,128.423 361.143,129.955 361.143,129.955 " />
+<polygon points="363.292,128.423 363.219,128.326 361.143,129.955 361.143,129.955 " />
+<polygon points="363.219,128.326 363.142,128.231 361.143,129.955 361.143,129.955 " />
+<polygon points="363.142,128.231 363.06,128.141 361.143,129.955 361.143,129.955 " />
+<polygon points="363.06,128.141 362.974,128.054 361.143,129.955 361.143,129.955 " />
+<polygon points="362.974,128.054 362.885,127.972 361.143,129.955 361.143,129.955 " />
+<polygon points="362.885,127.972 362.791,127.893 361.143,129.955 361.143,129.955 " />
+<polygon points="362.791,127.893 362.694,127.82 361.143,129.955 361.143,129.955 " />
+<polygon points="362.694,127.82 362.594,127.75 361.143,129.955 361.143,129.955 " />
+<polygon points="362.594,127.75 362.491,127.686 361.143,129.955 361.143,129.955 " />
+<polygon points="362.491,127.686 362.384,127.626 361.143,129.955 361.143,129.955 " />
+<polygon points="362.384,127.626 362.275,127.571 361.143,129.955 361.143,129.955 " />
+<polygon points="362.275,127.571 362.164,127.521 361.143,129.955 361.143,129.955 " />
+<polygon points="362.164,127.521 362.051,127.477 361.143,129.955 361.143,129.955 " />
+<polygon points="362.051,127.477 361.935,127.437 361.143,129.955 361.143,129.955 " />
+<polygon points="361.935,127.437 361.818,127.403 361.143,129.955 361.143,129.955 " />
+<polygon points="361.818,127.403 361.7,127.375 361.143,129.955 361.143,129.955 " />
+<polygon points="361.7,127.375 361.58,127.352 361.143,129.955 361.143,129.955 " />
+<polygon points="361.58,127.352 361.459,127.335 361.143,129.955 361.143,129.955 " />
+<polygon points="361.459,127.335 361.338,127.323 361.143,129.955 361.143,129.955 " />
+<polygon points="361.338,127.323 361.216,127.317 361.143,129.955 361.143,129.955 " />
+<polygon points="361.216,127.317 361.094,127.316 361.143,129.955 361.143,129.955 " />
+<polygon points="361.094,127.316 360.972,127.321 361.143,129.955 361.143,129.955 " />
+<polygon points="360.972,127.321 360.851,127.332 361.143,129.955 361.143,129.955 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="360.851,127.332 360.559,124.709 " />
+<polyline points="360.559,124.709 354.867,73.623 " />
+<polyline points="354.867,73.623 333.334,73.623 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 105.435 37.8866)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >NOTE</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="105.435,42.0513 160.015,42.0513 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 160.015 37.8866)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >:</text>
+<text transform="matrix(14.0744 0 -0 14.0744 105.308 66.3226)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >FLOATING DIMENSION,</text>
+<text transform="matrix(14.0744 0 -0 14.0744 105.435 95.5343)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >NOT</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="105.435,99.699 146.912,99.699 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 152.373 95.5343)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >L</text>
+<text transform="matrix(9.8521 0 -0 9.8521 163.265 102.72)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >wp-h</text>
+<text transform="matrix(14.0744 0 -0 14.0744 198.529 95.5343)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >AT UPPER</text>
+<text transform="matrix(14.0744 0 -0 14.0744 105.378 123.195)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >END OF BRACE</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="412.866,219.134 336.747,144.888 " />
+<polyline points="455.426,183.188 375.464,105.194 " />
+<polyline points="349.155,142.245 373.131,117.664 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<path d="M347.896,141.017 350.414,143.474 341.784,149.802 341.784,149.802 z" />
+<path d="M371.872,116.436 374.391,118.893 380.502,110.108 380.502,110.108 z" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="463.118,185.793 463.024,185.689 460.463,188.102 460.463,188.102 " />
+<polygon points="463.024,185.689 462.926,185.589 460.463,188.102 460.463,188.102 " />
+<polygon points="462.926,185.589 462.824,185.493 460.463,188.102 460.463,188.102 " />
+<polygon points="462.824,185.493 462.719,185.401 460.463,188.102 460.463,188.102 " />
+<polygon points="462.719,185.401 462.609,185.314 460.463,188.102 460.463,188.102 " />
+<polygon points="462.609,185.314 462.497,185.231 460.463,188.102 460.463,188.102 " />
+<polygon points="462.497,185.231 462.381,185.152 460.463,188.102 460.463,188.102 " />
+<polygon points="462.381,185.152 462.262,185.078 460.463,188.102 460.463,188.102 " />
+<polygon points="462.262,185.078 462.141,185.009 460.463,188.102 460.463,188.102 " />
+<polygon points="462.141,185.009 462.016,184.945 460.463,188.102 460.463,188.102 " />
+<polygon points="462.016,184.945 461.89,184.886 460.463,188.102 460.463,188.102 " />
+<polygon points="461.89,184.886 461.761,184.831 460.463,188.102 460.463,188.102 " />
+<polygon points="461.761,184.831 461.63,184.782 460.463,188.102 460.463,188.102 " />
+<polygon points="461.63,184.782 461.497,184.739 460.463,188.102 460.463,188.102 " />
+<polygon points="461.497,184.739 461.362,184.7 460.463,188.102 460.463,188.102 " />
+<polygon points="461.362,184.7 461.226,184.667 460.463,188.102 460.463,188.102 " />
+<polygon points="461.226,184.667 461.089,184.64 460.463,188.102 460.463,188.102 " />
+<polygon points="461.089,184.64 460.951,184.617 460.463,188.102 460.463,188.102 " />
+<polygon points="460.951,184.617 460.812,184.601 460.463,188.102 460.463,188.102 " />
+<polygon points="460.812,184.601 460.673,184.59 460.463,188.102 460.463,188.102 " />
+<polygon points="460.673,184.59 460.533,184.584 460.463,188.102 460.463,188.102 " />
+<polygon points="460.533,184.584 460.393,184.584 460.463,188.102 460.463,188.102 " />
+<polygon points="460.393,184.584 460.253,184.59 460.463,188.102 460.463,188.102 " />
+<polygon points="460.253,184.59 460.114,184.601 460.463,188.102 460.463,188.102 " />
+<polygon points="460.114,184.601 459.975,184.618 460.463,188.102 460.463,188.102 " />
+<polygon points="459.975,184.618 459.836,184.64 460.463,188.102 460.463,188.102 " />
+<polygon points="459.836,184.64 459.699,184.667 460.463,188.102 460.463,188.102 " />
+<polygon points="459.699,184.667 459.563,184.7 460.463,188.102 460.463,188.102 " />
+<polygon points="459.563,184.7 459.429,184.739 460.463,188.102 460.463,188.102 " />
+<polygon points="459.429,184.739 459.296,184.783 460.463,188.102 460.463,188.102 " />
+<polygon points="459.296,184.783 459.165,184.832 460.463,188.102 460.463,188.102 " />
+<polygon points="459.165,184.832 459.036,184.886 460.463,188.102 460.463,188.102 " />
+<polygon points="459.036,184.886 458.909,184.945 460.463,188.102 460.463,188.102 " />
+<polygon points="458.909,184.945 458.785,185.01 460.463,188.102 460.463,188.102 " />
+<polygon points="458.785,185.01 458.663,185.079 460.463,188.102 460.463,188.102 " />
+<polygon points="458.663,185.079 458.544,185.153 460.463,188.102 460.463,188.102 " />
+<polygon points="458.544,185.153 458.429,185.231 460.463,188.102 460.463,188.102 " />
+<polygon points="458.429,185.231 458.316,185.314 460.463,188.102 460.463,188.102 " />
+<polygon points="458.316,185.314 458.207,185.402 460.463,188.102 460.463,188.102 " />
+<polygon points="458.207,185.402 458.102,185.494 460.463,188.102 460.463,188.102 " />
+<polygon points="458.102,185.494 458,185.59 460.463,188.102 460.463,188.102 " />
+<polygon points="458,185.59 457.902,185.69 460.463,188.102 460.463,188.102 " />
+<polygon points="457.902,185.69 457.808,185.793 460.463,188.102 460.463,188.102 " />
+<polygon points="457.808,185.793 457.718,185.901 460.463,188.102 460.463,188.102 " />
+<polygon points="457.718,185.901 457.633,186.012 460.463,188.102 460.463,188.102 " />
+<polygon points="457.633,186.012 457.552,186.126 460.463,188.102 460.463,188.102 " />
+<polygon points="457.552,186.126 457.476,186.243 460.463,188.102 460.463,188.102 " />
+<polygon points="457.476,186.243 457.404,186.363 460.463,188.102 460.463,188.102 " />
+<polygon points="457.404,186.363 457.337,186.486 460.463,188.102 460.463,188.102 " />
+<polygon points="457.337,186.486 457.276,186.612 460.463,188.102 460.463,188.102 " />
+<polygon points="457.276,186.612 457.219,186.74 460.463,188.102 460.463,188.102 " />
+<polygon points="457.219,186.74 457.167,186.87 460.463,188.102 460.463,188.102 " />
+<polygon points="457.167,186.87 457.121,187.002 460.463,188.102 460.463,188.102 " />
+<polygon points="457.121,187.002 457.08,187.136 460.463,188.102 460.463,188.102 " />
+<polygon points="457.08,187.136 457.044,187.271 460.463,188.102 460.463,188.102 " />
+<polygon points="457.044,187.271 457.014,187.407 460.463,188.102 460.463,188.102 " />
+<polygon points="457.014,187.407 456.989,187.545 460.463,188.102 460.463,188.102 " />
+<polygon points="456.989,187.545 456.97,187.684 460.463,188.102 460.463,188.102 " />
+<polygon points="456.97,187.684 456.956,187.823 460.463,188.102 460.463,188.102 " />
+<polygon points="456.956,187.823 456.947,187.963 460.463,188.102 460.463,188.102 " />
+<polygon points="456.947,187.963 456.945,188.103 460.463,188.102 460.463,188.102 " />
+<polygon points="456.945,188.103 456.947,188.242 460.463,188.102 460.463,188.102 " />
+<polygon points="456.947,188.242 456.956,188.382 460.463,188.102 460.463,188.102 " />
+<polygon points="456.956,188.382 456.97,188.521 460.463,188.102 460.463,188.102 " />
+<polygon points="456.97,188.521 456.989,188.66 460.463,188.102 460.463,188.102 " />
+<polygon points="456.989,188.66 457.014,188.798 460.463,188.102 460.463,188.102 " />
+<polygon points="457.014,188.798 457.044,188.934 460.463,188.102 460.463,188.102 " />
+<polygon points="457.044,188.934 457.08,189.069 460.463,188.102 460.463,188.102 " />
+<polygon points="457.08,189.069 457.121,189.203 460.463,188.102 460.463,188.102 " />
+<polygon points="457.121,189.203 457.168,189.335 460.463,188.102 460.463,188.102 " />
+<polygon points="457.168,189.335 457.219,189.465 460.463,188.102 460.463,188.102 " />
+<polygon points="457.219,189.465 457.276,189.593 460.463,188.102 460.463,188.102 " />
+<polygon points="457.276,189.593 457.338,189.719 460.463,188.102 460.463,188.102 " />
+<polygon points="457.338,189.719 457.405,189.842 460.463,188.102 460.463,188.102 " />
+<polygon points="457.405,189.842 457.476,189.962 460.463,188.102 460.463,188.102 " />
+<polygon points="457.476,189.962 457.552,190.079 460.463,188.102 460.463,188.102 " />
+<polygon points="457.552,190.079 457.633,190.193 460.463,188.102 460.463,188.102 " />
+<polygon points="457.633,190.193 457.719,190.304 460.463,188.102 460.463,188.102 " />
+<polygon points="457.719,190.304 457.808,190.411 460.463,188.102 460.463,188.102 " />
+<polygon points="457.808,190.411 457.902,190.515 460.463,188.102 460.463,188.102 " />
+<polygon points="457.902,190.515 458,190.615 460.463,188.102 460.463,188.102 " />
+<polygon points="458,190.615 458.102,190.711 460.463,188.102 460.463,188.102 " />
+<polygon points="458.102,190.711 458.208,190.803 460.463,188.102 460.463,188.102 " />
+<polygon points="458.208,190.803 458.317,190.89 460.463,188.102 460.463,188.102 " />
+<polygon points="458.317,190.89 458.429,190.973 460.463,188.102 460.463,188.102 " />
+<polygon points="458.429,190.973 458.545,191.052 460.463,188.102 460.463,188.102 " />
+<polygon points="458.545,191.052 458.664,191.126 460.463,188.102 460.463,188.102 " />
+<polygon points="458.664,191.126 458.786,191.195 460.463,188.102 460.463,188.102 " />
+<polygon points="458.786,191.195 458.91,191.259 460.463,188.102 460.463,188.102 " />
+<polygon points="458.91,191.259 459.037,191.319 460.463,188.102 460.463,188.102 " />
+<polygon points="459.037,191.319 459.166,191.373 460.463,188.102 460.463,188.102 " />
+<polygon points="459.166,191.373 459.297,191.422 460.463,188.102 460.463,188.102 " />
+<polygon points="459.297,191.422 459.43,191.465 460.463,188.102 460.463,188.102 " />
+<polygon points="459.43,191.465 459.564,191.504 460.463,188.102 460.463,188.102 " />
+<polygon points="459.564,191.504 459.7,191.537 460.463,188.102 460.463,188.102 " />
+<polygon points="459.7,191.537 459.837,191.565 460.463,188.102 460.463,188.102 " />
+<polygon points="459.837,191.565 459.975,191.587 460.463,188.102 460.463,188.102 " />
+<polygon points="459.975,191.587 460.114,191.603 460.463,188.102 460.463,188.102 " />
+<polygon points="460.114,191.603 460.254,191.614 460.463,188.102 460.463,188.102 " />
+<polygon points="460.254,191.614 460.394,191.62 460.463,188.102 460.463,188.102 " />
+<polygon points="460.394,191.62 460.534,191.62 460.463,188.102 460.463,188.102 " />
+<polygon points="460.534,191.62 460.673,191.614 460.463,188.102 460.463,188.102 " />
+<polygon points="460.673,191.614 460.813,191.603 460.463,188.102 460.463,188.102 " />
+<polygon points="460.813,191.603 460.952,191.587 460.463,188.102 460.463,188.102 " />
+<polygon points="460.952,191.587 461.09,191.564 460.463,188.102 460.463,188.102 " />
+<polygon points="461.09,191.564 461.227,191.537 460.463,188.102 460.463,188.102 " />
+<polygon points="461.227,191.537 461.363,191.504 460.463,188.102 460.463,188.102 " />
+<polygon points="461.363,191.504 461.498,191.465 460.463,188.102 460.463,188.102 " />
+<polygon points="461.498,191.465 461.63,191.421 460.463,188.102 460.463,188.102 " />
+<polygon points="461.63,191.421 461.761,191.372 460.463,188.102 460.463,188.102 " />
+<polygon points="461.761,191.372 461.89,191.318 460.463,188.102 460.463,188.102 " />
+<polygon points="461.89,191.318 462.017,191.259 460.463,188.102 460.463,188.102 " />
+<polygon points="462.017,191.259 462.141,191.195 460.463,188.102 460.463,188.102 " />
+<polygon points="462.141,191.195 462.263,191.125 460.463,188.102 460.463,188.102 " />
+<polygon points="462.263,191.125 462.382,191.052 460.463,188.102 460.463,188.102 " />
+<polygon points="462.382,191.052 462.498,190.973 460.463,188.102 460.463,188.102 " />
+<polygon points="462.498,190.973 462.61,190.89 460.463,188.102 460.463,188.102 " />
+<polygon points="462.61,190.89 462.719,190.802 460.463,188.102 460.463,188.102 " />
+<polygon points="462.719,190.802 462.825,190.71 460.463,188.102 460.463,188.102 " />
+<polygon points="462.825,190.71 462.927,190.614 460.463,188.102 460.463,188.102 " />
+<polygon points="462.927,190.614 463.025,190.515 460.463,188.102 460.463,188.102 " />
+<polygon points="463.025,190.515 463.118,190.411 460.463,188.102 460.463,188.102 " />
+<polygon points="463.118,190.411 463.208,190.303 460.463,188.102 460.463,188.102 " />
+<polygon points="463.208,190.303 463.294,190.193 460.463,188.102 460.463,188.102 " />
+<polygon points="463.294,190.193 463.374,190.078 460.463,188.102 460.463,188.102 " />
+<polygon points="463.374,190.078 463.451,189.961 460.463,188.102 460.463,188.102 " />
+<polygon points="463.451,189.961 463.522,189.841 460.463,188.102 460.463,188.102 " />
+<polygon points="463.522,189.841 463.589,189.718 460.463,188.102 460.463,188.102 " />
+<polygon points="463.589,189.718 463.651,189.592 460.463,188.102 460.463,188.102 " />
+<polygon points="463.651,189.592 463.707,189.464 460.463,188.102 460.463,188.102 " />
+<polygon points="463.707,189.464 463.759,189.334 460.463,188.102 460.463,188.102 " />
+<polygon points="463.759,189.334 463.805,189.202 460.463,188.102 460.463,188.102 " />
+<polygon points="463.805,189.202 463.846,189.069 460.463,188.102 460.463,188.102 " />
+<polygon points="463.846,189.069 463.882,188.933 460.463,188.102 460.463,188.102 " />
+<polygon points="463.882,188.933 463.913,188.797 460.463,188.102 460.463,188.102 " />
+<polygon points="463.913,188.797 463.937,188.659 460.463,188.102 460.463,188.102 " />
+<polygon points="463.937,188.659 463.957,188.52 460.463,188.102 460.463,188.102 " />
+<polygon points="463.957,188.52 463.971,188.381 460.463,188.102 460.463,188.102 " />
+<polygon points="463.971,188.381 463.979,188.242 460.463,188.102 460.463,188.102 " />
+<polygon points="463.979,188.242 463.982,188.102 460.463,188.102 460.463,188.102 " />
+<polygon points="463.982,188.102 463.979,187.962 460.463,188.102 460.463,188.102 " />
+<polygon points="463.979,187.962 463.971,187.822 460.463,188.102 460.463,188.102 " />
+<polygon points="463.971,187.822 463.957,187.683 460.463,188.102 460.463,188.102 " />
+<polygon points="463.957,187.683 463.937,187.544 460.463,188.102 460.463,188.102 " />
+<polygon points="463.937,187.544 463.912,187.407 460.463,188.102 460.463,188.102 " />
+<polygon points="463.912,187.407 463.882,187.27 460.463,188.102 460.463,188.102 " />
+<polygon points="463.882,187.27 463.846,187.135 460.463,188.102 460.463,188.102 " />
+<polygon points="463.846,187.135 463.805,187.001 460.463,188.102 460.463,188.102 " />
+<polygon points="463.805,187.001 463.759,186.869 460.463,188.102 460.463,188.102 " />
+<polygon points="463.759,186.869 463.707,186.739 460.463,188.102 460.463,188.102 " />
+<polygon points="463.707,186.739 463.65,186.611 460.463,188.102 460.463,188.102 " />
+<polygon points="463.65,186.611 463.588,186.486 460.463,188.102 460.463,188.102 " />
+<polygon points="463.588,186.486 463.522,186.363 460.463,188.102 460.463,188.102 " />
+<polygon points="463.522,186.363 463.45,186.242 460.463,188.102 460.463,188.102 " />
+<polygon points="463.45,186.242 463.374,186.125 460.463,188.102 460.463,188.102 " />
+<polygon points="463.374,186.125 463.293,186.011 460.463,188.102 460.463,188.102 " />
+<polygon points="463.293,186.011 463.208,185.9 460.463,188.102 460.463,188.102 " />
+<polygon points="463.208,185.9 463.118,185.793 460.463,188.102 460.463,188.102 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="463.118,185.793 465.773,183.483 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="429.777,225.001 419.118,224.048 429.509,221.493 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="429.643,223.247 507.15,217.347 " />
+<polyline points="507.15,217.347 516.33,217.347 " />
+<circle cx="527.59" cy="217.347" r="11.2595" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(11.9633 0 -0 11.9633 522.016 223.329)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >B</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="114.839,552.537 114.839,628.969 " />
+<polyline points="460.463,552.537 460.463,628.969 " />
+<polyline points="125.395,621.932 449.907,621.932 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<path d="M125.395,620.172 125.395,623.691 114.839,621.932 114.839,621.932 z" />
+<path d="M449.907,620.172 449.907,623.691 460.463,621.932 460.463,621.932 z" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="266.479,595.894 308.822,595.894 308.822,624.369 266.479,624.369 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(14.0744 0 -0 14.0744 269.759 613.487)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >W</text>
+<text transform="matrix(9.8521 0 -0 9.8521 288.279 618.121)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >wp</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="467.5,188.102 555.757,188.102 " />
+<polyline points="467.5,545.5 555.757,545.5 " />
+<polyline points="548.72,198.658 548.72,534.944 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<path d="M546.96,198.658 550.479,198.658 548.72,188.102 548.72,188.102 z" />
+<path d="M546.96,534.944 550.479,534.944 548.72,545.5 548.72,545.5 z" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polygon points="522.682,385.122 522.682,348.48 551.157,348.48 551.157,385.122 " />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(8.6181e-016 -14.0744 14.0744 8.6181e-016 540.275 383.18)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >H</text>
+<text transform="matrix(6.03267e-016 -9.8521 9.8521 6.03267e-016 544.909 369.023)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >wp</text>
+<text transform="matrix(14.0744 0 -0 14.0744 605.127 312.415)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >LOWER-MOST BOLT-HOLE.</text>
+<text transform="matrix(14.0744 0 -0 14.0744 612.023 392.963)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >(SEE DETAIL 2/-)</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="937.398" cy="714.126" r="33.7786" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(35.8898 0 -0 35.8898 923.455 732.071)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >1</text>
+<text transform="matrix(21.1122 0 -0 21.1122 173.271 704.811)" font-family="Arial,&apos;sans-serif&apos;" font-weight="bold" font-size="1.39636" >BOLTED GUSSET OVERALL LAYOUT PROCEDURE</text>
+<text transform="matrix(14.0746 0 -0 14.0746 781.597 737.76)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >SCALE: NTS</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<polyline points="903.619,714.126 48.1428,714.126 " />
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="527.59" cy="274.287" r="11.2595" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(11.9633 0 -0 11.9633 521.555 280.269)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >C</text>
+</g>
+<g clip-path="url(#clipId0)" fill="none" stroke="rgb(255,255,255)" stroke-width="1px" >
+<circle cx="249.998" cy="467.694" r="11.2595" />
+</g>
+<g clip-path="url(#clipId0)" fill="rgb(255,255,255)" stroke="rgb(255,255,255)" stroke-width="1px" >
+<text transform="matrix(11.9633 0 -0 11.9633 244.424 473.676)" font-family="Arial,&apos;sans-serif&apos;" font-size="1.39636" >A</text>
+</g>
 </svg>

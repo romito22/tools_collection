@@ -339,14 +339,3 @@ setupDeck({
     ["CB-6.50", "BRB-6.50", 6, "C-D", 1, 1902, 2, "184 8/16", "182 15/16", 228, "8 4/16"]
   ]
 });
-
-setupDeck({
-  prefix: "assembly",
-  itemName: "Assembly",
-  mode: "assembly",
-  sampleRows: [
-    ["CB-ID", "EOR-ID", "Line", "Grids", "Lvls", "Mark", "Qty", "Lc", "Type", "Hc", "Wc", "tc", "DWL", "DWC"],
-    ["CB-13.5", "BRB13.5", "12.3", "W.8 to Y", 250, 1251, 1, "29'-6 1/4\"", "t", 14, 14, 0.5, 6, 0],
-    ["CB-23.0", "BRB23", "Z", "12.3 to 11.6", 290, 1253, 1, "28'-6 3/4\"", "p", 16, 16, 0.5, 5, 0]
-  ]
-});

@@ -37,11 +37,54 @@
 .core-check input{width:18px;min-height:18px;height:18px;accent-color:var(--amber)}
 @media(max-width:1180px){.core-viewer{grid-template-columns:38px minmax(0,1fr) 38px}.core-viewer-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.core-table{max-height:calc(100vh - 560px)}}
 @media(max-width:720px){.core-viewer{grid-template-columns:1fr}.core-arrow{height:38px}.core-svg{height:210px}.core-viewer-meta{grid-template-columns:1fr}.core-table{max-height:360px}}
-.lug-svg{height:clamp(260px,42vh,430px)}
-.lug-template-bg{fill:#000}
-.lug-value-box{fill:#be9092;stroke:#be9092;stroke-width:1}
+.lug-svg{height:clamp(360px,58vh,620px)}
+.lug-template-bg{fill:#f7f5ee}
+.lug-part{fill:#fffdf7;stroke:#111;stroke-width:2;vector-effect:non-scaling-stroke}
+.lug-center{stroke:#555;stroke-width:2;stroke-dasharray:18 12;vector-effect:non-scaling-stroke}
+.lug-value-box{fill:#fff0a8;stroke:#d99a1e;stroke-width:1.5}
+.lug-value-box.primary{fill:#c7e8ff;stroke:#58a6d6}
+.lug-value-box.title{fill:#f8d0d2;stroke:#be9092}
 .lug-outline{fill:none;stroke:#111;stroke-width:2}
-.lug-hole{fill:#fbfaf5;stroke:#111;stroke-width:1.4}
-.lug-box-text{fill:#050505;font:900 22px/1 Arial,Helvetica,sans-serif}
-.lug-mark-text{fill:#f4f4f4;font:900 30px/1 Arial,Helvetica,sans-serif}
-.lug-table .core-head,.lug-table .core-row{grid-template-columns:44px 120px repeat(17,minmax(100px,1fr));min-width:2050px}
+.lug-hole{fill:#f7f5ee;stroke:#111;stroke-width:2}
+.lug-box-text{fill:#050505;font:800 18px/1 Arial,Helvetica,sans-serif}
+.lug-mark-text{fill:#111;font:900 5px/1 Arial,Helvetica,sans-serif}
+.lug-slot-boxes rect{fill:transparent;stroke:transparent;stroke-width:0}
+.lug-highlight{fill:#fff16a;stroke:none;opacity:.86}
+.lug-highlight.primary{fill:#bfe7ff}
+.lug-highlight.banner,.lug-highlight.plate{fill:#fff16a;opacity:.92}
+.lug-highlight.leader,.lug-highlight.pattern{fill:#fff16a}
+.lug-slot-text{fill:#050505;font:900 3.8px/1 Arial,Helvetica,sans-serif}
+.lug-slot-text.primary{font-size:4.3px}
+.lug-slot-text.plate{font-size:2.65px}
+.lug-slot-text.pattern{font-size:3.6px}
+.lug-slot-text.banner{font-size:3.2px;font-weight:900}
+.lug-slot-text.leader{font-size:3.35px}
+.lug-same-box{margin-top:10px;border:1px solid #314255;background:#101821;border-radius:8px;padding:10px 12px;color:#d9ecff;display:grid;gap:4px}
+.lug-same-box span{text-transform:uppercase;font-size:11px;font-weight:800;color:#a9c8e8}
+.lug-same-box b{font-size:14px;line-height:1.35;color:#fff}
+.p15-deck{display:grid;gap:12px}
+.p15-viewer{border:1px solid #314255;background:#0c1218;border-radius:8px;padding:12px;display:grid;gap:10px}
+.p15-template-head{display:flex;align-items:center;justify-content:space-between;color:#acd0f1;font-size:12px;font-weight:800;text-transform:uppercase}
+.p15-template-head b{color:#fff;background:#1b2a39;border:1px solid #314255;border-radius:999px;padding:5px 9px}
+.p15-template-stage{background:#f7f5ee;border:1px solid #d9d4c8;border-radius:7px;min-height:min(68vh,720px);display:grid;place-items:center;overflow:auto}
+.p15-template-stage img{display:block;width:min(100%,1500px);height:auto}
+.p15-svg{height:clamp(360px,62vh,720px);background:#f7f5ee}
+.p15-bg{fill:#f7f5ee}
+.p15-highlight{fill:#fff16a;opacity:.88}
+.p15-highlight.primary{fill:#bfe7ff}
+.p15-highlight.callout{fill:#fff16a}
+.p15-highlight.chain{fill:#fff16a;opacity:.8}
+.p15-highlight.banner{fill:#fff16a;opacity:.92}
+.p15-slot-text{fill:#050505;font:900 25px/1 Arial,Helvetica,sans-serif}
+.p15-slot-text.primary{font-size:27px}
+.p15-slot-text.chain{font-size:22px}
+.p15-slot-text.arc-radius{font-size:24px}
+.p15-slot-text.radius{font-size:21px}
+.p15-slot-text.callout{font-size:20px}
+.p15-slot-text.banner{font-size:21px}
+.p15-title-text{fill:#050505;font-family:Arial,Helvetica,sans-serif}
+.p15-title-note{fill:#050505;font-family:Arial,Helvetica,sans-serif}
+.core-viewer-meta .p15-sum{border-color:#d5a31f;background:#3a3117;color:#fff3b0}
+.core-viewer-meta .p15-sum b{color:#ffd96a}
+.p15-table .core-head,.p15-table .core-row{grid-template-columns:44px 140px 150px repeat(18,minmax(110px,1fr));min-width:2550px}
+.lug-table .core-head,.lug-table .core-row{grid-template-columns:44px 120px repeat(26,minmax(100px,1fr));min-width:2950px}
