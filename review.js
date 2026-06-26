@@ -1,3 +1,4 @@
+(() => {
 function $(selector) {
   return document.querySelector(selector);
 }
@@ -339,3 +340,4 @@ setupDeck({
     ["CB-6.50", "BRB-6.50", 6, "C-D", 1, 1902, 2, "184 8/16", "182 15/16", 228, "8 4/16"]
   ]
 });
+})();

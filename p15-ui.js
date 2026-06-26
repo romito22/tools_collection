@@ -232,9 +232,9 @@ function setupP15(rows) {
       [1278, 652, 85, 42, p15BottomShoulder(row), "chain"],
       [1502, 657, 85, 42, p15Measure(row, "t2cc"), "chain primary"]
     ];
-    els.title.textContent = `Mark ${row.Mark}`;
+    els.title.textContent = `Mark ${row.Mark} | ${row.Piece || "p15"}`;
     els.count.textContent = `${state.active + 1} of ${state.visible.length}`;
-    els.eyebrow.textContent = `Cap Plate | ${row._matches} matching source row${row._matches === 1 ? "" : "s"}`;
+    els.eyebrow.textContent = `${row.Piece || "p15"} Casing Cap | ${row._matches} matching source row${row._matches === 1 ? "" : "s"}`;
     els.svg.innerHTML = `
       <rect x="0" y="0" width="1920" height="1080" class="p15-bg"></rect>
       <image href="assets/p15-template.svg" x="0" y="0" width="1920" height="1080"></image>
@@ -248,7 +248,7 @@ function setupP15(rows) {
       ${bottomChain.map((entry) => slot(...entry)).join("")}
       ${slot(896, 787, 54, 20, p15Measure(row, "W1cc"), "overall")}
       <text x="960" y="920" text-anchor="middle" class="p15-title-text" font-size="42" font-weight="800">${plateTitle(row)}</text>
-      <text x="960" y="974" text-anchor="middle" class="p15-title-note" font-size="34" font-weight="700">AS DRAWN MARKED P_15</text>
+      <text x="960" y="974" text-anchor="middle" class="p15-title-note" font-size="34" font-weight="700">AS DRAWN MARKED ${p15Escape(String(row.Piece || "P_15").toUpperCase())}</text>
     `;
     const meta = ["Hc", "Wc", "tc", "W1cc", "H1cc", "t1cc", "t2cc", "tcc", "DwL", "DwL-i"];
     els.meta.innerHTML = meta.map((field) => `<span><b>${p15Escape(field)}</b>${p15Escape(p15Measure(row, field))}</span>`).join("")
