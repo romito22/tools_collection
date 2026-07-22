@@ -22,16 +22,8 @@
           <div id="partsReviewMenu" class="nav-group-menu">
             <button class="nav-btn active" type="button" data-target="fullSheetView">Full Sheet</button>
             <button class="nav-btn" type="button" data-target="p01View" data-parts-entry="true">P Parts</button>
-            <button class="nav-btn" type="button" data-target="toolsView">Tools</button>
-            <button class="nav-btn" type="button" data-target="reviewView">Review Deck</button>
-            <button class="nav-btn" type="button" data-target="hssView">HSS</button>
-            <button class="nav-btn" type="button" data-target="pimView">PIM</button>
-            <button class="nav-btn" type="button" data-target="coreView">Core</button>
           </div>
         </div>
-        <button class="nav-btn" type="button" data-target="connSchedView">Conn Sched</button>
-        <button class="nav-btn" type="button" data-target="lbTabView">LB Tab</button>
-        <button class="nav-btn" type="button" data-target="lugPagesView">LUG Pages</button>
       </nav>
       <button id="themeBtn" type="button">Theme</button>
     </aside>
@@ -44,6 +36,21 @@
             <p>Workbook-driven brace sheet reference for comparing the drawing one mark at a time.</p>
           </div>
         </header>
+        <section class="workbook-manager" aria-labelledby="workbookManagerTitle">
+          <div class="workbook-manager-copy">
+            <h2 id="workbookManagerTitle">Workbook Data</h2>
+            <p id="workbookStatus" aria-live="polite">Ready for an Excel workbook.</p>
+          </div>
+          <div id="workbookDropZone" class="workbook-drop-zone" role="button" tabindex="0" aria-label="Drop an Excel workbook or choose a file">
+            <strong>Drop Excel here</strong>
+            <span>.xlsx or .xls</span>
+          </div>
+          <div class="workbook-actions">
+            <input id="workbookFileInput" type="file" accept=".xlsx,.xls" hidden>
+            <button id="workbookUploadBtn" class="primary" type="button">Upload Excel</button>
+            <button id="workbookClearBtn" class="danger" type="button">Delete Data</button>
+          </div>
+        </section>
         <section class="card review-deck full-sheet-deck">
           <div class="section-head">
             <div>
@@ -634,28 +641,24 @@
     </main>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="assets/xlsx.full.min.js?v=0.18.5"></script>
   <script src="app.js?v=20260518-scrollfix"></script>
-  <script src="review.js?v=20260608-private-scope"></script>
-  <script src="core-data.js?v=20260707-marine-way-campus"></script>
-  <script src="manual.js?v=20260707-marine-way-campus"></script>
-  <script src="core-ui.js?v=20260518-core-wsg"></script>
-  <script src="full-sheet-data.js?v=20260707-marine-way-campus"></script>
-  <script src="full-sheet-generated-data.js?v=20260707-marine-way-campus"></script>
-  <script src="full-sheet-weld-data.js?v=20260707-marine-way-campus"></script>
-  <script src="full-sheet-ui.js?v=20260707-marine-way-campus"></script>
-  <script src="p15-data.js?v=20260707-marine-way-campus"></script>
-  <script src="p15-ui.js?v=20260707-marine-way-campus"></script>
-  <script src="p06-data.js?v=20260707-marine-way-campus"></script>
-  <script src="p06-ui.js?v=20260528-p06-bgfix"></script>
-  <script src="p07-data.js?v=20260707-marine-way-campus"></script>
-  <script src="p07-ui.js?v=20260528-p07-bgfix"></script>
-  <script src="lug-data.js?v=20260707-marine-way-campus"></script>
-  <script src="lug-ui.js?v=20260707-marine-way-campus"></script>
-  <script src="conn-sched-data.js?v=20260617-fleet-conn-sched-1101-1104"></script>
-  <script src="lb-data.js?v=20260612-lb-only"></script>
-  <script src="part-layout.js?v=20260617-chip-buttons"></script>
-  <script src="lug-pages.js?v=20260617-lug-pages"></script>
-  <script src="nav.js?v=20260617-lug-pages-standalone"></script>
+  <script src="core-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="manual.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="full-sheet-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="full-sheet-generated-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="full-sheet-weld-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="p15-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="p06-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="p07-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="lug-data.js?v=20260721-rno-concourse-a-7093"></script>
+  <script src="workbook-import.js?v=20260722-browser-import"></script>
+  <script src="full-sheet-ui.js?v=20260722-browser-import"></script>
+  <script src="p15-ui.js?v=20260722-browser-import"></script>
+  <script src="p06-ui.js?v=20260722-browser-import"></script>
+  <script src="p07-ui.js?v=20260722-browser-import"></script>
+  <script src="lug-ui.js?v=20260722-browser-import"></script>
+  <script src="part-layout.js?v=20260722-browser-import"></script>
+  <script src="nav.js?v=20260722-parts-only"></script>
 </body>
 </html>

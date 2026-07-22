@@ -252,3 +252,76 @@
 .full-check-field span{display:grid;gap:3px;min-width:0;font:850 .78rem/1.2 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;overflow-wrap:anywhere}
 .full-check-field.checked{background:color-mix(in srgb,var(--amber) 18%,var(--input));border-color:color-mix(in srgb,var(--amber) 65%,var(--line))}
 @media(max-width:1180px){.full-sheet-controls{grid-template-columns:1fr}.full-sheet-svg{height:clamp(420px,64vh,680px)}.full-bom-head,.full-bom-row{grid-template-columns:minmax(76px,1fr) 46px minmax(110px,1.5fr) minmax(76px,1fr) minmax(88px,1.1fr) minmax(96px,1.2fr) 38px 36px 56px 28px}.full-bom-head span,.full-bom-row>*{padding:7px 5px;font-size:.66rem}.full-bom-head span{font-size:.52rem}}
+/* Browser-side workbook loading */
+.workbook-manager {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(230px, 360px) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid #33475c;
+  border-radius: 6px;
+  background: #151c24;
+}
+
+.workbook-manager h2 {
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.workbook-manager p {
+  margin: 0;
+  color: #abc0d5;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+#workbookStatus[data-state="error"] { color: #ff9b9b; }
+#workbookStatus[data-state="success"] { color: #89d5a0; }
+#workbookStatus[data-state="busy"] { color: #ffd36d; }
+
+.workbook-drop-zone {
+  min-height: 52px;
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  border: 1px dashed #6591b8;
+  border-radius: 6px;
+  background: #0d141c;
+  color: #e8f2fb;
+  text-align: center;
+  cursor: pointer;
+}
+
+.workbook-drop-zone span {
+  color: #8ca3b8;
+  font-size: 11px;
+}
+
+.workbook-drop-zone:hover,
+.workbook-drop-zone:focus-visible,
+.workbook-drop-zone.dragging {
+  border-color: #80c7ff;
+  background: #132535;
+  outline: none;
+}
+
+.workbook-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.workbook-actions button {
+  min-height: 40px;
+  white-space: nowrap;
+}
+
+.workbook-actions .danger {
+  border-color: #7d4249;
+  color: #ffb7bd;
+}
+
+@media (max-width: 900px) {
+  .workbook-manager { grid-template-columns: 1fr; }
+  .workbook-actions button { flex: 1; }
+}

@@ -26,11 +26,6 @@ const partViews = [
 const partTargets = new Set(partViews.map(([, target]) => target));
 const groupedTargets = new Set([
   "fullSheetView",
-  "toolsView",
-  "reviewView",
-  "hssView",
-  "pimView",
-  "coreView",
   ...partTargets
 ]);
 
@@ -103,4 +98,5 @@ navButtons.forEach((button) => {
 });
 
 const savedView = localStorage.getItem("tools_collection.activeView");
-if (viewTargets.has(savedView)) showView(savedView);
+if (groupedTargets.has(savedView)) showView(savedView);
+else showView("fullSheetView");
