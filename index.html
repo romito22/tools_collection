@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
   <link rel="stylesheet" href="styles.css?v=20260518-scrollfix">
-  <link rel="stylesheet" href="scrollfix.css?v=20260617-lug-pages">
+  <link rel="stylesheet" href="scrollfix.css?v=20260727-tos-fields">
 </head>
 <body>
   <div class="app-shell">
@@ -22,6 +22,7 @@
           <div id="partsReviewMenu" class="nav-group-menu">
             <button class="nav-btn active" type="button" data-target="fullSheetView">Full Sheet</button>
             <button class="nav-btn" type="button" data-target="p01View" data-parts-entry="true">P Parts</button>
+            <button class="nav-btn" type="button" data-target="tosAverageView">TOS Average</button>
           </div>
         </div>
       </nav>
@@ -96,6 +97,84 @@
           </section>
           <div id="fullSheetChecks" class="full-sheet-checks"></div>
           <p id="fullSheetStatus" class="note">Full sheet mark data ready for review.</p>
+        </section>
+      </section>
+
+      <section id="tosAverageView" class="view">
+        <header class="topbar">
+          <div>
+            <h2>TOS Average</h2>
+            <p>Top-of-steel midpoint calculator.</p>
+          </div>
+        </header>
+        <section class="tos-calculator" aria-labelledby="tosCalculatorTitle">
+          <div class="tos-input-panel">
+            <h2 id="tosCalculatorTitle">Elevations</h2>
+            <fieldset class="tos-entry" data-tos-row="a">
+              <legend>TOS 1</legend>
+              <label>Feet<input id="tosFeetA" type="number" inputmode="numeric" step="1" placeholder="140"></label>
+              <label>Inches<input id="tosInchesA" type="number" inputmode="numeric" min="0" max="11" step="1" value="0"></label>
+              <label>Fraction
+                <select id="tosFractionA" aria-label="TOS 1 fraction">
+                  <option value="0">0</option>
+                  <option value="0.0625">1/16</option>
+                  <option value="0.125">1/8</option>
+                  <option value="0.1875">3/16</option>
+                  <option value="0.25">1/4</option>
+                  <option value="0.3125">5/16</option>
+                  <option value="0.375">3/8</option>
+                  <option value="0.4375">7/16</option>
+                  <option value="0.5">1/2</option>
+                  <option value="0.5625">9/16</option>
+                  <option value="0.625">5/8</option>
+                  <option value="0.6875">11/16</option>
+                  <option value="0.75">3/4</option>
+                  <option value="0.8125">13/16</option>
+                  <option value="0.875">7/8</option>
+                  <option value="0.9375">15/16</option>
+                </select>
+              </label>
+            </fieldset>
+            <button id="tosSwapBtn" class="tos-icon-btn" type="button" aria-label="Swap TOS values" title="Swap values">&#8645;</button>
+            <fieldset class="tos-entry" data-tos-row="b">
+              <legend>TOS 2</legend>
+              <label>Feet<input id="tosFeetB" type="number" inputmode="numeric" step="1" placeholder="140"></label>
+              <label>Inches<input id="tosInchesB" type="number" inputmode="numeric" min="0" max="11" step="1" value="0"></label>
+              <label>Fraction
+                <select id="tosFractionB" aria-label="TOS 2 fraction">
+                  <option value="0">0</option>
+                  <option value="0.0625">1/16</option>
+                  <option value="0.125">1/8</option>
+                  <option value="0.1875">3/16</option>
+                  <option value="0.25">1/4</option>
+                  <option value="0.3125">5/16</option>
+                  <option value="0.375">3/8</option>
+                  <option value="0.4375">7/16</option>
+                  <option value="0.5">1/2</option>
+                  <option value="0.5625">9/16</option>
+                  <option value="0.625">5/8</option>
+                  <option value="0.6875">11/16</option>
+                  <option value="0.75">3/4</option>
+                  <option value="0.8125">13/16</option>
+                  <option value="0.875">7/8</option>
+                  <option value="0.9375">15/16</option>
+                </select>
+              </label>
+            </fieldset>
+            <div class="tos-actions">
+              <button id="tosClearBtn" type="button">Clear</button>
+            </div>
+            <p id="tosError" class="tos-error" aria-live="polite"></p>
+          </div>
+          <div class="tos-result-panel" aria-live="polite">
+            <span>Average TOS</span>
+            <strong id="tosAverageResult">-</strong>
+            <div class="tos-result-meta">
+              <span><b>Rounded to 1/16</b><output id="tosRoundedResult">-</output></span>
+              <span><b>Difference</b><output id="tosDifferenceResult">-</output></span>
+            </div>
+            <button id="tosCopyBtn" type="button" disabled>Copy Average</button>
+          </div>
         </section>
       </section>
 
@@ -659,6 +738,7 @@
   <script src="p07-ui.js?v=20260722-browser-import"></script>
   <script src="lug-ui.js?v=20260722-browser-import"></script>
   <script src="part-layout.js?v=20260722-browser-import"></script>
-  <script src="nav.js?v=20260722-parts-only"></script>
+  <script src="tos-average.js?v=20260727-tos-fields"></script>
+  <script src="nav.js?v=20260727-tos-average"></script>
 </body>
 </html>

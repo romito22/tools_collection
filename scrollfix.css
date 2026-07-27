@@ -325,3 +325,195 @@
   .workbook-manager { grid-template-columns: 1fr; }
   .workbook-actions button { flex: 1; }
 }
+
+.tos-calculator {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(320px, 1fr);
+  min-height: min(560px, calc(100vh - 130px));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--input);
+}
+
+.tos-input-panel,
+.tos-result-panel {
+  padding: clamp(22px, 4vw, 54px);
+}
+
+.tos-input-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
+  align-content: center;
+  gap: 12px;
+  border-right: 1px solid var(--line);
+  background: var(--soft);
+}
+
+.tos-input-panel h2,
+.tos-entry,
+.tos-actions,
+.tos-error {
+  grid-column: 1;
+}
+
+.tos-input-panel h2 {
+  margin: 0 0 18px;
+  font-size: 1rem;
+}
+
+.tos-entry {
+  display: grid;
+  grid-template-columns: minmax(74px, 1.05fr) minmax(68px, .85fr) minmax(92px, 1.25fr);
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tos-entry legend {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font: 850 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+  text-transform: uppercase;
+}
+
+.tos-entry label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  color: var(--muted);
+  font: 800 .64rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+  text-transform: uppercase;
+}
+
+.tos-entry input,
+.tos-entry select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--input);
+  color: var(--text);
+  font: 900 .95rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.tos-entry input:focus,
+.tos-entry select:focus {
+  border-color: var(--focus);
+  outline: 2px solid color-mix(in srgb, var(--focus) 25%, transparent);
+}
+
+.tos-entry input.invalid {
+  border-color: #d7646f;
+}
+
+.tos-icon-btn {
+  grid-column: 2;
+  grid-row: 3 / 4;
+  align-self: center;
+  width: 42px;
+  min-height: 42px;
+  padding: 0;
+  border-radius: 6px;
+  font-size: 1.25rem;
+}
+
+.tos-actions {
+  display: flex;
+  margin-top: 10px;
+}
+
+.tos-actions button {
+  min-height: 38px;
+}
+
+.tos-error {
+  min-height: 18px;
+  margin: 2px 0 0;
+  color: #ff9da6;
+  font-size: .76rem;
+}
+
+.tos-result-panel {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 14px;
+  background: #f7f5ee;
+  color: #101820;
+}
+
+.tos-result-panel > span {
+  color: #54616d;
+  font: 900 .75rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+  text-transform: uppercase;
+}
+
+#tosAverageResult {
+  max-width: 100%;
+  color: #0b1117;
+  font: 950 clamp(2rem, 5vw, 4.5rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+
+.tos-result-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.tos-result-meta span {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid #c8c2b6;
+  border-radius: 6px;
+  background: #fffdf8;
+}
+
+.tos-result-meta b {
+  color: #68737d;
+  font: 800 .66rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+  text-transform: uppercase;
+}
+
+.tos-result-meta output {
+  color: #101820;
+  font: 900 1rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+#tosCopyBtn {
+  margin-top: 8px;
+  border-color: #446c8a;
+  background: #1e4058;
+  color: #f4f9fd;
+}
+
+@media (max-width: 800px) {
+  .tos-calculator { grid-template-columns: 1fr; min-height: 0; }
+  .tos-input-panel { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tos-result-panel { min-height: 300px; }
+  .tos-result-meta { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 430px) {
+  .tos-input-panel { grid-template-columns: minmax(0, 1fr); padding: 22px; }
+  .tos-entry { grid-template-columns: minmax(0, 1fr); }
+  .tos-entry label:last-child { grid-column: auto; }
+  .tos-entry input,
+  .tos-entry select { padding-inline: 8px; font-size: .86rem; }
+  .tos-icon-btn {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: end;
+    width: 38px;
+    min-height: 38px;
+  }
+}

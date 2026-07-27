@@ -26,6 +26,7 @@ const partViews = [
 const partTargets = new Set(partViews.map(([, target]) => target));
 const groupedTargets = new Set([
   "fullSheetView",
+  "tosAverageView",
   ...partTargets
 ]);
 
