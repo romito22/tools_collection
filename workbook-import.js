@@ -179,7 +179,11 @@
         transverseCap: { piece: "p11", qty: n(cell(pim, pr, 45)), length: n(cell(pim, pr, 46)),
           width: n(cell(pim, pr, 47)), thickness: n(cell(pim, pr, 48)) },
         transverseShortCap: { piece: "p12", qty: n(cell(pim, pr, 49)), length: n(cell(pim, pr, 50)),
-          width: n(cell(pim, pr, 51)), thickness: n(cell(pim, pr, 52)) }
+          width: n(cell(pim, pr, 51)), thickness: n(cell(pim, pr, 52)) },
+        widenedCap: { piece: "p13", qty: n(cell(pim, pr, 53)), material: text(cell(pim, pr, 54), "-"),
+          length: n(cell(pim, pr, 55)), width: n(cell(pim, pr, 56)), thickness: n(cell(pim, pr, 57)) },
+        transitionCap: { piece: "p14", qty: n(cell(pim, pr, 58)), material: text(cell(pim, pr, 59), "-"),
+          length: n(cell(pim, pr, 60)), width: n(cell(pim, pr, 61)), thickness: n(cell(pim, pr, 62)) }
       },
       capPlate: { piece: "p15", qty: n(cell(hss, hr, 18)), thickness: n(cell(hss, hr, 27)),
         width: n(cell(hss, hr, 20)), length: n(cell(hss, hr, 19)), h2: n(cell(hss, hr, 21)),

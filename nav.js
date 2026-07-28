@@ -99,5 +99,5 @@ navButtons.forEach((button) => {
 });
 
 const savedView = localStorage.getItem("tools_collection.activeView");
-if (groupedTargets.has(savedView)) showView(savedView);
+if (viewTargets.has(savedView)) showView(savedView);
 else showView("fullSheetView");

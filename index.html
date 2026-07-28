@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>tools_collection | Engineering Review Helpers</title>
   <link rel="stylesheet" href="styles.css?v=20260518-scrollfix">
-  <link rel="stylesheet" href="scrollfix.css?v=20260727-tos-fields">
+  <link rel="stylesheet" href="scrollfix.css?v=20260728-auto-check-all">
 </head>
 <body>
   <div class="app-shell">
@@ -25,6 +25,7 @@
             <button class="nav-btn" type="button" data-target="tosAverageView">TOS Average</button>
           </div>
         </div>
+        <button class="nav-btn" type="button" data-target="autoReviewView">Auto</button>
       </nav>
       <button id="themeBtn" type="button">Theme</button>
     </aside>
@@ -174,6 +175,154 @@
               <span><b>Difference</b><output id="tosDifferenceResult">-</output></span>
             </div>
             <button id="tosCopyBtn" type="button" disabled>Copy Average</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="autoReviewView" class="view">
+        <header class="topbar auto-topbar">
+          <div>
+            <h2>Auto Review</h2>
+            <p>PDF evidence beside the selected spreadsheet cell.</p>
+          </div>
+          <div class="auto-summary" aria-label="Review summary">
+            <span><b id="autoPassCount">0</b> Pass</span>
+            <span><b id="autoFailCount">0</b> Fail</span>
+            <span><b id="autoOpenCount">18</b> Open</span>
+          </div>
+        </header>
+
+        <nav id="autoPartTabs" class="auto-part-tabs" aria-label="Auto review part">
+          <button class="active" type="button" data-auto-part="p01" aria-current="page">P01</button>
+          <button type="button" data-auto-part="p02">P02</button>
+          <button type="button" data-auto-part="lug">LUG</button>
+          <button type="button" data-auto-part="p03">P03</button>
+          <button type="button" data-auto-part="p04">P04</button>
+          <button type="button" data-auto-part="p05">P05</button>
+          <button type="button" data-auto-part="p06">P06</button>
+          <button type="button" data-auto-part="p07">P07</button>
+          <button type="button" data-auto-part="p08">P08</button>
+          <button type="button" data-auto-part="p09">P09</button>
+          <button type="button" data-auto-part="p10">P10</button>
+          <button type="button" data-auto-part="p11">P11</button>
+          <button type="button" data-auto-part="p12">P12</button>
+          <button type="button" data-auto-part="p13">P13</button>
+          <button type="button" data-auto-part="p14">P14</button>
+          <button type="button" data-auto-part="p15">P15</button>
+        </nav>
+
+        <section class="auto-sourcebar" aria-label="Review sources">
+          <div id="autoWorkbookDropZone" class="auto-source-file auto-file-drop-target">
+            <span>Spreadsheet</span>
+            <strong id="autoWorkbookName">7078-A Parts / HSS D</strong>
+            <small id="autoWorkbookStatus">Marks 1901, 1906, 1912</small>
+          </div>
+          <div id="autoPdfLibraryDropZone" class="auto-source-file auto-file-drop-target">
+            <span>PDF library</span>
+            <strong id="autoPdfName">No PDF loaded</strong>
+            <small id="autoPdfStatus">Add PDF files or select a project folder.</small>
+            <div id="autoPdfBreakdown" class="auto-index-breakdown" hidden>
+              <span data-kind="brace">Brace 0</span>
+              <span data-kind="parts">Parts 0</span>
+              <span data-kind="pim">PIM 0</span>
+              <span data-kind="other">Other 0</span>
+            </div>
+          </div>
+          <div class="auto-source-actions">
+            <input id="autoWorkbookInput" type="file" accept=".xlsx,.xls" hidden>
+            <input id="autoPdfInput" type="file" accept="application/pdf,.pdf" multiple hidden>
+            <input id="autoPdfFolderInput" type="file" accept="application/pdf,.pdf" webkitdirectory multiple hidden>
+            <button id="autoWorkbookUploadBtn" type="button">Excel</button>
+            <button id="autoPdfUploadBtn" type="button">Add PDFs</button>
+            <button id="autoPdfFolderBtn" type="button">Folder</button>
+            <button id="autoPdfClearBtn" type="button">Clear</button>
+          </div>
+        </section>
+
+        <dialog id="autoClearPdfDialog" class="auto-confirm-dialog" aria-labelledby="autoClearPdfTitle">
+          <h3 id="autoClearPdfTitle">Clear PDF library?</h3>
+          <p>This removes every indexed and saved PDF from this browser. Your review log stays saved.</p>
+          <div>
+            <button id="autoClearPdfCancelBtn" type="button">Cancel</button>
+            <button id="autoClearPdfConfirmBtn" class="danger" type="button">Clear PDFs</button>
+          </div>
+        </dialog>
+
+        <section class="auto-workspace">
+          <article class="auto-pdf-panel" aria-labelledby="autoPdfPanelTitle">
+            <header class="auto-panel-head">
+              <div>
+                <span>Drawing evidence</span>
+                <h3 id="autoPdfPanelTitle">p0110-7078</h3>
+              </div>
+              <div class="auto-pdf-tools" aria-label="PDF zoom controls">
+                <button id="autoZoomOutBtn" type="button" aria-label="Zoom out" title="Zoom out">-</button>
+                <button id="autoZoomFitBtn" type="button">Fit</button>
+                <button id="autoZoomInBtn" type="button" aria-label="Zoom in" title="Zoom in">+</button>
+                <output id="autoZoomValue">150%</output>
+              </div>
+            </header>
+            <div id="autoPdfScroll" class="auto-pdf-scroll" tabindex="0">
+              <div id="autoPdfStage" class="auto-pdf-stage">
+                <canvas id="autoPdfCanvas" aria-label="Uploaded part PDF page"></canvas>
+                <div id="autoPdfAnnotations" class="auto-pdf-annotations" aria-label="PDF review marks"></div>
+                <div id="autoPdfHighlight" class="auto-pdf-highlight" hidden>
+                  <span id="autoPdfHighlightLabel"></span>
+                </div>
+              </div>
+              <button id="autoPdfDropZone" class="auto-pdf-empty" type="button">
+                <strong>Add drawing PDFs</strong>
+                <span>Click, drop multiple files, or select a folder</span>
+              </button>
+            </div>
+          </article>
+
+          <aside class="auto-sheet-panel" aria-labelledby="autoSheetTitle">
+            <header class="auto-panel-head">
+              <div>
+                <span>Spreadsheet evidence</span>
+                <h3 id="autoSheetTitle">HSS D</h3>
+              </div>
+              <output id="autoCellAddress">G9</output>
+            </header>
+            <div class="auto-sheet-context">
+              <span id="autoMarkLabel">Mark 1901</span>
+              <strong id="autoFieldLabel">Qty</strong>
+              <b id="autoExpectedValue">1</b>
+            </div>
+            <div class="auto-sheet-scroll">
+              <table id="autoSheetGrid" class="auto-sheet-grid" aria-label="HSS D spreadsheet rows"></table>
+            </div>
+            <section class="auto-log" aria-labelledby="autoLogTitle">
+              <div class="auto-log-head">
+                <h3 id="autoLogTitle">Review Log</h3>
+                <button id="autoClearLogBtn" type="button">Clear Log</button>
+              </div>
+              <div id="autoLogList" class="auto-log-list"></div>
+            </section>
+          </aside>
+        </section>
+
+        <section class="auto-reviewbar" aria-label="Current review item">
+          <div class="auto-review-progress">
+            <span id="autoProgressEyebrow">Mark 1 of 3 / Data 1 of 6</span>
+            <strong id="autoReviewTitle">1901 - Qty</strong>
+            <small id="autoEvidenceHint">Load the PDF to view the drawing candidate.</small>
+          </div>
+          <div class="auto-compare">
+            <span>Spreadsheet<b id="autoCompareExpected">1</b></span>
+            <span>PDF candidate<b id="autoCompareCandidate">Waiting for PDF</b></span>
+          </div>
+          <div class="auto-decision-actions">
+            <button id="autoCheckAllBtn" class="auto-check-btn" type="button">Check All</button>
+            <button id="autoPassBtn" class="auto-pass-btn" type="button">Pass</button>
+            <button id="autoFailBtn" class="auto-fail-btn" type="button">Fail</button>
+          </div>
+          <div class="auto-next-actions">
+            <button id="autoPrevMarkBtn" type="button" aria-label="Previous mark" title="Previous mark">&laquo;</button>
+            <button id="autoPrevDataBtn" type="button" aria-label="Previous data" title="Previous data">&lsaquo;</button>
+            <button id="autoNextDataBtn" type="button" aria-label="Next data" title="Next data">&rsaquo;</button>
+            <button id="autoNextMarkBtn" type="button" aria-label="Next mark" title="Next mark">&raquo;</button>
           </div>
         </section>
       </section>
@@ -731,7 +880,7 @@
   <script src="p06-data.js?v=20260721-rno-concourse-a-7093"></script>
   <script src="p07-data.js?v=20260721-rno-concourse-a-7093"></script>
   <script src="lug-data.js?v=20260721-rno-concourse-a-7093"></script>
-  <script src="workbook-import.js?v=20260722-browser-import"></script>
+  <script src="workbook-import.js?v=20260728-auto-all-parts"></script>
   <script src="full-sheet-ui.js?v=20260722-browser-import"></script>
   <script src="p15-ui.js?v=20260722-browser-import"></script>
   <script src="p06-ui.js?v=20260722-browser-import"></script>
@@ -739,6 +888,7 @@
   <script src="lug-ui.js?v=20260722-browser-import"></script>
   <script src="part-layout.js?v=20260722-browser-import"></script>
   <script src="tos-average.js?v=20260727-tos-fields"></script>
-  <script src="nav.js?v=20260727-tos-average"></script>
+  <script type="module" src="auto-review.js?v=20260728-auto-all-at-once-21"></script>
+  <script src="nav.js?v=20260728-auto-all-at-once-21"></script>
 </body>
 </html>
